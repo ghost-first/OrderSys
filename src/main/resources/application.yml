@@ -1,13 +1,13 @@
 spring:
   datasource:
-    name: testa  #数据库名
-    url: jdbc:mysql://localhost:3306/testa #url
-    username: root  #用户名
-    password: 30515a  #密码
-    driver-class-name: com.mysql.cj.jdbc.Driver  #数据库链接驱动
+    name: testa
+    url: jdbc:mysql://localhost:3306/demo
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml  #配置映射文件
-  type-aliases-package: com.example.test.bean #配置实体类
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.example.test.bean
