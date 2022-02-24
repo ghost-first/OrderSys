@@ -10,4 +10,5 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+#  mapper-locations: classpath*:com/example/demo/mapper/*.xml
   type-aliases-package: com.example.test.bean

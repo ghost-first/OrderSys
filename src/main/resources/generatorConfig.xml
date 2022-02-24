@@ -20,7 +20,7 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--生成映射文件存放位置-->
-        <sqlMapGenerator targetPackage="com.example.demo.mapper" targetProject="C:\Users\qwe\IdeaProjects\OrderSys\src\main\java">
+        <sqlMapGenerator targetPackage="mapper" targetProject="C:\Users\qwe\IdeaProjects\OrderSys\src\main\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao类存放位置-->
