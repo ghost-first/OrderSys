@@ -22,7 +22,7 @@ public interface DishesMapper {
 
     List<Dishes> selectByExample(DishesExample example);
 
-    Dishes selectById(Integer dishId);
+    Dishes selectByPrimaryKey(Integer dishId);
 
     int updateByExampleSelective(@Param("record") Dishes record, @Param("example") DishesExample example);
 
