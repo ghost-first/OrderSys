@@ -46,6 +46,16 @@ public class DishesController {
         return dish;
     }
 
+    @ResponseBody
+    @RequestMapping("removedish")
+    public boolean removeDish(int dishid){
+        return dishesService.removeDishes(dishid);
+    }
 
+    @ResponseBody
+    @RequestMapping("adddish")
+    public boolean addDish(Dishes dish){
+        return dishesService.addDishes(dish);
+    }
 
 }
