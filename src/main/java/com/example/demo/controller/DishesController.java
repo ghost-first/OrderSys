@@ -15,20 +15,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Controller
+@RequestMapping("/dishes")
 public class DishesController {
 
+    @Autowired
     private DishesService dishesService;
 
-    public DishesService getDishesService() {
-        return dishesService;
-    }
+//    public DishesService getDishesService() {
+//        return dishesService;
+//    }
+//
+//    @Autowired
+//    public void setDishesService(DishesService dishesService) {
+//        this.dishesService = dishesService;
+//    }
 
-    @Autowired
-    public void setDishesService(DishesService dishesService) {
-        this.dishesService = dishesService;
-    }
-
-    @RequestMapping("dishlist")
+    @RequestMapping("/all")
     @ResponseBody
     public List<Dishes> showDishes() {
         List<Dishes> list = dishesService.findAll();
@@ -36,21 +38,33 @@ public class DishesController {
     }
 
     @ResponseBody
-    @RequestMapping("querydish")
-    public Dishes queryDish(int dishid){
-        Dishes dish = dishesService.findByDid(dishid);
+    @RequestMapping("/query")
+    public Dishes queryDish(int dishId){
+//        System.out.println("开始queryDish");
+        Dishes dish = dishesService.findByDid(dishId);
         System.out.println(dish);
+//        Dishes test = new Dishes();
+//        test.setDishId(1);
+//        test.setPrice(2.0);
+//        test.setDishName("test");
+//        test.setIntro("dish");
+//        test.setType("type");
         return dish;
+    }
+    @ResponseBody
+    @RequestMapping("/querySome")
+    public List<Dishes> querySomeDishes(String dishName){
+        return dishesService.findSomeDishes(dishName);
     }
 
     @ResponseBody
-    @RequestMapping("removedish")
+    @RequestMapping("/remove")
     public boolean removeDish(int dishid){
         return dishesService.removeDishes(dishid);
     }
 
     @ResponseBody
-    @RequestMapping("adddish")
+    @RequestMapping("/add")
     public boolean addDish(Dishes dish,MultipartHttpServletRequest request)throws Exception {
         System.out.println(dish);
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
@@ -58,7 +72,7 @@ public class DishesController {
     }
 
     @ResponseBody
-    @RequestMapping("editdish")
+    @RequestMapping("/edit")
     public boolean editDish(Dishes dish,MultipartHttpServletRequest request)throws Exception {
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         System.out.println(dish);
