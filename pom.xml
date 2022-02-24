@@ -60,6 +60,11 @@
             <artifactId>mybatis</artifactId>
             <version>3.4.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
+        </dependency>
     </dependencies>
 
     <build>

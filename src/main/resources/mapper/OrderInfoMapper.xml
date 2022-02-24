@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.dao.OrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.OrderInfo" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="order_time" property="orderTime" jdbcType="VARCHAR" />
+    <result column="table_id" property="tableId" jdbcType="INTEGER" />
+    <result column="order_state" property="orderState" jdbcType="INTEGER" />
+    <result column="waiter" property="waiter" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    order_id, order_time, table_id, order_state, waiter, total_price, remarks
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.OrderInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderinfo
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from orderinfo
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.demo.entity.OrderInfoExample" >
+    delete from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.entity.OrderInfo" >
+    insert into orderinfo (order_id, order_time, table_id, 
+      order_state, waiter, total_price, 
+      remarks)
+    values (#{orderId,jdbcType=INTEGER}, #{orderTime,jdbcType=VARCHAR}, #{tableId,jdbcType=INTEGER}, 
+      #{orderState,jdbcType=INTEGER}, #{waiter,jdbcType=INTEGER}, #{totalPrice,jdbcType=DOUBLE}, 
+      #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.entity.OrderInfo" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="orderTime != null" >
+        order_time,
+      </if>
+      <if test="tableId != null" >
+        table_id,
+      </if>
+      <if test="orderState != null" >
+        order_state,
+      </if>
+      <if test="waiter != null" >
+        waiter,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderTime != null" >
+        #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tableId != null" >
+        #{tableId,jdbcType=INTEGER},
+      </if>
+      <if test="orderState != null" >
+        #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="waiter != null" >
+        #{waiter,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.demo.entity.OrderInfoExample" resultType="java.lang.Integer" >
+    select count(*) from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderinfo
+    <set >
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderTime != null" >
+        order_time = #{record.orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tableId != null" >
+        table_id = #{record.tableId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderState != null" >
+        order_state = #{record.orderState,jdbcType=INTEGER},
+      </if>
+      <if test="record.waiter != null" >
+        waiter = #{record.waiter,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalPrice != null" >
+        total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderinfo
+    set order_id = #{record.orderId,jdbcType=INTEGER},
+      order_time = #{record.orderTime,jdbcType=VARCHAR},
+      table_id = #{record.tableId,jdbcType=INTEGER},
+      order_state = #{record.orderState,jdbcType=INTEGER},
+      waiter = #{record.waiter,jdbcType=INTEGER},
+      total_price = #{record.totalPrice,jdbcType=DOUBLE},
+      remarks = #{record.remarks,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.OrderInfo" >
+    update orderinfo
+    <set >
+      <if test="orderTime != null" >
+        order_time = #{orderTime,jdbcType=VARCHAR},
+      </if>
+      <if test="tableId != null" >
+        table_id = #{tableId,jdbcType=INTEGER},
+      </if>
+      <if test="orderState != null" >
+        order_state = #{orderState,jdbcType=INTEGER},
+      </if>
+      <if test="waiter != null" >
+        waiter = #{waiter,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.OrderInfo" >
+    update orderinfo
+    set order_time = #{orderTime,jdbcType=VARCHAR},
+      table_id = #{tableId,jdbcType=INTEGER},
+      order_state = #{orderState,jdbcType=INTEGER},
+      waiter = #{waiter,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
+</mapper>
