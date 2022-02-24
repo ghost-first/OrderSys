@@ -10,5 +10,4 @@ public class OrderSysApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderSysApplication.class, args);
     }
-
 }
