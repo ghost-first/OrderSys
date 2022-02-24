@@ -7,6 +7,7 @@ import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import com.example.demo.service.OrderService;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,5 +75,12 @@ public class OrderServiceImpl implements OrderService {
         return order;
     }
 
-
+    @Override
+    public boolean checkout(int orderid){
+        OrderInfo orderInfo = orderInfoMapper.selectByPrimaryKey(orderid);
+        if(orderInfo.getOrderState()==1)
+            return false;
+        orderInfo.setOrderState(1);
+        return orderInfoMapper.updateByPrimaryKeySelective(orderInfo)>0;
+    }
 }

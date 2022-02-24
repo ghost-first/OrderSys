@@ -101,7 +101,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.example.demo.entity.OrderInfo" >
+  <insert id="insert" parameterType="com.example.demo.entity.OrderInfo"  useGeneratedKeys="true" keyProperty="orderId">
     insert into orderinfo (order_id, order_time, table_id, 
       order_state, waiter, total_price, 
       remarks)
