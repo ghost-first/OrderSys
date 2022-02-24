@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderInfoExample {
@@ -174,62 +175,52 @@ public class OrderInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeEqualTo(String value) {
+        public Criteria andOrderTimeEqualTo(Date value) {
             addCriterion("order_time =", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeNotEqualTo(String value) {
+        public Criteria andOrderTimeNotEqualTo(Date value) {
             addCriterion("order_time <>", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeGreaterThan(String value) {
+        public Criteria andOrderTimeGreaterThan(Date value) {
             addCriterion("order_time >", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeGreaterThanOrEqualTo(String value) {
+        public Criteria andOrderTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("order_time >=", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeLessThan(String value) {
+        public Criteria andOrderTimeLessThan(Date value) {
             addCriterion("order_time <", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeLessThanOrEqualTo(String value) {
+        public Criteria andOrderTimeLessThanOrEqualTo(Date value) {
             addCriterion("order_time <=", value, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeLike(String value) {
-            addCriterion("order_time like", value, "orderTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderTimeNotLike(String value) {
-            addCriterion("order_time not like", value, "orderTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andOrderTimeIn(List<String> values) {
+        public Criteria andOrderTimeIn(List<Date> values) {
             addCriterion("order_time in", values, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeNotIn(List<String> values) {
+        public Criteria andOrderTimeNotIn(List<Date> values) {
             addCriterion("order_time not in", values, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeBetween(String value1, String value2) {
+        public Criteria andOrderTimeBetween(Date value1, Date value2) {
             addCriterion("order_time between", value1, value2, "orderTime");
             return (Criteria) this;
         }
 
-        public Criteria andOrderTimeNotBetween(String value1, String value2) {
+        public Criteria andOrderTimeNotBetween(Date value1, Date value2) {
             addCriterion("order_time not between", value1, value2, "orderTime");
             return (Criteria) this;
         }
@@ -364,52 +355,62 @@ public class OrderInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andWaiterEqualTo(Integer value) {
+        public Criteria andWaiterEqualTo(String value) {
             addCriterion("waiter =", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterNotEqualTo(Integer value) {
+        public Criteria andWaiterNotEqualTo(String value) {
             addCriterion("waiter <>", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterGreaterThan(Integer value) {
+        public Criteria andWaiterGreaterThan(String value) {
             addCriterion("waiter >", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterGreaterThanOrEqualTo(Integer value) {
+        public Criteria andWaiterGreaterThanOrEqualTo(String value) {
             addCriterion("waiter >=", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterLessThan(Integer value) {
+        public Criteria andWaiterLessThan(String value) {
             addCriterion("waiter <", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterLessThanOrEqualTo(Integer value) {
+        public Criteria andWaiterLessThanOrEqualTo(String value) {
             addCriterion("waiter <=", value, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterIn(List<Integer> values) {
+        public Criteria andWaiterLike(String value) {
+            addCriterion("waiter like", value, "waiter");
+            return (Criteria) this;
+        }
+
+        public Criteria andWaiterNotLike(String value) {
+            addCriterion("waiter not like", value, "waiter");
+            return (Criteria) this;
+        }
+
+        public Criteria andWaiterIn(List<String> values) {
             addCriterion("waiter in", values, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterNotIn(List<Integer> values) {
+        public Criteria andWaiterNotIn(List<String> values) {
             addCriterion("waiter not in", values, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterBetween(Integer value1, Integer value2) {
+        public Criteria andWaiterBetween(String value1, String value2) {
             addCriterion("waiter between", value1, value2, "waiter");
             return (Criteria) this;
         }
 
-        public Criteria andWaiterNotBetween(Integer value1, Integer value2) {
+        public Criteria andWaiterNotBetween(String value1, String value2) {
             addCriterion("waiter not between", value1, value2, "waiter");
             return (Criteria) this;
         }

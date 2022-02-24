@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class NoticeExample {
@@ -234,73 +235,73 @@ public class NoticeExample {
             return (Criteria) this;
         }
 
-        public Criteria andContentsIsNull() {
-            addCriterion("contents is null");
+        public Criteria andTitleIsNull() {
+            addCriterion("title is null");
             return (Criteria) this;
         }
 
-        public Criteria andContentsIsNotNull() {
-            addCriterion("contents is not null");
+        public Criteria andTitleIsNotNull() {
+            addCriterion("title is not null");
             return (Criteria) this;
         }
 
-        public Criteria andContentsEqualTo(String value) {
-            addCriterion("contents =", value, "contents");
+        public Criteria andTitleEqualTo(String value) {
+            addCriterion("title =", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsNotEqualTo(String value) {
-            addCriterion("contents <>", value, "contents");
+        public Criteria andTitleNotEqualTo(String value) {
+            addCriterion("title <>", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsGreaterThan(String value) {
-            addCriterion("contents >", value, "contents");
+        public Criteria andTitleGreaterThan(String value) {
+            addCriterion("title >", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsGreaterThanOrEqualTo(String value) {
-            addCriterion("contents >=", value, "contents");
+        public Criteria andTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("title >=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsLessThan(String value) {
-            addCriterion("contents <", value, "contents");
+        public Criteria andTitleLessThan(String value) {
+            addCriterion("title <", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsLessThanOrEqualTo(String value) {
-            addCriterion("contents <=", value, "contents");
+        public Criteria andTitleLessThanOrEqualTo(String value) {
+            addCriterion("title <=", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsLike(String value) {
-            addCriterion("contents like", value, "contents");
+        public Criteria andTitleLike(String value) {
+            addCriterion("title like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsNotLike(String value) {
-            addCriterion("contents not like", value, "contents");
+        public Criteria andTitleNotLike(String value) {
+            addCriterion("title not like", value, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsIn(List<String> values) {
-            addCriterion("contents in", values, "contents");
+        public Criteria andTitleIn(List<String> values) {
+            addCriterion("title in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsNotIn(List<String> values) {
-            addCriterion("contents not in", values, "contents");
+        public Criteria andTitleNotIn(List<String> values) {
+            addCriterion("title not in", values, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsBetween(String value1, String value2) {
-            addCriterion("contents between", value1, value2, "contents");
+        public Criteria andTitleBetween(String value1, String value2) {
+            addCriterion("title between", value1, value2, "title");
             return (Criteria) this;
         }
 
-        public Criteria andContentsNotBetween(String value1, String value2) {
-            addCriterion("contents not between", value1, value2, "contents");
+        public Criteria andTitleNotBetween(String value1, String value2) {
+            addCriterion("title not between", value1, value2, "title");
             return (Criteria) this;
         }
 
@@ -314,62 +315,52 @@ public class NoticeExample {
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeEqualTo(String value) {
+        public Criteria andSendTimeEqualTo(Date value) {
             addCriterion("send_time =", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeNotEqualTo(String value) {
+        public Criteria andSendTimeNotEqualTo(Date value) {
             addCriterion("send_time <>", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeGreaterThan(String value) {
+        public Criteria andSendTimeGreaterThan(Date value) {
             addCriterion("send_time >", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeGreaterThanOrEqualTo(String value) {
+        public Criteria andSendTimeGreaterThanOrEqualTo(Date value) {
             addCriterion("send_time >=", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeLessThan(String value) {
+        public Criteria andSendTimeLessThan(Date value) {
             addCriterion("send_time <", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeLessThanOrEqualTo(String value) {
+        public Criteria andSendTimeLessThanOrEqualTo(Date value) {
             addCriterion("send_time <=", value, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeLike(String value) {
-            addCriterion("send_time like", value, "sendTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSendTimeNotLike(String value) {
-            addCriterion("send_time not like", value, "sendTime");
-            return (Criteria) this;
-        }
-
-        public Criteria andSendTimeIn(List<String> values) {
+        public Criteria andSendTimeIn(List<Date> values) {
             addCriterion("send_time in", values, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeNotIn(List<String> values) {
+        public Criteria andSendTimeNotIn(List<Date> values) {
             addCriterion("send_time not in", values, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeBetween(String value1, String value2) {
+        public Criteria andSendTimeBetween(Date value1, Date value2) {
             addCriterion("send_time between", value1, value2, "sendTime");
             return (Criteria) this;
         }
 
-        public Criteria andSendTimeNotBetween(String value1, String value2) {
+        public Criteria andSendTimeNotBetween(Date value1, Date value2) {
             addCriterion("send_time not between", value1, value2, "sendTime");
             return (Criteria) this;
         }

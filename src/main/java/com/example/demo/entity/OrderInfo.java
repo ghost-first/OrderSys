@@ -1,17 +1,18 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class OrderInfo implements Serializable {
     private Integer orderId;
 
-    private String orderTime;
+    private Date orderTime;
 
     private Integer tableId;
 
     private Integer orderState;
 
-    private Integer waiter;
+    private String waiter;
 
     private Double totalPrice;
 
@@ -27,12 +28,12 @@ public class OrderInfo implements Serializable {
         this.orderId = orderId;
     }
 
-    public String getOrderTime() {
+    public Date getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime == null ? null : orderTime.trim();
+    public void setOrderTime(Date orderTime) {
+        this.orderTime = orderTime;
     }
 
     public Integer getTableId() {
@@ -51,12 +52,12 @@ public class OrderInfo implements Serializable {
         this.orderState = orderState;
     }
 
-    public Integer getWaiter() {
+    public String getWaiter() {
         return waiter;
     }
 
-    public void setWaiter(Integer waiter) {
-        this.waiter = waiter;
+    public void setWaiter(String waiter) {
+        this.waiter = waiter == null ? null : waiter.trim();
     }
 
     public Double getTotalPrice() {
