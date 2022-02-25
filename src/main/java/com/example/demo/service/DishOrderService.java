@@ -36,10 +36,6 @@ public class DishOrderService {
             dishOrderKey.setDishId(dishOrder.getDishId());
             dishOrderKey.setOrderId(dishOrder.getOrderId());
             DishOrder dishOrder1 = dishOrderMapper.selectByPrimaryKey(dishOrderKey);
-            if(dishOrder1.getDishState() == 3){
-                dishOrderMapper.deleteByPrimaryKey(dishOrderKey);
-                dishOrder1 = null;
-            }
             return dishOrder1;
         }else{
             return null;

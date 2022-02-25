@@ -145,8 +145,8 @@
   <insert id="insert" parameterType="com.example.demo.entity.User" >
     insert into user (user_id, password, role_id, 
       profile_pic, is_lock)
-    values (#{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{roleId,jdbcType=INTEGER}, 
-      #{profilePic,jdbcType=VARCHAR}, #{isLock,jdbcType=INTEGER})
+    values (#{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 0,
+      #{profilePic,jdbcType=VARCHAR}, 0)
   </insert>
   <insert id="insertSelective" parameterType="com.example.demo.entity.User" >
     insert into user
