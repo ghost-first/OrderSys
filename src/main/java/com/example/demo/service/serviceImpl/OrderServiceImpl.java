@@ -6,11 +6,13 @@ import com.example.demo.dao.OrderInfoMapper;
 import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
+import com.example.demo.entity.TestDish;
 import com.example.demo.service.OrderService;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -83,4 +85,35 @@ public class OrderServiceImpl implements OrderService {
         orderInfo.setOrderState(1);
         return orderInfoMapper.updateByPrimaryKeySelective(orderInfo)>0;
     }
+    /*
+    * 删除DishOrder里的菜品，再删除订单
+    * */
+    @Override
+    public int deleteOrder(int orderId) {
+        int res1 = dishOrderMapper.deleteOrder(orderId);
+        int res2 = orderInfoMapper.deleteByPrimaryKey(orderId);
+        return res1 & res2;
+    }
+
+    @Override
+    public List<TestDish> queryOrder(OrderInfo orderInfo) {
+        List<OrderInfo> orderInfos = orderInfoMapper.queryOrder(orderInfo);
+        return getDishes(orderInfos);
+    }
+
+    //根据订单查询
+    public List<TestDish> getDishes(List<OrderInfo> orderInfos) {
+        List<TestDish> list = new ArrayList<>();
+        for (OrderInfo orderInfo : orderInfos) {
+
+            List<DishOrder> dishOrders = dishOrderMapper.queryDishes(orderInfo.getOrderId());
+
+            TestDish testDish = new TestDish();
+            testDish.setNewOrder(orderInfo);
+            testDish.setDishes(dishOrders);
+            list.add(testDish);
+        }
+        return list;
+    }
+
 }

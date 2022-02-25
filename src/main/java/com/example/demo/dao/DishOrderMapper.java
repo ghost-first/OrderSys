@@ -28,4 +28,8 @@ public interface DishOrderMapper {
     int updateByPrimaryKeySelective(DishOrder record);
 
     int updateByPrimaryKey(DishOrder record);
+
+    int deleteOrder(int orderId);
+
+    List<DishOrder> queryDishes(int orderId);
 }
