@@ -2,11 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public User addUser(User user){
-        return userService.add(user);
+    public User addUser(User user,MultipartHttpServletRequest request) throws Exception {
+        return userService.add(user,request);
     }
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){
