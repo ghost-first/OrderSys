@@ -81,11 +81,27 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByTest" resultType="java.util.Map" parameterType="java.lang.Integer" >
-    select dish_name,table_id,dish_state,count
-    from dishorder,dishes,orderinfo
-    where table_id = #{tableId,jdbcType=INTEGER} and dishorder.order_id = orderinfo.order_id
-      and dishorder.dish_id = dishes.dish_id
+  <select id="selectByTest" resultType="java.util.Map" parameterType="Map" >
+    SELECT distinct dish_name,table_id,dish_state,count
+    FROM dishes
+    INNER JOIN dishorder
+    ON dishes.dish_id = dishorder.dish_id
+    INNER JOIN orderinfo
+    ON dishorder.order_id = orderinfo.order_id
+    <trim prefix="where" suffixOverrides="and">
+      <if test="dishName != null and dishName != ''">
+        dish_name = #{dishName,jdbcType=VARCHAR} and
+      </if>
+      <if test="tableId != null">
+        table_id = #{tableId,jdbcType=INTEGER} and
+      </if>
+      <if test="dishState != null">
+        dish_state = #{dishState,jdbcType=INTEGER} and
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER} and
+      </if>
+    </trim>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demo.entity.DishOrderKey" >
     select dish_name,table_id,dish_state,count

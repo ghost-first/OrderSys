@@ -23,7 +23,7 @@ public interface DishOrderMapper {
 
     List<DishOrder> selectByExample(DishOrderExample example);
 
-    List<Map<String,Object>> selectByTest(Integer tableId);
+    List<Map<String,Object>> selectByTest(Map<String,Object> map);
 
     DishOrder selectByPrimaryKey(DishOrderKey key);
 
