@@ -18,4 +18,8 @@ public class DishOrderController {
     public List<DishOrder> findSomeDishOrder(DishOrder dishOrder){
         return dishOrderService.findSomeDishOrder(dishOrder);
     }
+    @RequestMapping("/update")
+    public DishOrder updateDishOrder(DishOrder dishOrder){
+        return dishOrderService.updateDishOrder(dishOrder);
+    }
 }

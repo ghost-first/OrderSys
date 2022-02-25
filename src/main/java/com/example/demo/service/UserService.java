@@ -26,8 +26,13 @@ public class UserService {
         userMapper.insert(user);
         return user;
     }
-    public int updateInfo(User user){
-        return userMapper.updateInfo(user);
+    public User updateInfo(User user){
+        int result =  userMapper.updateInfo(user);
+        if(result>0){
+            return userMapper.selectById(user.getUserId());
+        }else{
+            return null;
+        }
     }
     public int delete(String userId){
         return userMapper.deleteById(userId);

@@ -100,8 +100,7 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.example.demo.entity.DishOrder" >
-    insert into dishorder (order_id, dish_id, dish_state, 
-      count)
+    insert into dishorder (order_id, dish_id, dish_state, count)
     values (#{orderId,jdbcType=INTEGER}, #{dishId,jdbcType=INTEGER}, #{dishState,jdbcType=INTEGER}, 
       #{count,jdbcType=INTEGER})
   </insert>
@@ -188,8 +187,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.DishOrder" >
     update dishorder
-    set dish_state = #{dishState,jdbcType=INTEGER},
-      count = #{count,jdbcType=INTEGER}
+    set dish_state = dish_state+1
     where order_id = #{orderId,jdbcType=INTEGER}
       and dish_id = #{dishId,jdbcType=INTEGER}
   </update>

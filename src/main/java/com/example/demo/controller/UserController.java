@@ -29,13 +29,8 @@ public class UserController {
         return userService.selectAll(user);
     }
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
-    public String updateUser(User user){
-        int result = userService.updateInfo(user);
-        if(result>0){
-            return "修改成功";
-        }else{
-            return "修改失败";
-        }
+    public User updateUser(User user){
+        return userService.updateInfo(user);
     }
     @RequestMapping(value = "/delete",method = RequestMethod.GET)
     public String deleteUser(String userId){
