@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl {
 
     @Autowired
     private UserMapper userMapper;
@@ -16,19 +16,16 @@ public class UserServiceImpl implements UserService {
     * 通过userId查找用户
     * 用于登录
     * */
-    @Override
     public User findById(String userId) {
         User user = userMapper.selectByPrimaryKey(userId);
         return user;
     }
 
-    @Override
     public int insertUser(User user) {
         int res = userMapper.insert(user);
         return res;
     }
 
-    @Override
     public int deleteUser(String userId) {
         int res = userMapper.deleteByPrimaryKey(userId);
         return res;

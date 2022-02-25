@@ -26,8 +26,8 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public User addUser(User user,MultipartHttpServletRequest request) throws Exception {
-        return userService.add(user,request);
+    public User addUser(User user) throws Exception {
+        return userService.add(user);
     }
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){

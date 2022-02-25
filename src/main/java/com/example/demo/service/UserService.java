@@ -20,15 +20,17 @@ public class UserService {
     public User selectById(String userId){
         return userMapper.selectById(userId);
     }
+
     public List<User> selectAll(User user){
         return userMapper.selectAll(user);
     }
-    public User add(User user,MultipartHttpServletRequest request) throws Exception {
+
+    public User add(User user) throws Exception {
         User oldUser = userMapper.selectById(user.getUserId());
         if(oldUser != null){
             return oldUser;
         }
-        user.setProfilePic(uploadPic("profile_pic",request));
+//        user.setProfilePic(uploadPic("profile_pic",request));
         userMapper.insert(user);
         return user;
     }

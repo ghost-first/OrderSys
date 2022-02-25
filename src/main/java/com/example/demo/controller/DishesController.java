@@ -58,7 +58,7 @@ public class DishesController {
 
     @ResponseBody
     @RequestMapping("/add")
-    public boolean addDish(Dishes dish,MultipartHttpServletRequest request)throws Exception {
+    public boolean addDish(Dishes dish){
         System.out.println(dish);
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         return dishesService.addDishes(dish);
@@ -66,7 +66,7 @@ public class DishesController {
 
     @ResponseBody
     @RequestMapping("/edit")
-    public boolean editDish(Dishes dish,MultipartHttpServletRequest request)throws Exception {
+    public boolean editDish(Dishes dish){
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         System.out.println(dish);
         return dishesService.editDishes(dish);
