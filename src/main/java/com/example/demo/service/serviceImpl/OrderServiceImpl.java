@@ -116,4 +116,8 @@ public class OrderServiceImpl implements OrderService {
         return list;
     }
 
+    public void testA(){
+        System.out.println("为了commit");
+    }
+
 }
