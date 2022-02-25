@@ -94,4 +94,8 @@ public interface DishOrderMapper {
      * @mbggenerated Thu Feb 24 15:34:35 CST 2022
      */
     int updateByPrimaryKey(DishOrder record);
+
+    int deleteOrder(int orderId);
+
+    List<DishOrder> queryDishes(int orderId);
 }

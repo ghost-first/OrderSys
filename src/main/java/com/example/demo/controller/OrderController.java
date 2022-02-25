@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class WaiterController {
+public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
 
@@ -86,4 +86,22 @@ public class WaiterController {
         System.out.println("结束getOrder");
         return orderPrice;
     }
+
+    //删除订单
+    @RequestMapping(value = "/deleteOrder",method = RequestMethod.GET)
+    @ResponseBody
+    public Integer deleteOrder(Integer orderId){
+        int res = orderServiceImpl.deleteOrder(orderId);
+        return res;
+    }
+
+    //查询订单
+    @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
+    @ResponseBody
+    public List<TestDish> queryOrder(OrderInfo orderInfo){
+        List<TestDish> testDishes = orderServiceImpl.queryOrder(orderInfo);
+        return testDishes;
+    }
+
+
 }

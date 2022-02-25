@@ -3,6 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import java.util.List;
+
+import com.example.demo.entity.TestDish;
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderInfoMapper {
@@ -93,4 +95,6 @@ public interface OrderInfoMapper {
      * @mbggenerated Thu Feb 24 15:34:35 CST 2022
      */
     int updateByPrimaryKey(OrderInfo record);
+
+    List<OrderInfo> queryOrder(OrderInfo orderInfo);
 }
