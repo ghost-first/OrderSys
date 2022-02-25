@@ -4,6 +4,9 @@ import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.DishOrderExample;
 import com.example.demo.entity.DishOrderKey;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface DishOrderMapper {
@@ -18,6 +21,8 @@ public interface DishOrderMapper {
     int insertSelective(DishOrder record);
 
     List<DishOrder> selectByExample(DishOrderExample example);
+
+    List<Map<String,Object>> selectByTest(Integer tableId);
 
     DishOrder selectByPrimaryKey(DishOrderKey key);
 
