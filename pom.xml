@@ -13,9 +13,13 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>OrderSys</name>
     <description>点餐系统</description>
+<!--    打包方式-->
+    <packaging>war</packaging>
     <properties>
         <java.version>11</java.version>
     </properties>
+
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,9 +73,34 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>1.2.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <!-- 移除嵌入式tomcat插件 -->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+<!--        添加servlet-api依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>8.0.36</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>OrderSys</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
