@@ -26,8 +26,8 @@ public class DishOrderService {
 //        }
 //        return dishOrderMapper.selectByExample(doe);
 //    }
-    public List<Map<String,Object>> findSomeDishOrder(Integer tableId){
-        return dishOrderMapper.selectByTest(tableId);
+    public List<Map<String,Object>> findSomeDishOrder(Map<String,Object> map){
+        return dishOrderMapper.selectByTest(map);
     }
     public DishOrder updateDishOrder(DishOrder dishOrder){
         int result = dishOrderMapper.updateByPrimaryKey(dishOrder);
