@@ -40,15 +40,8 @@ public class DishesController {
     @ResponseBody
     @RequestMapping("/query")
     public Dishes queryDish(int dishId){
-//        System.out.println("开始queryDish");
         Dishes dish = dishesService.findByDid(dishId);
         System.out.println(dish);
-//        Dishes test = new Dishes();
-//        test.setDishId(1);
-//        test.setPrice(2.0);
-//        test.setDishName("test");
-//        test.setIntro("dish");
-//        test.setType("type");
         return dish;
     }
     @ResponseBody

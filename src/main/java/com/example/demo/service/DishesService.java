@@ -27,6 +27,13 @@ public class DishesService {
         return dishesMapper.selectByExample(null);
     }
 
+    public List<Dishes> findSomeDishes(String dishName){
+        DishesExample de = new DishesExample();
+        DishesExample.Criteria criteria = de.createCriteria();
+        criteria.andDishNameEqualTo(dishName);
+        return dishesMapper.selectByExample(de);
+    }
+
     public Dishes findByDid(int did){
         return dishesMapper.selectByPrimaryKey(did);
     }

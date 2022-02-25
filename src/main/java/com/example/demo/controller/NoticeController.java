@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequestMapping("/notice")
 public class NoticeController {
     private NoticeService noticeService;
 
@@ -20,34 +21,34 @@ public class NoticeController {
     }
 
     @ResponseBody
-    @RequestMapping("noticelist")
+    @RequestMapping("/all")
     public List<Notice> showNotice() {
         List<Notice> list = noticeService.findAll();
         return list;
     }
 
     @ResponseBody
-    @RequestMapping("querynotice")
+    @RequestMapping("/query")
     public Notice queryNotice(int notice_id){
         System.out.println("开始看公告了");
         return noticeService.findByDid(notice_id);
     }
 
     @ResponseBody
-    @RequestMapping("removenotice")
+    @RequestMapping("/remove")
     public boolean removeNotice(int notice_id){
         return noticeService.removeNotice(notice_id);
     }
 
     @ResponseBody
-    @RequestMapping("addnotice")
+    @RequestMapping("/add")
     public boolean addDish(Notice notice){
         notice.setSendTime(new Date());
         return noticeService.addNotice(notice);
     }
 
     @ResponseBody
-    @RequestMapping("editnotice")
+    @RequestMapping("/edit")
     public boolean editDish(Notice notice){
         notice.setSendTime(new Date());
         return noticeService.editNotice(notice);

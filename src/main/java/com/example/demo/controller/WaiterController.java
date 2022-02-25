@@ -40,7 +40,7 @@ public class WaiterController {
     }
 
     @ResponseBody
-    @RequestMapping("checkout")
+    @RequestMapping("/checkout")
     public boolean checkout(int orderid){
         return orderServiceImpl.checkout(orderid);
     }
