@@ -81,12 +81,17 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByTest" resultType="java.util.Map" parameterType="java.lang.Integer" >
+    select dish_name,table_id,dish_state,count
+    from dishorder,dishes,orderinfo
+    where table_id = #{tableId,jdbcType=INTEGER} and dishorder.order_id = orderinfo.order_id
+      and dishorder.dish_id = dishes.dish_id
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.example.demo.entity.DishOrderKey" >
-    select 
-    <include refid="Base_Column_List" />
-    from dishorder
-    where order_id = #{orderId,jdbcType=INTEGER}
-      and dish_id = #{dishId,jdbcType=INTEGER}
+    select dish_name,table_id,dish_state,count
+    from dishorder,dishes,orderinfo
+    where dishorder.order_id = #{orderId,jdbcType=INTEGER} and dishorder.order_id = orderinfo.order_id
+      and dishorder.dish_id = #{dishId,jdbcType=INTEGER} and dishorder.dish_id = dishes.dish_id
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.example.demo.entity.DishOrderKey" >
     delete from dishorder

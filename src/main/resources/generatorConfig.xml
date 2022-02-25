@@ -8,7 +8,10 @@
 <!--        <plugin type="generator.MysqlPaginationPlugin" />-->
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
-
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
         <!--连接数据库-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://101.34.48.210:3306/zrgj3"
                         userId="zrgj3"
