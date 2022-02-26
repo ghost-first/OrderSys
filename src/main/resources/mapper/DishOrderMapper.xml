@@ -89,7 +89,7 @@
     order_id, dish_id, dish_state, count
   </sql>
   <select id="selectByTest" resultType="java.util.Map" parameterType="Map" >
-    SELECT distinct dish_name,table_id,dish_state,count
+    SELECT distinct dishorder.dish_id,dishorder.order_id,dish_name,table_id,dish_state,count
     FROM dishes
     INNER JOIN dishorder
     ON dishes.dish_id = dishorder.dish_id

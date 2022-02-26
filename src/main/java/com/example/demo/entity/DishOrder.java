@@ -2,7 +2,6 @@ package com.example.demo.entity;
 
 import java.io.Serializable;
 
-
 public class DishOrder extends DishOrderKey implements Serializable {
     private Integer dishState;
 

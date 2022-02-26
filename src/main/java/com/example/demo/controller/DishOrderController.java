@@ -4,6 +4,7 @@ import com.example.demo.entity.DishOrder;
 import com.example.demo.service.DishOrderService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/dishOrder")
+@CrossOrigin
 public class DishOrderController {
     @Autowired
     private DishOrderService dishOrderService;

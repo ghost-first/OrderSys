@@ -6,7 +6,6 @@ import com.example.demo.entity.DishOrderKey;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface DishOrderMapper {
@@ -22,8 +21,6 @@ public interface DishOrderMapper {
 
     List<DishOrder> selectByExample(DishOrderExample example);
 
-    List<Map<String,Object>> selectByTest(Map<String,Object> map);
-
     DishOrder selectByPrimaryKey(DishOrderKey key);
 
     int updateByExampleSelective(@Param("record") DishOrder record, @Param("example") DishOrderExample example);
@@ -36,5 +33,7 @@ public interface DishOrderMapper {
 
     int deleteOrder(int orderId);
 
-    List<DishOrder> queryDishes(int orderId);
+    List<DishOrder> queryDishes(Integer orderId);
+
+    List<Map<String, Object>> selectByTest(Map<String, Object> map);
 }

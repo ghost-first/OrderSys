@@ -1,19 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.DishOrder;
-import com.example.demo.entity.Dishes;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.TestDish;
-import com.example.demo.service.OrderService;
 import com.example.demo.service.serviceImpl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@CrossOrigin
 public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
@@ -77,7 +75,7 @@ public class OrderController {
         OrderInfo orderInfo = orderServiceImpl.addOrder(testDish.getNewOrder());
         System.out.println("获取到订单号"+orderInfo.getOrderId());
 
-        List<DishOrder> dishes = testDish.getDishes();
+        List<DishOrder> dishes = testDish.getDishOrders();
         System.out.println("列表长度："+dishes.size());
         //菜品添加进订单，获得价格数
         OrderInfo orderPrice = orderServiceImpl.addDishes(dishes, orderInfo);

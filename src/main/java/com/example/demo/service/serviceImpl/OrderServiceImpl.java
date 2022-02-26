@@ -3,12 +3,8 @@ package com.example.demo.service.serviceImpl;
 import com.example.demo.dao.DishOrderMapper;
 import com.example.demo.dao.DishesMapper;
 import com.example.demo.dao.OrderInfoMapper;
-import com.example.demo.entity.DishOrder;
-import com.example.demo.entity.OrderInfo;
-import com.example.demo.entity.OrderInfoExample;
-import com.example.demo.entity.TestDish;
+import com.example.demo.entity.*;
 import com.example.demo.service.OrderService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -108,9 +104,16 @@ public class OrderServiceImpl implements OrderService {
 
             List<DishOrder> dishOrders = dishOrderMapper.queryDishes(orderInfo.getOrderId());
 
+            List<Dishes> dishes = new ArrayList<>();
+            for (DishOrder dishOrder : dishOrders) {
+                Dishes dish = dishesMapper.selectByPrimaryKey(dishOrder.getDishId());
+                dishes.add(dish);
+            }
+
             TestDish testDish = new TestDish();
             testDish.setNewOrder(orderInfo);
-            testDish.setDishes(dishOrders);
+            testDish.setDishes(dishes);
+            testDish.setDishOrders(dishOrders);
             list.add(testDish);
         }
         return list;

@@ -3,13 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import java.util.List;
-
-import com.example.demo.entity.TestDish;
-
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-@Mapper
 public interface OrderInfoMapper {
     int countByExample(OrderInfoExample example);
 
