@@ -6,17 +6,13 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
-    int insert(User record);
+    int countByExample(UserExample example);
 
-    User selectById(String userId);
-
-    List<User> selectAll(User user);
-
-    int updateInfo(User record);
-
-    int deleteById(String userId);
+    int deleteByExample(UserExample example);
 
     int deleteByPrimaryKey(String userId);
+
+    int insert(User record);
 
     int insertSelective(User record);
 
@@ -31,4 +27,12 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectById(String userId);
+
+    List<User> selectAll(User user);
+
+    int updateInfo(User user);
+
+    int deleteById(String userId);
 }

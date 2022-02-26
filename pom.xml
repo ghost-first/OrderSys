@@ -89,7 +89,9 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
+<!--            打包的时候改成compile-->
+<!--            <scope>provided</scope>-->
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
