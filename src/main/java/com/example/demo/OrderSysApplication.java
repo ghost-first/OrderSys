@@ -12,11 +12,11 @@ import org.springframework.web.WebApplicationInitializer;
 @MapperScan("com.example.demo")
 public class OrderSysApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        // 注意这里要指向原先用main方法执行的Application启动类
-        return builder.sources(OrderSysApplication.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        // 注意这里要指向原先用main方法执行的Application启动类
+//        return builder.sources(OrderSysApplication.class);
+//    }
     public static void main(String[] args) {
         SpringApplication.run(OrderSysApplication.class, args);
     }

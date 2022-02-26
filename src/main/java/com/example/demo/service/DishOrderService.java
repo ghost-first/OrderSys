@@ -12,6 +12,7 @@ import java.util.Map;
 
 @Service
 public class DishOrderService {
+
     @Autowired
     private DishOrderMapper dishOrderMapper;
 
@@ -40,6 +41,11 @@ public class DishOrderService {
         }else{
             return null;
         }
+    }
+
+    //发布传菜信息
+    public List<Map<String,Object>> sendDishInfo(){
+        return dishOrderMapper.sendDishInfo();
     }
 
 }

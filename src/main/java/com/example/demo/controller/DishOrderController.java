@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -41,4 +42,11 @@ public class DishOrderController {
     public DishOrder updateDishOrder(DishOrder dishOrder){
         return dishOrderService.updateDishOrder(dishOrder);
     }
+
+    //发布传菜信息
+    @RequestMapping("/sendDishInfo")
+    public List<Map<String,Object>> sendDishInfo(){
+        return dishOrderService.sendDishInfo();
+    }
+
 }

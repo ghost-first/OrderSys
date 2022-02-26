@@ -88,6 +88,15 @@
     -->
     order_id, dish_id, dish_state, count
   </sql>
+<!--  发布传菜信息的select
+by 李满园2.26-->
+  <select id="sendDishInfo" resultType="java.util.Map">
+    SELECT dish_name,count,table_id
+    FROM dishes INNER JOIN dishorder on dishes.dish_id=dishorder.dish_id
+    INNER JOIN orderinfo ON dishorder.order_id=orderinfo.order_id
+    WHERE dishorder.dish_state=3
+  </select>
+
   <select id="selectByTest" resultType="java.util.Map" parameterType="Map" >
     SELECT distinct dishorder.dish_id,dishorder.order_id,dish_name,table_id,dish_state,count
     FROM dishes
