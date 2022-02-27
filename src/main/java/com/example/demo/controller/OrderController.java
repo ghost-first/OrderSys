@@ -87,6 +87,7 @@ public class OrderController {
         return orderPrice;
     }
 
+    //买单
     @ResponseBody
     @RequestMapping("/checkout")
     public boolean checkout(int orderid){
