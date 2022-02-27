@@ -87,7 +87,7 @@
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null" >
-      order by ${orderByClause}
+      order by ${orderByClause} desc
     </if>
   </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.NoticeExample" >
