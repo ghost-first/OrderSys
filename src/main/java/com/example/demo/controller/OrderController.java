@@ -103,6 +103,8 @@ public class OrderController {
     @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
     @ResponseBody
     public List<TestDish> queryOrder(OrderInfo orderInfo){
+        System.out.println("开始queryOrder");
+        System.out.println(orderInfo);
         List<TestDish> testDishes = orderServiceImpl.queryOrder(orderInfo);
         return testDishes;
     }

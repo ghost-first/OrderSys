@@ -78,7 +78,7 @@
     select
     <include refid="Base_Column_List" />
     from orderinfo
-    <if test="tableId != null and orderState != null">
+    <if test="tableId != null or orderState != null">
       where
     </if>
     <if test="orderState != null">

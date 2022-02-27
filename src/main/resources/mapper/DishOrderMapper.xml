@@ -94,7 +94,7 @@ by 李满园2.26-->
     SELECT dish_name,count,table_id
     FROM dishes INNER JOIN dishorder on dishes.dish_id=dishorder.dish_id
     INNER JOIN orderinfo ON dishorder.order_id=orderinfo.order_id
-    WHERE dishorder.dish_state=3
+    WHERE dishorder.dish_state=2
   </select>
 
   <select id="selectByTest" resultType="java.util.Map" parameterType="Map" >

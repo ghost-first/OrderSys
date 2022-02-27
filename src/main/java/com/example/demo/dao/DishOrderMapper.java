@@ -6,7 +6,6 @@ import com.example.demo.entity.DishOrderKey;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 public interface DishOrderMapper {
@@ -32,11 +31,11 @@ public interface DishOrderMapper {
 
     int updateByPrimaryKey(DishOrder record);
 
+    List<Map<String, Object>> selectByTest(Map<String, Object> map);
+
     int deleteOrder(int orderId);
 
     List<DishOrder> queryDishes(Integer orderId);
 
-    List<Map<String, Object>> selectByTest(Map<String, Object> map);
-    //发布传菜信息
-    List<Map<String,Object>> sendDishInfo();
+    List<Map<String, Object>> sendDishInfo();
 }
