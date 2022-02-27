@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DishesService {
@@ -27,10 +28,11 @@ public class DishesService {
         return dishesMapper.selectByExample(null);
     }
 
-    public List<Dishes> findSomeDishes(String dishName){
+    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
-        criteria.andDishNameEqualTo(dishName);
+        criteria.andDishNameLike("%"+dishName+"%");
+        criteria.andPriceBetween(minPrice,maxPrice);
         return dishesMapper.selectByExample(de);
     }
 

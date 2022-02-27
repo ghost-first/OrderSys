@@ -71,6 +71,7 @@
   <sql id="Base_Column_List" >
     dish_id, dish_name, price, intro, detail, type, dish_pic
   </sql>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.DishesExample" >
     select
     <if test="distinct" >
