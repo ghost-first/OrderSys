@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Dishes;
 import com.example.demo.service.DishesService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,10 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 @RequestMapping("/dishes")
@@ -49,8 +47,10 @@ public class DishesController {
     }
     @ResponseBody
     @RequestMapping("/querySome")
-    public List<Dishes> querySomeDishes(String dishName){
-        return dishesService.findSomeDishes(dishName);
+    public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
+                                        @Param("minPrice")Double minPrice,
+                                        @Param("maxPrice")Double maxPrice){
+        return dishesService.findSomeDishes(dishName,minPrice,maxPrice);
     }
 
     @ResponseBody
