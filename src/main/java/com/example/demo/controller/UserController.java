@@ -4,6 +4,9 @@ import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
 import com.example.demo.util.RandomValidateCode;
 import com.example.demo.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -41,7 +44,7 @@ public class UserController {
     public User updateUser(User user){
         return userService.updateInfo(user);
     }
-    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
         int result = userService.delete(userId);
         if(result>0){
@@ -100,22 +103,28 @@ public class UserController {
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
     public User login(User user){
-        System.out.println("开始login");
-        System.out.println(user);
-
         //根据ID获取用户
         User byName = userServiceImpl.findById(user.getUserId());
-        System.out.println("byName:");
-        System.out.println(byName);
-
         //密码验证
         if(!user.getPassword().equals(byName.getPassword())){
             System.out.println("密码不正确");
             return null;
         }
+        //用户认证信息
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
+                byName.getUserId(),
+                byName.getPassword()
+        );
+        subject.login(usernamePasswordToken);
         System.out.println("密码正确\nlogin结束");
-
         return byName;
+    }
+
+    @RequestMapping("/logout")
+    @ResponseBody
+    public void logout(HttpServletRequest request){
+        request.getSession().invalidate();
     }
 
 }

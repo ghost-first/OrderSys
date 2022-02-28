@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/Order")
 public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
@@ -70,8 +71,8 @@ public class OrderController {
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
     @ResponseBody
     public OrderInfo newOrder(@RequestBody TestDish testDish){
-        System.out.println("newOrder开始");
-        System.out.println(testDish);
+//        System.out.println("newOrder开始");
+//        System.out.println(testDish);
 
         //添加新订单，获取订单号
         OrderInfo orderInfo = orderServiceImpl.addOrder(testDish.getNewOrder());
@@ -95,7 +96,7 @@ public class OrderController {
     }
 
     //删除订单
-    @RequestMapping(value = "/deleteOrder",method = RequestMethod.GET)
+    @RequestMapping(value = "/remove",method = RequestMethod.GET)
     @ResponseBody
     public Integer deleteOrder(Integer orderId){
         int res = orderServiceImpl.deleteOrder(orderId);
@@ -103,7 +104,7 @@ public class OrderController {
     }
 
     //查询订单
-    @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
+    @RequestMapping(value = "/query",method = RequestMethod.GET)
     @ResponseBody
     public List<TestDish> queryOrder(OrderInfo orderInfo){
         List<TestDish> testDishes = orderServiceImpl.queryOrder(orderInfo);

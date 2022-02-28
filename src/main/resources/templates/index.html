@@ -6,6 +6,14 @@
 </head>
 <body>
     springboot
-    <a href="/addDish">点击添加菜品</a>
+    <a href="/dishes/add">点击添加菜品</a>
+    <form method="post" action="/user/login">
+        选择一个文件:
+        <input type="text" name="userId" />
+        <input type="text" name="password" />
+        <input type="number" name="roleId" />
+        <br/><br/>
+        <input type="submit" value="提交" />
+    </form>
 </body>
 </html>

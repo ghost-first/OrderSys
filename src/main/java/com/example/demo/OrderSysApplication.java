@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.WebApplicationInitializer;
 
 @SpringBootApplication
+@ComponentScan("com.example")
 @MapperScan("com.example.demo")
 public class OrderSysApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
