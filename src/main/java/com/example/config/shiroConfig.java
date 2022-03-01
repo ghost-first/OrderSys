@@ -14,8 +14,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.servlet.Filter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
+
 
 @Configuration
 public class shiroConfig {
@@ -75,6 +78,12 @@ public class shiroConfig {
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
+        //引入自定义的Filter
+        LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
+        // 配置自定义 or角色 认证
+        filtersMap.put("roles", new RoleFilter());
+        shiroFilterFactoryBean.setFilters(filtersMap);
+
         Map<String, String> map = new HashMap<>();
         //登出
         map.put("/logout", "logout");
@@ -86,17 +95,17 @@ public class shiroConfig {
         map.put("/user/queryAll","roles[ADMIN]");
         map.put("/dishes/edit","roles[ADMIN]");
         map.put("/queryOrder","roles[ADMIN]");
-        map.put("/Order/query","roles[ADMIN]");
+        map.put("/order/query","roles[ADMIN]");
 
         //后厨
         map.put("/dishOrder/querySome","roles[COOK]");
         map.put("/dishOrder/update","roles[COOK,WAITER]");
 
         //服务员
-        map.put("/dishes/all","roles[WAITER],roles[ADMIN]");
+        map.put("/dishes/all","roles[WAITER,ADMIN]");
         map.put("/dishes/query","roles[WAITER]");
-        map.put("/dishes/querySome","roles[WAITER],roles[ADMIN]");
-        map.put("/Order/newOrder","roles[WAITER]");
+        map.put("/dishes/querySome","roles[WAITER,ADMIN]");
+        map.put("/order/newOrder","roles[WAITER]");
         map.put("/checkout","roles[WAITER]");
         map.put("/dishOrder/sendDishInfo","roles[WAITER]");
 
