@@ -5,11 +5,14 @@ spring:
     username: zrgj3
     password: zrgj3
     driver-class-name: com.mysql.cj.jdbc.Driver
-
-
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 100MB
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.test.bean
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

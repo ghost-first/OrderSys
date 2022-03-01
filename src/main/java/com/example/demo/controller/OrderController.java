@@ -5,12 +5,12 @@ import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.TestDish;
 import com.example.demo.service.serviceImpl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
-@Controller
+@RestController
 @CrossOrigin
 public class OrderController {
     @Autowired
@@ -78,7 +78,7 @@ public class OrderController {
         List<DishOrder> dishes = testDish.getDishOrders();
         System.out.println("列表长度："+dishes.size());
         //菜品添加进订单，获得价格数
-        OrderInfo orderPrice = orderServiceImpl.addDishes(dishes, orderInfo);
+        OrderInfo orderPrice = orderServiceImpl.addDishesIntoOrder(dishes, orderInfo);
 
         System.out.println(orderPrice);
         System.out.println("结束getOrder");
@@ -86,7 +86,6 @@ public class OrderController {
     }
 
     //买单
-    @ResponseBody
     @RequestMapping("/checkout")
     public boolean checkout(int orderid){
         return orderServiceImpl.checkout(orderid);
@@ -94,7 +93,6 @@ public class OrderController {
 
     //删除订单
     @RequestMapping(value = "/deleteOrder",method = RequestMethod.GET)
-    @ResponseBody
     public Integer deleteOrder(Integer orderId){
         int res = orderServiceImpl.deleteOrder(orderId);
         return res;
@@ -102,7 +100,6 @@ public class OrderController {
 
     //查询订单
     @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
-    @ResponseBody
     public List<TestDish> queryOrder(OrderInfo orderInfo){
         System.out.println("开始queryOrder");
         System.out.println(orderInfo);
@@ -110,5 +107,24 @@ public class OrderController {
         return testDishes;
     }
 
+    //查询订单
+    @RequestMapping(value = "/queryDetailOrder",method = RequestMethod.GET)
+    public List<Map<String, Object>> queryDetailOrder(OrderInfo orderInfo){
+        System.out.println("开始queryOrder");
+        System.out.println(orderInfo);
+        return orderServiceImpl.queryDetailOrder(orderInfo);
+    }
 
+
+    //加菜
+    @RequestMapping("/addDishes")
+    public OrderInfo addDishes(@RequestBody TestDish testDish){
+        return orderServiceImpl.addDishes(testDish);
+    }
+
+    //TODO 撤销菜品
+    @RequestMapping(value = "/deleteDishOrder",method = RequestMethod.POST)
+    public String deleteDishOrder(DishOrder dishOrder){
+        return orderServiceImpl.deleteDishOrder(dishOrder);
+    }
 }

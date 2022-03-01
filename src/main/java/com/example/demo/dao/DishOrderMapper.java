@@ -19,7 +19,7 @@ public interface DishOrderMapper {
 
     int insertSelective(DishOrder record);
 
-    List<DishOrder> selectByExample(DishOrderExample example);
+    DishOrder selectByExample(DishOrderExample example);
 
     DishOrder selectByPrimaryKey(DishOrderKey key);
 
