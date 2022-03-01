@@ -1,17 +1,21 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.DishOrder;
+import com.example.demo.entity.Dishes;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.TestDish;
+import com.example.demo.service.OrderService;
 import com.example.demo.service.serviceImpl.OrderServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @CrossOrigin
+@RequestMapping("/Order")
 public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
@@ -116,15 +120,4 @@ public class OrderController {
     }
 
 
-    //加菜
-    @RequestMapping("/addDishes")
-    public OrderInfo addDishes(@RequestBody TestDish testDish){
-        return orderServiceImpl.addDishes(testDish);
-    }
-
-    //TODO 撤销菜品
-    @RequestMapping(value = "/deleteDishOrder",method = RequestMethod.POST)
-    public String deleteDishOrder(DishOrder dishOrder){
-        return orderServiceImpl.deleteDishOrder(dishOrder);
-    }
 }

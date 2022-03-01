@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class User implements Serializable {
     private String userId;
@@ -54,6 +55,18 @@ public class User implements Serializable {
     public void setIsLock(Integer isLock) {
         this.isLock = isLock;
     }
+
+    //获取用户的角色名称
+    public String getRole(int roleId){
+        if(roleId==1)
+            return "ADMIN";
+        if(roleId==2)
+            return "COOK";
+        if(roleId==3)
+            return "WAITER";
+        return null;
+    }
+
 
     @Override
     public String toString() {

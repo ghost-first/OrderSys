@@ -4,6 +4,11 @@ import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
 import com.example.demo.util.RandomValidateCode;
 import com.example.demo.service.UserService;
+import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,9 +16,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
@@ -49,7 +57,7 @@ public class UserController {
     public User updateUser(User user){
         return userService.updateInfo(user);
     }
-    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
         int result = userService.delete(userId);
         if(result>0){
@@ -105,21 +113,54 @@ public class UserController {
     /*
      * 登录
      * */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login")
     @ResponseBody
-    public User login(User user){
-        System.out.println("开始login，现在是热部署哦");
-        System.out.println(user);
+//    public User login(User user){
+//        //根据ID获取用户
+//        User byName = userServiceImpl.findById(user.getUserId());
+//        //密码验证
+//        if(!user.getPassword().equals(byName.getPassword())){
+//            return null;
+//        }
+//
+//        return byName;
+//    }
+    public User login(@Param("userId") String userId, @Param("password") String password,RedirectAttributes redirectAttributes) {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated()){
+            UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
+            try {
+                subject.login(token);
+            } catch(UnknownAccountException e) {
+                redirectAttributes.addAttribute("message","账户不存在");
+            }catch (ExcessiveAttemptsException e){
+                redirectAttributes.addAttribute("message","验证未通过，错误次数大于5次，账户已锁定！");
+                User user = new User();
+                user.setUserId(userId);
+                user.setIsLock(1);
+                userService.updateInfo(user);
+            }catch (IncorrectCredentialsException e){
+                redirectAttributes.addAttribute("message","验证未通过，账户密码错误！");
+            }catch (DisabledAccountException e){
+                redirectAttributes.addAttribute("message","验证未通过，账户已经禁止登录！");
+            }
+        }
 
-        //根据ID获取用户
-        User byName = userServiceImpl.findById(user.getUserId());
-        System.out.println("byName:");
-        System.out.println(byName);
-
-        //密码验证
-        if(!user.getPassword().equals(byName.getPassword())){
-            System.out.println("密码不正确");
-            return null;
+        if (subject.isAuthenticated()){
+            Session session = subject.getSession();
+            User user = userService.selectById(userId);
+            session.setAttribute("user",user);
+            return user;
+//            subject.logout();
+        }
+        return null;
+    }
+    @RequestMapping("/logout")
+    public void logout(){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+            System.out.println("准备取消已登录账户");
+            subject.logout();
         }
         System.out.println("密码正确\nlogin结束");
 

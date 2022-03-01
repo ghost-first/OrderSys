@@ -22,15 +22,6 @@ public class DishesController {
     @Autowired
     private DishesService dishesService;
 
-//    public DishesService getDishesService() {
-//        return dishesService;
-//    }
-//
-//    @Autowired
-//    public void setDishesService(DishesService dishesService) {
-//        this.dishesService = dishesService;
-//    }
-
     @RequestMapping("/all")
     @ResponseBody
     public List<Dishes> showDishes() {
