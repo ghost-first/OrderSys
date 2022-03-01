@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/Order")
+@RequestMapping("/order")
 public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;
