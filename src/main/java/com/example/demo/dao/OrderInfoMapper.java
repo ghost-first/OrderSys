@@ -3,6 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderInfoMapper {
@@ -19,6 +21,8 @@ public interface OrderInfoMapper {
     List<OrderInfo> selectByExample(OrderInfoExample example);
 
     OrderInfo selectByPrimaryKey(Integer orderId);
+
+    List<Map<String,Object>> selectBySales(String start,String end);
 
     int updateByExampleSelective(@Param("record") OrderInfo record, @Param("example") OrderInfoExample example);
 

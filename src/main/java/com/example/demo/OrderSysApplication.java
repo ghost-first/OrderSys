@@ -8,6 +8,8 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.WebApplicationInitializer;
 
+import java.util.LinkedList;
+
 @SpringBootApplication
 @MapperScan("com.example.demo")
 public class OrderSysApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
