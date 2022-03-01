@@ -5,7 +5,11 @@
     <title>Title</title>
 </head>
 <body>
-    springboot
-    <a href="/addDish">点击添加菜品</a>
+    <form th:action="@{/user/login}">
+        id<input name="userId" type="text"><br>
+        password<input name="password" type="password"><br>
+        rememberMe<input name="rememberMe" type="checkbox"><br>
+        <input type="submit" value="提交">
+    </form>
 </body>
 </html>

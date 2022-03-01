@@ -112,8 +112,7 @@ public class OrderServiceImpl implements OrderService {
 
             TestDish testDish = new TestDish();
             testDish.setNewOrder(orderInfo);
-            testDish.setDishes(dishes);
-            testDish.setDishOrders(dishOrders);
+            testDish.setDishes(dishOrders);
             list.add(testDish);
         }
         return list;
