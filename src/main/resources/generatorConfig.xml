@@ -34,9 +34,9 @@
         </javaClientGenerator>
         <!--需要逆向分析的表-->
         <table tableName="dishes" domainObjectName="Dishes"></table>
-        <table tableName="dishorder" domainObjectName="DishOrder"></table>
-        <table tableName="notice" domainObjectName="Notice"></table>
-        <table tableName="orderinfo" domainObjectName="OrderInfo"></table>
-        <table tableName="user" domainObjectName="User"></table>
+<!--        <table tableName="dishorder" domainObjectName="DishOrder"></table>-->
+<!--        <table tableName="notice" domainObjectName="Notice"></table>-->
+<!--        <table tableName="orderinfo" domainObjectName="OrderInfo"></table>-->
+<!--        <table tableName="user" domainObjectName="User"></table>-->
     </context>
 </generatorConfiguration>

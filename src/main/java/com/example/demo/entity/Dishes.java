@@ -17,6 +17,8 @@ public class Dishes implements Serializable {
 
     private String dishPic;
 
+    private Integer isrec;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getDishId() {
@@ -75,6 +77,14 @@ public class Dishes implements Serializable {
         this.dishPic = dishPic == null ? null : dishPic.trim();
     }
 
+    public Integer getIsrec() {
+        return isrec;
+    }
+
+    public void setIsrec(Integer isrec) {
+        this.isrec = isrec;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -88,6 +98,7 @@ public class Dishes implements Serializable {
         sb.append(", detail=").append(detail);
         sb.append(", type=").append(type);
         sb.append(", dishPic=").append(dishPic);
+        sb.append(", isrec=").append(isrec);
         sb.append("]");
         return sb.toString();
     }

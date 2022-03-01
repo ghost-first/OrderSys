@@ -80,8 +80,8 @@ public class shiroConfig {
         map.put("/logout", "logout");
 
         //管理员
-        map.put("/add","roles[ADMIN]");
-        map.put("/remove","roles[ADMIN]");
+        map.put("/**/add","roles[ADMIN]");
+        map.put("/**/remove","roles[ADMIN]");
         map.put("/notice/edit","roles[ADMIN]");
         map.put("/user/queryAll","roles[ADMIN]");
         map.put("/dishes/edit","roles[ADMIN]");
@@ -95,6 +95,7 @@ public class shiroConfig {
         //服务员
         map.put("/dishes/all","roles[WAITER]");
         map.put("/dishes/query","roles[WAITER]");
+        map.put("/dishes/querySome","roles[WAITER]");
         map.put("/Order/newOrder","roles[WAITER]");
         map.put("/checkout","roles[WAITER]");
         map.put("/dishOrder/sendDishInfo","roles[WAITER]");

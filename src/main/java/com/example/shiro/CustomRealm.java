@@ -33,7 +33,7 @@ public class CustomRealm extends AuthorizingRealm {
     //执行认证操作
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-        System.out.println("执行了认证");
+//        System.out.println("执行了认证");
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         String userId1 = token1.getUsername();
         User user = userService.selectById(userId1);
