@@ -5,6 +5,7 @@ import com.example.demo.service.serviceImpl.UserServiceImpl;
 import com.example.demo.util.RandomValidateCode;
 import com.example.demo.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,21 +105,24 @@ public class UserController {
     @ResponseBody
     public User login(User user){
         //根据ID获取用户
-        User byName = userServiceImpl.findById(user.getUserId());
+//        User byName = userServiceImpl.findById(user.getUserId());
         //密码验证
-        if(!user.getPassword().equals(byName.getPassword())){
-            System.out.println("密码不正确");
-            return null;
-        }
+//        if(!user.getPassword().equals(byName.getPassword())){
+//            System.out.println("密码不正确");
+//            return null;
+//        }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                byName.getUserId(),
-                byName.getPassword()
+                user.getUserId(),
+                user.getPassword()
         );
-        subject.login(usernamePasswordToken);
-        System.out.println("密码正确\nlogin结束");
-        return byName;
+        try {
+            subject.login(usernamePasswordToken);
+        } catch (Exception e) {
+            return null;
+        }
+        return userServiceImpl.findById(user.getUserId());
     }
 
     @RequestMapping("/logout")
