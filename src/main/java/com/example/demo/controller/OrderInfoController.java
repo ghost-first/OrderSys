@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/orderInfo")
@@ -17,5 +19,9 @@ public class OrderInfoController {
     @RequestMapping("/querySome")
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
         return orderInfoService.findSomeOrderInfo(tableId);
+    }
+
+    public List<Map<String, Object>> get7DaysData(){
+        return orderInfoService.get7DaysData();
     }
 }

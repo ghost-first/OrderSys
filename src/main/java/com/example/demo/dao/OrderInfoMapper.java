@@ -3,6 +3,8 @@ package com.example.demo.dao;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderInfoMapper {
@@ -29,4 +31,7 @@ public interface OrderInfoMapper {
     int updateByPrimaryKey(OrderInfo record);
 
     List<OrderInfo> queryOrder(OrderInfo orderInfo);
+
+    //查看历史数据
+    List<Map<String,Object>> get7DaysData();
 }

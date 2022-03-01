@@ -93,9 +93,9 @@ public class shiroConfig {
         map.put("/dishOrder/update","roles[COOK,WAITER]");
 
         //服务员
-        map.put("/dishes/all","roles[WAITER]");
+        map.put("/dishes/all","roles[WAITER],roles[ADMIN]");
         map.put("/dishes/query","roles[WAITER]");
-        map.put("/dishes/querySome","roles[WAITER]");
+        map.put("/dishes/querySome","roles[WAITER],roles[ADMIN]");
         map.put("/Order/newOrder","roles[WAITER]");
         map.put("/checkout","roles[WAITER]");
         map.put("/dishOrder/sendDishInfo","roles[WAITER]");

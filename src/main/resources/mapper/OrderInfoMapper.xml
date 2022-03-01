@@ -74,6 +74,14 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >order_id, order_time, table_id, order_state, waiter, total_price, remarks</sql>
+<!--  筛选历史数据
+3.1 by manyuan-->
+  <select id="get7DaysData" resultMap="BaseResultMap">
+    SELECT order_time,SUM(total_price)
+    FROM orderinfo
+    WHERE (TO_DAYS(order_time)-TO_DAYS(NOW()))&lt;7
+    GROUP BY TO_DAYS(order_time);
+  </select>
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
