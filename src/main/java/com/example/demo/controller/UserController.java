@@ -4,9 +4,10 @@ import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
 import com.example.demo.util.RandomValidateCode;
 import com.example.demo.service.UserService;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -101,34 +103,55 @@ public class UserController {
     /*
      * 登录
      * */
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login")
     @ResponseBody
-    public User login(User user){
-        //根据ID获取用户
+//    public User login(User user){
+//        //根据ID获取用户
 //        User byName = userServiceImpl.findById(user.getUserId());
-        //密码验证
+//        //密码验证
 //        if(!user.getPassword().equals(byName.getPassword())){
-//            System.out.println("密码不正确");
 //            return null;
 //        }
-        //用户认证信息
+//
+//        return byName;
+//    }
+    public User login(@Param("userId") String userId, @Param("password") String password,RedirectAttributes redirectAttributes) {
         Subject subject = SecurityUtils.getSubject();
-        UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(
-                user.getUserId(),
-                user.getPassword()
-        );
-        try {
-            subject.login(usernamePasswordToken);
-        } catch (Exception e) {
-            return null;
+        if (!subject.isAuthenticated()){
+            UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
+            try {
+                subject.login(token);
+            } catch(UnknownAccountException e) {
+                redirectAttributes.addAttribute("message","账户不存在");
+            }catch (ExcessiveAttemptsException e){
+                redirectAttributes.addAttribute("message","验证未通过，错误次数大于5次，账户已锁定！");
+                User user = new User();
+                user.setUserId(userId);
+                user.setIsLock(1);
+                userService.updateInfo(user);
+            }catch (IncorrectCredentialsException e){
+                redirectAttributes.addAttribute("message","验证未通过，账户密码错误！");
+            }catch (DisabledAccountException e){
+                redirectAttributes.addAttribute("message","验证未通过，账户已经禁止登录！");
+            }
         }
-        return userServiceImpl.findById(user.getUserId());
-    }
 
+        if (subject.isAuthenticated()){
+            Session session = subject.getSession();
+            User user = userService.selectById(userId);
+            session.setAttribute("user",user);
+            return user;
+//            subject.logout();
+        }
+        return null;
+    }
     @RequestMapping("/logout")
-    @ResponseBody
-    public void logout(HttpServletRequest request){
-        request.getSession().invalidate();
+    public void logout(){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+            System.out.println("准备取消已登录账户");
+            subject.logout();
+        }
     }
 
 }
