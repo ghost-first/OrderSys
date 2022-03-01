@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -26,5 +27,10 @@ public class OrderInfoController {
     @RequestMapping("/get7DaysData")
     public List<Map<String, Object>> get7DaysData(){
         return orderInfoService.get7DaysData();
+    }
+
+    @RequestMapping("/querySales")
+    public List<Map<String,Object>> selectBySales() throws ParseException {
+        return orderInfoService.selectBySales();
     }
 }

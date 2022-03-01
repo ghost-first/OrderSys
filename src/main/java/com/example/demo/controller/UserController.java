@@ -163,8 +163,6 @@ public class UserController {
             subject.logout();
         }
         System.out.println("密码正确\nlogin结束");
-
-        return byName;
     }
 
     @RequestMapping("/uploadFile")

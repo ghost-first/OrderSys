@@ -22,6 +22,8 @@ public interface OrderInfoMapper {
 
     OrderInfo selectByPrimaryKey(Integer orderId);
 
+    List<Map<String,Object>> selectBySales(String start,String end);
+
     int updateByExampleSelective(@Param("record") OrderInfo record, @Param("example") OrderInfoExample example);
 
     int updateByExample(@Param("record") OrderInfo record, @Param("example") OrderInfoExample example);
