@@ -116,7 +116,7 @@ public class shiroConfig {
         map.put("/user/add","user");
         map.put("/notice/query","user");
         map.put("/notice/all","user");
-        map.put("/user/uploadFile","user");
+        map.put("/user/uploadFile","anon");
 
 //        map.put("/dishes/all","perms[add]");
 //        map.put("")

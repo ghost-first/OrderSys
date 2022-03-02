@@ -27,4 +27,9 @@ public class OrderInfoController {
     public List<Map<String, Object>> get7DaysData(){
         return orderInfoService.get7DaysData();
     }
+
+    @RequestMapping("/getSixMonthsData")
+    public List<Map<String, Object>> getSixMonthsData(){
+        return orderInfoService.getSixMonthsData();
+    }
 }

@@ -25,4 +25,8 @@ public class OrderInfoService {
     public List<Map<String,Object>> get7DaysData(){
         return orderInfoMapper.get7DaysData();
     }
+
+    public List<Map<String, Object>> getSixMonthsData() {
+        return orderInfoMapper.getSixMonthsData();
+    }
 }
