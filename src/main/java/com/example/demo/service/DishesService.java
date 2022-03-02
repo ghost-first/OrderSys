@@ -28,11 +28,12 @@ public class DishesService {
         return dishesMapper.selectByExample(null);
     }
 
-    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice){
+    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
         criteria.andDishNameLike("%"+dishName+"%");
         criteria.andPriceBetween(minPrice,maxPrice);
+        criteria.andIsrecEqualTo(isrec);
         return dishesMapper.selectByExample(de);
     }
 

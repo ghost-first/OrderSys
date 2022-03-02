@@ -38,8 +38,9 @@ public class DishesController {
     @RequestMapping("/querySome")
     public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
                                         @Param("minPrice")Double minPrice,
-                                        @Param("maxPrice")Double maxPrice){
-        return dishesService.findSomeDishes(dishName,minPrice,maxPrice);
+                                        @Param("maxPrice")Double maxPrice,
+                                        @Param("isrec") Integer isrec){
+        return dishesService.findSomeDishes(dishName,minPrice,maxPrice,isrec);
     }
 
     @ResponseBody
