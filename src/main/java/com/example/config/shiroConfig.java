@@ -121,11 +121,11 @@ public class shiroConfig {
 //        map.put("/dishes/all","perms[add]");
 //        map.put("")
         //登录
-        shiroFilterFactoryBean.setLoginUrl("/index.html");
+//        shiroFilterFactoryBean.setLoginUrl("/index.html");
         //首页
 //        shiroFilterFactoryBean.setSuccessUrl("/addDish.html");
         //错误页面，认证不通过跳转
-        shiroFilterFactoryBean.setUnauthorizedUrl("/success.html");
+//        shiroFilterFactoryBean.setUnauthorizedUrl("/success.html");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }

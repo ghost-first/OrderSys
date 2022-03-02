@@ -27,10 +27,10 @@ public class OrderController {
 
         //添加新订单，获取订单号
         OrderInfo orderInfo = orderServiceImpl.addOrder(testDish.getNewOrder());
-        System.out.println("获取到订单号"+orderInfo.getOrderId());
+//        System.out.println("获取到订单号"+orderInfo.getOrderId());
 
         List<DishOrder> dishes = testDish.getDishes();
-        System.out.println("列表长度："+dishes.size());
+//        System.out.println("列表长度："+dishes.size());
         //菜品添加进订单，获得价格数
         OrderInfo orderPrice = orderServiceImpl.addDishes(dishes, orderInfo);
 

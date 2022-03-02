@@ -55,7 +55,12 @@ public class OrderInfoController {
     public List<Map<String,Object>> getThisWeek(){
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_WEEK);
-        int len=past7DaysData.size();
+//        int len=past7DaysData.size();
         return past7DaysData.subList(0,day-1);
+    }
+
+    @RequestMapping("/getThisMonth")
+    public Map<String,Object> getThisMonth(){
+        return past6MonthsData.get(past6MonthsData.size()-1);
     }
 }
