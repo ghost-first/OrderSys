@@ -33,4 +33,7 @@ public interface OrderInfoMapper {
     List<OrderInfo> queryOrder(OrderInfo orderInfo);
 
     List<Map<String, Object>> queryOrderDetail(@Param("orderId") int orderId);
+
+    //查看历史数据
+    List<Map<String,Object>> get7DaysData();
 }

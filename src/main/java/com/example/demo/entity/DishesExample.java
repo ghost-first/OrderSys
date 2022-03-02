@@ -573,6 +573,66 @@ public class DishesExample {
             addCriterion("dish_pic not between", value1, value2, "dishPic");
             return (Criteria) this;
         }
+
+        public Criteria andIsrecIsNull() {
+            addCriterion("isrec is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecIsNotNull() {
+            addCriterion("isrec is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecEqualTo(Integer value) {
+            addCriterion("isrec =", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecNotEqualTo(Integer value) {
+            addCriterion("isrec <>", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecGreaterThan(Integer value) {
+            addCriterion("isrec >", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecGreaterThanOrEqualTo(Integer value) {
+            addCriterion("isrec >=", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecLessThan(Integer value) {
+            addCriterion("isrec <", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecLessThanOrEqualTo(Integer value) {
+            addCriterion("isrec <=", value, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecIn(List<Integer> values) {
+            addCriterion("isrec in", values, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecNotIn(List<Integer> values) {
+            addCriterion("isrec not in", values, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecBetween(Integer value1, Integer value2) {
+            addCriterion("isrec between", value1, value2, "isrec");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsrecNotBetween(Integer value1, Integer value2) {
+            addCriterion("isrec not between", value1, value2, "isrec");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
