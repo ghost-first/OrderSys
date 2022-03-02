@@ -4,6 +4,11 @@ import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
 import com.example.demo.util.RandomValidateCode;
 import com.example.demo.service.UserService;
+import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,11 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.ServletContext;
@@ -77,7 +80,7 @@ public class UserController {
 //
 //        return byName;
 //    }
-    public User login(@Param("userId") String userId, @Param("password") String password,RedirectAttributes redirectAttributes) {
+    public User login(@Param("userId") String userId, @Param("password") String password, RedirectAttributes redirectAttributes) {
         Subject subject = SecurityUtils.getSubject();
         if (!subject.isAuthenticated()){
             UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
@@ -121,12 +124,14 @@ public class UserController {
         System.out.println("开始上传");
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();
+        System.out.println("上传图片"+fileName);
         //处理文件重名问题
         String hzName = fileName.substring(fileName.lastIndexOf("."));
         fileName = UUID.randomUUID().toString() + hzName;
         //获取服务器中photo目录的路径
-        ServletContext servletContext = session.getServletContext();
-        String photoPath = servletContext.getRealPath("photo");
+//        ServletContext servletContext = session.getServletContext();
+////        String photoPath = servletContext.getRealPath("photo");
+        String photoPath = "/www/wwwroot/img";
         System.out.println(photoPath);
         File file = new File(photoPath);
         if(!file.exists()){
@@ -137,7 +142,7 @@ public class UserController {
         //实现上传功能
         photo.transferTo(new File(finalPath));
 
-        return finalPath;
+        return "img/"+fileName;
     }
 
 }
