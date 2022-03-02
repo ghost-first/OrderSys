@@ -76,11 +76,31 @@
   <sql id="Base_Column_List" >order_id, order_time, table_id, order_state, waiter, total_price, remarks</sql>
 <!--  筛选历史数据
 3.1 by manyuan-->
-  <select id="get7DaysData" resultMap="BaseResultMap">
-    SELECT order_time,SUM(total_price)
-    FROM orderinfo
-    WHERE (TO_DAYS(order_time)-TO_DAYS(NOW()))&lt;7
-    GROUP BY TO_DAYS(order_time);
+  <select id="get7DaysData" resultType="java.util.Map">
+    SELECT click_date,DATE_FORMAT(click_date,'%a'),totalprice FROM (
+    SELECT curdate() as click_date
+    union all
+    SELECT date_sub(curdate(), interval 1 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 2 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 3 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 4 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 5 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 6 day) as click_date
+    )a LEFT JOIN (
+    SELECT date(order_time) as datetime,SUM(total_price) as totalprice FROM orderinfo
+    WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(order_time)
+    GROUP BY datetime
+    )b ON a.click_date = b.datetime;
+  </select>
+  <select id="get6MonthsData" resultType="java.util.Map">
+    SELECT DATE_FORMAT(order_time,'%Y-%c'),SUM(total_price)
+    FROM orderinfo WHERE order_time BETWEEN date_sub(now(),interval 6 month) AND now()
+    GROUP BY DATE_FORMAT(order_time,'%Y-%c');
   </select>
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">
     select

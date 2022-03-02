@@ -1,16 +1,16 @@
 package com.example.config;
 
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.filter.authc.UserFilter;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
 
-public class  RoleFilter extends RolesAuthorizationFilter {
+public class  RoleFilter extends UserFilter {
     @Override
-    public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
-            throws IOException {
+    public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
 
         final Subject subject = getSubject(request, response);
         final String[] rolesArray = (String[]) mappedValue;
@@ -25,7 +25,8 @@ public class  RoleFilter extends RolesAuthorizationFilter {
                 return true;
             }
         }
-
         return false;
     }
+
+
 }
