@@ -40,4 +40,6 @@ public interface OrderInfoMapper {
     List<Map<String,Object>> get7DaysData();
 
     List<Map<String, Object>> getSixMonthsData();
+
+    List<Map<String,Object>> selectBySales(String start,String end);
 }

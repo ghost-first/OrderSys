@@ -89,7 +89,17 @@
     from orderinfo where order_time between date_sub(now(), interval 6 month) and now()
     group by date_format(order_time,"%Y-%M");
   </select>
-
+  <select id="selectBySales" resultType="Map">
+    SELECT dishorder.dish_id,dish_name, price,SUM(count) total
+    FROM dishes
+           INNER JOIN dishorder
+                      ON dishes.dish_id = dishorder.dish_id
+           INNER JOIN orderinfo
+                      ON dishorder.order_id = orderinfo.order_id
+    WHERE order_time BETWEEN #{start} AND #{end}
+    GROUP BY dishorder.dish_id
+    ORDER BY total DESC
+  </select>
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

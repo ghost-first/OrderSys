@@ -7,6 +7,7 @@ import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -86,13 +87,14 @@ public class OrderInfoController {
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);
     }
 
+    @RequestMapping("/querySales")
+    public List<Map<String,Object>> selectBySales() throws ParseException {
+        return orderInfoServiceImpl.selectBySales();
+    }
+
     @RequestMapping("/get7DaysData")
     public List<Map<String, Object>> get7DaysData(){
         return orderInfoServiceImpl.get7DaysData();
     }
 
-    @RequestMapping("/getSixMonthsData")
-    public List<Map<String, Object>> getSixMonthsData(){
-        return orderInfoServiceImpl.getSixMonthsData();
-    }
 }
