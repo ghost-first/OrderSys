@@ -31,6 +31,7 @@ public class OrderController {
         System.out.println("获取到订单号"+orderInfo.getOrderId());
 
         List<DishOrder> dishes = testDish.getDishOrders();
+
         System.out.println("列表长度："+dishes.size());
         //菜品添加进订单，获得价格数
         OrderInfo orderPrice = orderServiceImpl.addDishesIntoOrder(dishes, orderInfo);

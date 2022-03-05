@@ -122,7 +122,7 @@ public class UserController {
     }
 
     @RequestMapping("/uploadFile")
-    public String testUp(MultipartFile photo, HttpSession session) throws IOException {
+    public String uploadFile(MultipartFile photo, HttpSession session) throws IOException {
         System.out.println("开始上传");
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();
