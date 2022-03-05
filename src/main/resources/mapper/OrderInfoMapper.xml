@@ -117,7 +117,17 @@
         GROUP BY DATE_FORMAT(order_time,'%Y-%c')
         )b ON a.click_date=b.datetime;
   </select>
-
+  <select id="selectBySales" resultType="Map">
+    SELECT dishorder.dish_id,dish_name, price,SUM(count) total
+    FROM dishes
+           INNER JOIN dishorder
+                      ON dishes.dish_id = dishorder.dish_id
+           INNER JOIN orderinfo
+                      ON dishorder.order_id = orderinfo.order_id
+    WHERE order_time BETWEEN #{start} AND #{end}
+    GROUP BY dishorder.dish_id
+    ORDER BY total DESC
+  </select>
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

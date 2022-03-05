@@ -96,6 +96,11 @@ public class OrderInfoController {
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);
     }
 
+    @RequestMapping("/querySales")
+    public List<Map<String,Object>> selectBySales() throws ParseException {
+        return orderInfoServiceImpl.selectBySales();
+    }
+
     @RequestMapping("/get7DaysData")
     public List<Map<String, Object>> get7DaysData(){
         return past7DaysData;
