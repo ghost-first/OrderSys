@@ -162,14 +162,14 @@ public class shiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 
-    @Bean
-    public FilterRegistrationBean replaceTokenFilter(){
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setName("RoleFilter");//spring 协助注入，注意名称不要重复
-        registration.setFilter( new RoleFilter());
-        registration.setDispatcherTypes(DispatcherType.REQUEST); //拦截请求
-        registration.addUrlPatterns("/*");//拦截请求url
-        registration.setOrder(1);//排序第一，避免影响。
-        return registration;
-    }
+//    @Bean
+//    public FilterRegistrationBean replaceTokenFilter(){
+//        FilterRegistrationBean registration = new FilterRegistrationBean();
+//        registration.setName("RoleFilter");//spring 协助注入，注意名称不要重复
+//        registration.setFilter( new RoleFilter());
+//        registration.setDispatcherTypes(DispatcherType.REQUEST); //拦截请求
+//        registration.addUrlPatterns("/*");//拦截请求url
+//        registration.setOrder(1);//排序第一，避免影响。
+//        return registration;
+//    }
 }
