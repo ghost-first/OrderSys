@@ -1,37 +1,18 @@
 package com.example.demo.service;
-import com.example.demo.dao.NoticeMapper;
-import com.example.demo.entity.Dishes;
+
 import com.example.demo.entity.Notice;
 import com.example.demo.entity.NoticeExample;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class NoticeService {
-    @Autowired
-    private NoticeMapper noticeMapper;
+public interface NoticeService {
+    List<Notice> findAll();
 
-    public List<Notice> findAll(){
-        NoticeExample noticeExample = new NoticeExample();
-        noticeExample.setOrderByClause("notice_id");
-        return noticeMapper.selectByExampleWithBLOBs(noticeExample);
-    }
+    Notice findByDid(int notice_id);
 
-    public Notice findByDid(int notice_id){
-        return noticeMapper.selectByPrimaryKey(notice_id);
-    }
+    boolean addNotice(Notice notice);
 
-    public boolean addNotice(Notice notice) {
-        return noticeMapper.insertSelective(notice)>0;
-    }
+    boolean removeNotice(int notice_id);
 
-    public boolean removeNotice(int notice_id) {
-        return noticeMapper.deleteByPrimaryKey(notice_id)>0;
-    }
-
-    public boolean editNotice(Notice notice) {
-        return noticeMapper.updateByPrimaryKeySelective(notice)>0;
-    }
+    boolean editNotice(Notice notice);
 }

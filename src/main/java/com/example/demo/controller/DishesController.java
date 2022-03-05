@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Dishes;
-import com.example.demo.service.DishesService;
+import com.example.demo.service.serviceImpl.DishesServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,19 +20,19 @@ import java.util.*;
 public class DishesController {
 
     @Autowired
-    private DishesService dishesService;
+    private DishesServiceImpl dishesServiceImpl;
 
     @RequestMapping("/all")
     @ResponseBody
     public List<Dishes> showDishes() {
-        List<Dishes> list = dishesService.findAll();
+        List<Dishes> list = dishesServiceImpl.findAll();
         return list;
     }
 
     @ResponseBody
     @RequestMapping("/query")
     public Dishes queryDish(int dishId){
-        Dishes dish = dishesService.findByDid(dishId);
+        Dishes dish = dishesServiceImpl.findByDid(dishId);
         System.out.println(dish);
         return dish;
     }
@@ -42,13 +41,13 @@ public class DishesController {
     public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
                                         @Param("minPrice")Double minPrice,
                                         @Param("maxPrice")Double maxPrice){
-        return dishesService.findSomeDishes(dishName,minPrice,maxPrice);
+        return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice);
     }
 
     @ResponseBody
     @RequestMapping("/remove")
     public boolean removeDish(int dishid){
-        return dishesService.removeDishes(dishid);
+        return dishesServiceImpl.removeDishes(dishid);
     }
 
     @ResponseBody
@@ -56,7 +55,7 @@ public class DishesController {
     public boolean addDish(Dishes dish){
         System.out.println(dish);
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
-        return dishesService.addDishes(dish);
+        return dishesServiceImpl.addDishes(dish);
     }
 
     @ResponseBody
@@ -64,7 +63,7 @@ public class DishesController {
     public boolean editDish(Dishes dish){
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         System.out.println(dish);
-        return dishesService.editDishes(dish);
+        return dishesServiceImpl.editDishes(dish);
     }
 
     //图片上传
