@@ -29,13 +29,14 @@ public class DishesServiceImpl implements DishesService {
         return dishesMapper.selectByExample(null);
     }
 
-    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice){
+    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
         if(dishName!=null){
             criteria.andDishNameLike("%"+dishName+"%");
         }
         criteria.andPriceBetween(minPrice,maxPrice);
+        criteria.andIsrecEqualTo(isrec);
         return dishesMapper.selectByExample(de);
     }
 

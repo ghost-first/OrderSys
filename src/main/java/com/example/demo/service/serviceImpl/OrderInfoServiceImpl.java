@@ -4,14 +4,14 @@ import com.example.demo.dao.DishOrderMapper;
 import com.example.demo.dao.DishesMapper;
 import com.example.demo.dao.OrderInfoMapper;
 import com.example.demo.entity.*;
-import com.example.demo.service.OrderService;
+import com.example.demo.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class OrderInfoServiceImpl implements OrderInfoService {
+public class OrderInfoServiceImpl implements OrderInfoService{
     @Autowired
     private OrderInfoMapper orderInfoMapper;
     @Autowired
@@ -244,8 +244,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public List<Map<String,Object>> get7DaysData(){
         return orderInfoMapper.get7DaysData();
     }
-
-    public List<Map<String, Object>> getSixMonthsData() {
-        return orderInfoMapper.getSixMonthsData();
+    public List<Map<String, Object>> get6MonthsData(){
+        return orderInfoMapper.get6MonthsData();
     }
+
 }

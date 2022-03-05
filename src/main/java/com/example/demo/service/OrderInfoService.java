@@ -21,7 +21,5 @@ public interface OrderInfoService {
 
     //查看历史数据
     List<Map<String,Object>> get7DaysData();
-
-    List<Map<String, Object>> getSixMonthsData();
-
+    List<Map<String, Object>> get6MonthsData();
 }

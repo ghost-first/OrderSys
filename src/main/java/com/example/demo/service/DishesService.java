@@ -9,7 +9,7 @@ public interface DishesService {
 
     public List<Dishes> findAll();
 
-    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice);
+    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec);
 
     public Dishes findByDid(int did);
 

@@ -18,6 +18,15 @@ import java.util.Objects;
 public class OrderInfoController {
     @Autowired
     private OrderInfoServiceImpl orderInfoServiceImpl;
+    private List<Map<String, Object>> past7DaysData;
+    private List<Map<String, Object>> past6MonthsData;
+
+    //初始化的构造函数
+    public OrderInfoController(OrderInfoServiceImpl orderInfoService) {
+        this.orderInfoServiceImpl = orderInfoService;
+        this.past7DaysData = orderInfoServiceImpl.get7DaysData();
+        this.past6MonthsData = orderInfoServiceImpl.get6MonthsData();
+    }
 
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
     @ResponseBody
@@ -84,14 +93,7 @@ public class OrderInfoController {
     public String deleteDishOrder(DishOrder dishOrder){
         return orderInfoServiceImpl.deleteDishOrder(dishOrder);
     }
-    private List<Map<String, Object>> past7DaysData;
-    private List<Map<String, Object>> past6MonthsData;
 
-    public OrderInfoController(OrderInfoService orderInfoService) {
-        this.orderInfoService = orderInfoService;
-        this.past7DaysData = orderInfoService.get7DaysData();
-        this.past6MonthsData = orderInfoService.get6MonthsData();
-    }
 
     @RequestMapping("/querySome")
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
@@ -106,7 +108,6 @@ public class OrderInfoController {
     @RequestMapping("/get6MonthsData")
     public List<Map<String,Object>> get6MonthsData(){
         return past6MonthsData;
-        return orderInfoServiceImpl.get7DaysData();
     }
 
     @RequestMapping("/getToday")
@@ -123,13 +124,12 @@ public class OrderInfoController {
     public List<Map<String,Object>> getThisWeek(){
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_WEEK);
-//        int len=past7DaysData.size();
         return past7DaysData.subList(0,day-1);
     }
 
     @RequestMapping("/getThisMonth")
     public Map<String,Object> getThisMonth(){
-        return past6MonthsData.get(past6MonthsData.size()-1);
+        return past6MonthsData.get(0);
     }
 
 }

@@ -42,7 +42,7 @@ public class DishesController {
                                         @Param("minPrice")Double minPrice,
                                         @Param("maxPrice")Double maxPrice,
                                         @Param("isrec") Integer isrec){
-        return dishesService.findSomeDishes(dishName,minPrice,maxPrice,isrec);
+        return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice,isrec);
     }
 
     @ResponseBody
