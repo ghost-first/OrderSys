@@ -38,8 +38,8 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserServiceImpl getUserServiceImpl;
+//    @Autowired
+//    private UserServiceImpl getUserServiceImpl;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {

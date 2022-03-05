@@ -242,10 +242,20 @@ public class OrderInfoServiceImpl implements OrderInfoService{
 
     //查看历史数据
     public List<Map<String,Object>> get7DaysData(){
-        return orderInfoMapper.get7DaysData();
+        List<Map<String,Object>> result = orderInfoMapper.get7DaysData();
+        for(Map<String,Object> map:result){
+            if(map.get("totalprice")==null)
+                map.put("totalprice",0);
+        }
+        return result;
     }
     public List<Map<String, Object>> get6MonthsData(){
-        return orderInfoMapper.get6MonthsData();
+        List<Map<String,Object>> result = orderInfoMapper.get6MonthsData();
+        for(Map<String,Object> map:result){
+            if(map.get("totalprice")==null)
+                map.put("totalprice",0);
+        }
+        return result;
     }
 
 }

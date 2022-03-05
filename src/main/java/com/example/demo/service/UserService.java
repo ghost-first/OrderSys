@@ -14,17 +14,14 @@ import java.util.UUID;
 
 @Service
 public interface UserService {
+    User selectById(String userId);
 
+    List<User> selectAll(User user);
 
-    public User selectById(String userId);
+    User add(User user) throws Exception;
 
-    public List<User> selectAll(User user);
+    User updateInfo(User user);
 
-    public User add(User user) throws Exception;
+    int delete(String userId);
 
-    public User updateInfo(User user);
-
-    public int delete(String userId);
-
-    public String uploadPic(String itemName, MultipartHttpServletRequest request) throws Exception;
 }
