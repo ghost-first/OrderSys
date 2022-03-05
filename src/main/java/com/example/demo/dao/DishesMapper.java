@@ -3,8 +3,11 @@ package com.example.demo.dao;
 import com.example.demo.entity.Dishes;
 import com.example.demo.entity.DishesExample;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface DishesMapper {
     int countByExample(DishesExample example);
 

@@ -1,12 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.DishOrder;
-import com.example.demo.service.DishOrderService;
+import com.example.demo.service.serviceImpl.DishOrderServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -18,35 +17,25 @@ import java.util.Map;
 @CrossOrigin
 public class DishOrderController {
     @Autowired
-    private DishOrderService dishOrderService;
+    private DishOrderServiceImpl dishOrderServiceImpl;
 
-//    @RequestMapping("/querySome")
-//    public List<DishOrder> findSomeDishOrder(DishOrder dishOrder){
-//        return dishOrderService.findSomeDishOrder(dishOrder);
-//    }
     @RequestMapping("/querySome")
     public List<Map<String,Object>> findSomeDishOrder(@Param("dishName")String dishName,
                                                       @Param("dishState")Integer dishState,
                                                       @Param("tableId")Integer tableId,
                                                       @Param("count")Integer count){
-        Map<String,Object> map = new HashMap<>();
-        map.put("dishName",dishName);
-        map.put("dishState",dishState);
-        map.put("tableId",tableId);
-        map.put("count",count);
-        List<Map<String,Object>> rs = dishOrderService.findSomeDishOrder(map);
-        System.out.println(rs.size());
-        return dishOrderService.findSomeDishOrder(map);
+        List<Map<String,Object>> rs = dishOrderServiceImpl.findSomeDishOrder(dishName,dishState,tableId,count);
+        return rs;
     }
     @RequestMapping("/update")
     public DishOrder updateDishOrder(DishOrder dishOrder){
-        return dishOrderService.updateDishOrder(dishOrder);
+        return dishOrderServiceImpl.updateDishOrder(dishOrder);
     }
 
     //发布传菜信息
     @RequestMapping("/sendDishInfo")
     public List<Map<String,Object>> sendDishInfo(){
-        return dishOrderService.sendDishInfo();
+        return dishOrderServiceImpl.sendDishInfo();
     }
 
 }

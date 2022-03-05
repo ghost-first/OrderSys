@@ -4,14 +4,14 @@ import com.example.demo.dao.DishOrderMapper;
 import com.example.demo.dao.DishesMapper;
 import com.example.demo.dao.OrderInfoMapper;
 import com.example.demo.entity.*;
-import com.example.demo.service.OrderService;
+import com.example.demo.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderInfoServiceImpl implements OrderInfoService {
     @Autowired
     private OrderInfoMapper orderInfoMapper;
     @Autowired
@@ -220,8 +220,6 @@ public class OrderServiceImpl implements OrderService {
         return newOrder;
     }
 
-
-
     public String deleteDishOrder(DishOrder dishOrder) {
         DishOrderExample dishOrderExample = new DishOrderExample();
         DishOrderExample.Criteria criteria = dishOrderExample.createCriteria();
@@ -231,5 +229,21 @@ public class OrderServiceImpl implements OrderService {
         int i = dishOrderMapper.deleteByExample(dishOrderExample);
 
         return i==1?"success":"false";
+    }
+
+    public List<OrderInfo> findSomeOrderInfo(Integer tableId){
+        OrderInfoExample oie = new OrderInfoExample();
+        OrderInfoExample.Criteria criteria = oie.createCriteria();
+        criteria.andTableIdEqualTo(tableId);
+        return orderInfoMapper.selectByExample(oie);
+    }
+
+    //查看历史数据
+    public List<Map<String,Object>> get7DaysData(){
+        return orderInfoMapper.get7DaysData();
+    }
+
+    public List<Map<String, Object>> getSixMonthsData() {
+        return orderInfoMapper.getSixMonthsData();
     }
 }
