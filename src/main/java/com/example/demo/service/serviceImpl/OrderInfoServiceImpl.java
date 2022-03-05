@@ -5,14 +5,13 @@ import com.example.demo.dao.DishesMapper;
 import com.example.demo.dao.OrderInfoMapper;
 import com.example.demo.entity.*;
 import com.example.demo.service.OrderService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderInfoServiceImpl implements OrderInfoService {
     @Autowired
     private OrderInfoMapper orderInfoMapper;
     @Autowired
@@ -33,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setOrderTime(new Date());
         //0开始准备，1
         newOrder.setOrderState(0);
+        //设置加菜情况
+        newOrder.setAddOrder(0);
 
         orderInfoMapper.insert(newOrder);
         //获取订单号
@@ -92,6 +93,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<TestDish> queryOrder(OrderInfo orderInfo) {
+        //where add_order = 0,选出不加菜的列表
         List<OrderInfo> orderInfos = orderInfoMapper.queryOrder(orderInfo);
         return getDishes(orderInfos);
     }
@@ -229,5 +231,21 @@ public class OrderServiceImpl implements OrderService {
         int i = dishOrderMapper.deleteByExample(dishOrderExample);
 
         return i==1?"success":"false";
+    }
+
+    public List<OrderInfo> findSomeOrderInfo(Integer tableId){
+        OrderInfoExample oie = new OrderInfoExample();
+        OrderInfoExample.Criteria criteria = oie.createCriteria();
+        criteria.andTableIdEqualTo(tableId);
+        return orderInfoMapper.selectByExample(oie);
+    }
+
+    //查看历史数据
+    public List<Map<String,Object>> get7DaysData(){
+        return orderInfoMapper.get7DaysData();
+    }
+
+    public List<Map<String, Object>> getSixMonthsData() {
+        return orderInfoMapper.getSixMonthsData();
     }
 }

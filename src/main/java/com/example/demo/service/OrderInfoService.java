@@ -1,32 +1,27 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.OrderInfoMapper;
+import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.demo.entity.TestDish;
 
 import java.util.List;
 import java.util.Map;
 
-@Service
-public class OrderInfoService {
-    @Autowired
-    private OrderInfoMapper orderInfoMapper;
+public interface OrderInfoService {
+    OrderInfo addOrder(OrderInfo orderInfo);
 
-    public List<OrderInfo> findSomeOrderInfo(Integer tableId){
-        OrderInfoExample oie = new OrderInfoExample();
-        OrderInfoExample.Criteria criteria = oie.createCriteria();
-        criteria.andTableIdEqualTo(tableId);
-        return orderInfoMapper.selectByExample(oie);
-    }
+    OrderInfo addDishesIntoOrder(List<DishOrder> dishes, OrderInfo order);
+    boolean checkout(int orderid);
+
+    int deleteOrder(int orderId);
+
+    List<TestDish> queryOrder(OrderInfo orderInfo);
+    List<OrderInfo> findSomeOrderInfo(Integer tableId);
 
     //查看历史数据
-    public List<Map<String,Object>> get7DaysData(){
-        return orderInfoMapper.get7DaysData();
-    }
+    List<Map<String,Object>> get7DaysData();
 
-    public List<Map<String,Object>> get6MonthsData(){
-        return orderInfoMapper.get6MonthsData();
-    }
+    List<Map<String, Object>> getSixMonthsData();
+
 }

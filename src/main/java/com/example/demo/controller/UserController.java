@@ -39,27 +39,27 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
     @Autowired
-    private UserService userService;
+    private UserServiceImpl getUserServiceImpl;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {
-        return userService.add(user);
+        return userServiceImpl.add(user);
     }
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){
-        return userService.selectById(userId);
+        return userServiceImpl.selectById(userId);
     }
     @RequestMapping(value = "/queryAll",method = RequestMethod.GET)
     public List<User> queryAllUsers(User user){
-        return userService.selectAll(user);
+        return userServiceImpl.selectAll(user);
     }
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
     public User updateUser(User user){
-        return userService.updateInfo(user);
+        return userServiceImpl.updateInfo(user);
     }
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
-        int result = userService.delete(userId);
+        int result = userServiceImpl.delete(userId);
         if(result>0){
             return "删除成功";
         }else{
@@ -85,7 +85,7 @@ public class UserController {
                 User user = new User();
                 user.setUserId(userId);
                 user.setIsLock(1);
-                userService.updateInfo(user);
+                userServiceImpl.updateInfo(user);
             }catch (IncorrectCredentialsException e){
                 model.addAttribute("message","验证未通过，账户密码错误！");
             }catch (DisabledAccountException e){
@@ -95,7 +95,7 @@ public class UserController {
 
         if (subject.isAuthenticated()){
             Session session = subject.getSession();
-            User user = userService.selectById(userId);
+            User user = userServiceImpl.selectById(userId);
             session.setAttribute("user",user);
             return user;
 //            subject.logout();
@@ -112,7 +112,7 @@ public class UserController {
     }
 
     @RequestMapping("/uploadFile")
-    public String testUp(MultipartFile photo, HttpSession session) throws IOException {
+    public String uploadFile(MultipartFile photo, HttpSession session) throws IOException {
         System.out.println("开始上传");
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();

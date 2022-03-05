@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Dishes;
-import com.example.demo.service.DishesService;
+import com.example.demo.service.serviceImpl.DishesServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,19 +20,19 @@ import java.util.*;
 public class DishesController {
 
     @Autowired
-    private DishesService dishesService;
+    private DishesServiceImpl dishesServiceImpl;
 
     @RequestMapping("/all")
     @ResponseBody
     public List<Dishes> showDishes() {
-        List<Dishes> list = dishesService.findAll();
+        List<Dishes> list = dishesServiceImpl.findAll();
         return list;
     }
 
     @ResponseBody
     @RequestMapping("/query")
     public Dishes queryDish(int dishId){
-        Dishes dish = dishesService.findByDid(dishId);
+        Dishes dish = dishesServiceImpl.findByDid(dishId);
         System.out.println(dish);
         return dish;
     }
@@ -49,7 +48,7 @@ public class DishesController {
     @ResponseBody
     @RequestMapping("/remove")
     public boolean removeDish(int dishid){
-        return dishesService.removeDishes(dishid);
+        return dishesServiceImpl.removeDishes(dishid);
     }
 
     @ResponseBody
@@ -57,7 +56,7 @@ public class DishesController {
     public boolean addDish(Dishes dish){
         System.out.println(dish);
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
-        return dishesService.addDishes(dish);
+        return dishesServiceImpl.addDishes(dish);
     }
 
     @ResponseBody
@@ -65,29 +64,7 @@ public class DishesController {
     public boolean editDish(Dishes dish){
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         System.out.println(dish);
-        return dishesService.editDishes(dish);
-    }
-
-    //图片上传
-    public String uploadPic(String itemName, MultipartHttpServletRequest request)throws Exception {
-        String pathRoot = request.getSession().getServletContext().getRealPath(""); //获得服务器上绝对路径
-        String path = "";// 保存的图片名
-        List<String> paths = new ArrayList<String>();//存放多个图片名
-        for(MultipartFile mf : request.getFiles(itemName)) {
-            if(!mf.isEmpty()) {
-                String uuid = UUID.randomUUID().toString().replaceAll("-", "");//获得一个不会重复的文件名
-                String contentType = mf.getContentType();//获得图片的后缀名
-                String suffixName = contentType.substring(contentType.indexOf("/")+1);//截取图片后缀名，它是一个特殊的格式，比如XXXX/JPEG
-                if(suffixName.equals("octet-stream"))return null;//一种特殊情况，一般不做处理
-                path = "/files/"+uuid+"."+suffixName;//合成图片的路径。files是文件夹的名字
-                mf.transferTo(new File(pathRoot+path));//存到服务器上
-                paths.add(path);
-            }
-        }
-        if(paths.size()!=0)
-            return String.join(";", paths);
-        else
-            return null;
+        return dishesServiceImpl.editDishes(dish);
     }
 
 }
