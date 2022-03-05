@@ -142,6 +142,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+<!-- insert自增 -->
   <insert id="insert" parameterType="com.example.demo.entity.User" >
     insert into user (user_id, password, role_id, 
       profile_pic, is_lock)

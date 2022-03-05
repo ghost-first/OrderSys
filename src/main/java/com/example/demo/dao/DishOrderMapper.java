@@ -19,7 +19,7 @@ public interface DishOrderMapper {
 
     int insertSelective(DishOrder record);
 
-    List<DishOrder> selectByExample(DishOrderExample example);
+    DishOrder selectByExample(DishOrderExample example);
 
     DishOrder selectByPrimaryKey(DishOrderKey key);
 
@@ -33,10 +33,9 @@ public interface DishOrderMapper {
 
     List<Map<String, Object>> selectByTest(Map<String, Object> map);
 
-    List<DishOrder> queryDishes(Integer orderId);
-
     int deleteOrder(int orderId);
 
-    //发布传菜信息
-    List<Map<String,Object>> sendDishInfo();
+    List<DishOrder> queryDishes(Integer orderId);
+
+    List<Map<String, Object>> sendDishInfo();
 }

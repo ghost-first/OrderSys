@@ -2,6 +2,7 @@ package com.example.demo.service;
 import com.example.demo.dao.NoticeMapper;
 import com.example.demo.entity.Dishes;
 import com.example.demo.entity.Notice;
+import com.example.demo.entity.NoticeExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,9 @@ public class NoticeService {
     private NoticeMapper noticeMapper;
 
     public List<Notice> findAll(){
-        return noticeMapper.selectByExampleWithBLOBs(null);
+        NoticeExample noticeExample = new NoticeExample();
+        noticeExample.setOrderByClause("notice_id");
+        return noticeMapper.selectByExampleWithBLOBs(noticeExample);
     }
 
     public Notice findByDid(int notice_id){

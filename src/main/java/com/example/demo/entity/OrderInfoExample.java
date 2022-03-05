@@ -544,6 +544,66 @@ public class OrderInfoExample {
             addCriterion("remarks not between", value1, value2, "remarks");
             return (Criteria) this;
         }
+
+        public Criteria andAddOrderIsNull() {
+            addCriterion("add_order is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderIsNotNull() {
+            addCriterion("add_order is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderEqualTo(Integer value) {
+            addCriterion("add_order =", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderNotEqualTo(Integer value) {
+            addCriterion("add_order <>", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderGreaterThan(Integer value) {
+            addCriterion("add_order >", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderGreaterThanOrEqualTo(Integer value) {
+            addCriterion("add_order >=", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderLessThan(Integer value) {
+            addCriterion("add_order <", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderLessThanOrEqualTo(Integer value) {
+            addCriterion("add_order <=", value, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderIn(List<Integer> values) {
+            addCriterion("add_order in", values, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderNotIn(List<Integer> values) {
+            addCriterion("add_order not in", values, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderBetween(Integer value1, Integer value2) {
+            addCriterion("add_order between", value1, value2, "addOrder");
+            return (Criteria) this;
+        }
+
+        public Criteria andAddOrderNotBetween(Integer value1, Integer value2) {
+            addCriterion("add_order not between", value1, value2, "addOrder");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

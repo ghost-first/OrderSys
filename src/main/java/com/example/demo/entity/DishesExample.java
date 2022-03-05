@@ -285,6 +285,8 @@ public class DishesExample {
         }
 
         public Criteria andPriceBetween(Double value1, Double value2) {
+            value1 = value1==null?0:value1;
+            value2 = value2==null?Double.MAX_VALUE:value2;
             addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }

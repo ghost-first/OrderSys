@@ -18,6 +18,8 @@ public class OrderInfo implements Serializable {
 
     private String remarks;
 
+    private Integer addOrder;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getOrderId() {
@@ -76,6 +78,14 @@ public class OrderInfo implements Serializable {
         this.remarks = remarks == null ? null : remarks.trim();
     }
 
+    public Integer getAddOrder() {
+        return addOrder;
+    }
+
+    public void setAddOrder(Integer addOrder) {
+        this.addOrder = addOrder;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -89,6 +99,7 @@ public class OrderInfo implements Serializable {
         sb.append(", waiter=").append(waiter);
         sb.append(", totalPrice=").append(totalPrice);
         sb.append(", remarks=").append(remarks);
+        sb.append(", addOrder=").append(addOrder);
         sb.append("]");
         return sb.toString();
     }

@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/orderInfo")
+@CrossOrigin
 public class OrderInfoController {
     @Autowired
     private OrderInfoService orderInfoService;
@@ -62,5 +64,10 @@ public class OrderInfoController {
     @RequestMapping("/getThisMonth")
     public Map<String,Object> getThisMonth(){
         return past6MonthsData.get(past6MonthsData.size()-1);
+    }
+
+    @RequestMapping("/getSixMonthsData")
+    public List<Map<String, Object>> getSixMonthsData(){
+        return orderInfoService.getSixMonthsData();
     }
 }

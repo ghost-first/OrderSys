@@ -24,19 +24,19 @@
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <!--生成映射文件存放位置-->
-        <sqlMapGenerator targetPackage="com.example.demo.mapper" targetProject=".\src\main\java">
+        <sqlMapGenerator targetPackage="mapper" targetProject="C:\Users\qwe\IdeaProjects\OrderSys\src\main\resources\mapper">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--生成Dao类存放位置-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.demo.dao"
-                             targetProject=".\src\main\java">
-            <property name="enableSubPackages" value="true"/>
-        </javaClientGenerator>
+<!--        <javaClientGenerator type="XMLMAPPER" targetPackage="com.example.demo.dao"-->
+<!--                             targetProject=".\src\main\java">-->
+<!--            <property name="enableSubPackages" value="true"/>-->
+<!--        </javaClientGenerator>-->
         <!--需要逆向分析的表-->
-        <table tableName="dishes" domainObjectName="Dishes"></table>
+<!--        <table tableName="dishes" domainObjectName="Dishes"></table>-->
 <!--        <table tableName="dishorder" domainObjectName="DishOrder"></table>-->
 <!--        <table tableName="notice" domainObjectName="Notice"></table>-->
-<!--        <table tableName="orderinfo" domainObjectName="OrderInfo"></table>-->
+        <table tableName="orderinfo" domainObjectName="OrderInfo"></table>
 <!--        <table tableName="user" domainObjectName="User"></table>-->
     </context>
 </generatorConfiguration>
