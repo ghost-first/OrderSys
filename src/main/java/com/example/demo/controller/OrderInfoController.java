@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/orderInfo")
@@ -66,8 +65,4 @@ public class OrderInfoController {
         return past6MonthsData.get(past6MonthsData.size()-1);
     }
 
-    @RequestMapping("/getSixMonthsData")
-    public List<Map<String, Object>> getSixMonthsData(){
-        return orderInfoService.getSixMonthsData();
-    }
 }

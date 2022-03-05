@@ -30,7 +30,7 @@ public class OrderController {
         OrderInfo orderInfo = orderServiceImpl.addOrder(testDish.getNewOrder());
 //        System.out.println("获取到订单号"+orderInfo.getOrderId());
 
-        List<DishOrder> dishes = testDish.getDishes();
+        List<DishOrder> dishes = testDish.getDishOrders();
 //        System.out.println("列表长度："+dishes.size());
         //菜品添加进订单，获得价格数
         OrderInfo orderPrice = orderServiceImpl.addDishesIntoOrder(dishes, orderInfo);
@@ -56,7 +56,7 @@ public class OrderController {
     }
 
     //查询订单
-    @RequestMapping(value = "/query",method = RequestMethod.GET)
+    @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
     @ResponseBody
     public List<TestDish> queryOrder(OrderInfo orderInfo){
         System.out.println("开始queryOrder");
