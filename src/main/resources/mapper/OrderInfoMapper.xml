@@ -78,16 +78,44 @@
 <!--  筛选历史数据
 3.1 by manyuan-->
   <select id="get7DaysData" resultType="java.util.Map">
-    SELECT order_time,SUM(total_price)
-    FROM orderinfo
-    WHERE (TO_DAYS(order_time)-TO_DAYS(NOW()))&lt;7
-    GROUP BY TO_DAYS(order_time);
+    SELECT click_date,DATE_FORMAT(click_date,'%a'),totalprice FROM (
+    SELECT curdate() as click_date
+    union all
+    SELECT date_sub(curdate(), interval 1 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 2 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 3 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 4 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 5 day) as click_date
+    union all
+    SELECT date_sub(curdate(), interval 6 day) as click_date
+    )a LEFT JOIN (
+    SELECT date(order_time) as datetime,SUM(total_price) as totalprice FROM orderinfo
+    WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(order_time)
+    GROUP BY datetime
+    )b ON a.click_date = b.datetime;
   </select>
-<!--     List<Map<String, Object>> getSixMonthsData(); -->
-  <select id="getSixMonthsData" resultType="java.util.Map">
-    select date_format(order_time,"%Y-%c") as time_info,sum(total_price)
-    from orderinfo where order_time between date_sub(now(), interval 6 month) and now()
-    group by date_format(order_time,"%Y-%M");
+  <select id="get6MonthsData" resultType="java.util.Map">
+    SELECT * FROM(
+        SELECT DATE_FORMAT(curdate(),'%Y-%c') as click_date
+        UNION ALL
+        SELECT DATE_FORMAT(date_sub(now(),interval 1 month),'%Y-%c') as click_date
+        UNION ALL
+        SELECT DATE_FORMAT(date_sub(now(),interval 2 month),'%Y-%c') as click_date
+        UNION ALL
+        SELECT DATE_FORMAT(date_sub(now(),interval 3 month),'%Y-%c') as click_date
+        UNION ALL
+        SELECT DATE_FORMAT(date_sub(now(),interval 4 month),'%Y-%c') as click_date
+        UNION ALL
+        SELECT DATE_FORMAT(date_sub(now(),interval 5 month),'%Y-%c') as click_date
+    ) a LEFT JOIN (
+        SELECT DATE_FORMAT(order_time,'%Y-%c') as datetime,SUM(total_price)
+        FROM orderinfo WHERE order_time BETWEEN date_sub(now(),interval 6 month) AND now()
+        GROUP BY DATE_FORMAT(order_time,'%Y-%c')
+        )b ON a.click_date=b.datetime;
   </select>
 
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">

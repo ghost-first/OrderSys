@@ -106,6 +106,7 @@ public class UserController {
         if (subject.isAuthenticated()){
             Session session = subject.getSession();
             User user = userServiceImpl.selectById(userId);
+            System.out.println(user);
             session.setAttribute("user",user);
             return user;
 //            subject.logout();

@@ -7,6 +7,7 @@ import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 @RestController
@@ -15,6 +16,15 @@ import java.util.Map;
 public class OrderInfoController {
     @Autowired
     private OrderInfoServiceImpl orderInfoServiceImpl;
+    private List<Map<String, Object>> past7DaysData;
+    private List<Map<String, Object>> past6MonthsData;
+
+    //初始化的构造函数
+    public OrderInfoController(OrderInfoServiceImpl orderInfoService) {
+        this.orderInfoServiceImpl = orderInfoService;
+        this.past7DaysData = orderInfoServiceImpl.get7DaysData();
+        this.past6MonthsData = orderInfoServiceImpl.get6MonthsData();
+    }
 
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
     @ResponseBody
@@ -88,11 +98,33 @@ public class OrderInfoController {
 
     @RequestMapping("/get7DaysData")
     public List<Map<String, Object>> get7DaysData(){
-        return orderInfoServiceImpl.get7DaysData();
+        return past7DaysData;
     }
 
-    @RequestMapping("/getSixMonthsData")
-    public List<Map<String, Object>> getSixMonthsData(){
-        return orderInfoServiceImpl.getSixMonthsData();
+    @RequestMapping("/get6MonthsData")
+    public List<Map<String,Object>> get6MonthsData(){
+        return past6MonthsData;
+    }
+
+    @RequestMapping("/getToday")
+    public Map<String,Object> getToday(){
+        return past7DaysData.get(0);
+    }
+
+    @RequestMapping("/getYesterday")
+    public Map<String,Object> getYesterday(){
+        return past7DaysData.get(1);
+    }
+
+    @RequestMapping("/getThisWeek")
+    public List<Map<String,Object>> getThisWeek(){
+        Calendar calendar=Calendar.getInstance();
+        int day=calendar.get(Calendar.DAY_OF_WEEK);
+        return past7DaysData.subList(0,day-1);
+    }
+
+    @RequestMapping("/getThisMonth")
+    public Map<String,Object> getThisMonth(){
+        return past6MonthsData.get(0);
     }
 }

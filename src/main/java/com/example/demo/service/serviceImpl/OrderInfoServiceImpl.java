@@ -246,4 +246,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public List<Map<String, Object>> getSixMonthsData() {
         return orderInfoMapper.getSixMonthsData();
     }
+
+//    @Override
+//    public List<Map<String, Object>> get6MonthsData() {
+//        return null;
+//    }
 }
