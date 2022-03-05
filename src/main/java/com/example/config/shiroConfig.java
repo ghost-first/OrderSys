@@ -89,33 +89,55 @@ public class shiroConfig {
         map.put("/logout", "logout");
 
         //管理员
-        map.put("/**/add","roles[ADMIN]");
-        map.put("/**/remove","roles[ADMIN]");
-        map.put("/notice/edit","roles[ADMIN]");
-        map.put("/user/queryAll","roles[ADMIN]");
-        map.put("/dishes/edit","roles[ADMIN]");
-        map.put("/queryOrder","roles[ADMIN]");
-        map.put("/order/query","roles[ADMIN]");
+//        map.put("/**/add","roles[ADMIN]");
+//        map.put("/**/remove","roles[ADMIN]");
+//        map.put("/notice/edit","roles[ADMIN]");
+//        map.put("/user/queryAll","roles[ADMIN]");
+//        map.put("/dishes/edit","roles[ADMIN]");
+//        map.put("/queryOrder","roles[ADMIN]");
+//        map.put("/order/query","roles[ADMIN]");
+        map.put("/**/add","anon");
+        map.put("/**/remove","anon");
+        map.put("/notice/edit","anon");
+        map.put("/user/queryAll","anon");
+        map.put("/dishes/edit","anon");
+        map.put("/order/queryOrder","anon");
+        map.put("/order/query","anon");
 
         //后厨
-        map.put("/dishOrder/querySome","roles[COOK]");
-        map.put("/dishOrder/update","roles[COOK,WAITER]");
+//        map.put("/dishOrder/querySome","roles[COOK]");
+//        map.put("/dishOrder/update","roles[COOK,WAITER]");
+        map.put("/dishOrder/querySome","anon");
+        map.put("/dishOrder/update","anon");
 
         //服务员
-        map.put("/dishes/all","roles[WAITER,ADMIN]");
-        map.put("/dishes/query","roles[WAITER]");
-        map.put("/dishes/querySome","roles[WAITER,ADMIN]");
-        map.put("/order/newOrder","roles[WAITER]");
-        map.put("/checkout","roles[WAITER]");
-        map.put("/dishOrder/sendDishInfo","roles[WAITER]");
+//        map.put("/dishes/all","roles[WAITER,ADMIN]");
+//        map.put("/dishes/query","roles[WAITER]");
+//        map.put("/dishes/querySome","roles[WAITER,ADMIN]");
+//        map.put("/order/newOrder","roles[WAITER]");
+//        map.put("/checkout","roles[WAITER]");
+//        map.put("/dishOrder/sendDishInfo","roles[WAITER]");
+        map.put("/dishes/all","anon");
+        map.put("/dishes/query","anon");
+        map.put("/dishes/querySome","anon");
+        map.put("/order/newOrder","anon");
+        map.put("/checkout","anon");
+        map.put("/dishOrder/sendDishInfo","anon");
 
         //基础功能
+//        map.put("/login","anon");
+//        map.put("/user/modify","user");
+//        map.put("/user/query","user");
+//        map.put("/user/add","user");
+//        map.put("/notice/query","user");
+//        map.put("/notice/all","user");
+//        map.put("/user/uploadFile","anon");
         map.put("/login","anon");
-        map.put("/user/modify","user");
-        map.put("/user/query","user");
-        map.put("/user/add","user");
-        map.put("/notice/query","user");
-        map.put("/notice/all","user");
+        map.put("/user/modify","anon");
+        map.put("/user/query","anon");
+        map.put("/user/add","anon");
+        map.put("/notice/query","anon");
+        map.put("/notice/all","anon");
         map.put("/user/uploadFile","anon");
 
 //        map.put("/dishes/all","perms[add]");

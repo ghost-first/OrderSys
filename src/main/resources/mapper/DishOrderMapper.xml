@@ -117,6 +117,7 @@ by 李满园2.26-->
       <if test="count != null">
         count = #{count,jdbcType=INTEGER} and
       </if>
+      dish_state != 3
     </trim>
   </select>
   <select id="selectByExample" parameterType="com.example.demo.entity.DishOrderExample" resultMap="BaseResultMap">

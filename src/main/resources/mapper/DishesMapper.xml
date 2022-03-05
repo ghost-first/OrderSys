@@ -72,20 +72,20 @@
   <sql id="Base_Column_List" >
     dish_id, dish_name, price, intro, detail, type, dish_pic, isrec
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.DishesExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    from dishes
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
+<select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.DishesExample" >
+select
+<if test="distinct" >
+  distinct
+</if>
+<include refid="Base_Column_List" />
+from dishes
+<if test="_parameter != null" >
+  <include refid="Example_Where_Clause" />
+</if>
+<if test="orderByClause != null" >
+  order by ${orderByClause}
+</if>
+</select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

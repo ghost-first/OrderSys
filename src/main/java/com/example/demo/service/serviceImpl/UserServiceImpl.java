@@ -1,7 +1,10 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.UserMapper;
+import com.example.demo.entity.Dishes;
+import com.example.demo.entity.DishesExample;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserExample;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +33,4 @@ public class UserServiceImpl {
         int res = userMapper.deleteByPrimaryKey(userId);
         return res;
     }
-
-
 }

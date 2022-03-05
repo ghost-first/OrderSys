@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
         newOrder.setOrderTime(new Date());
         //0开始准备，1
         newOrder.setOrderState(0);
+        //设置加菜情况
+        newOrder.setAddOrder(0);
 
         orderInfoMapper.insert(newOrder);
         //获取订单号
@@ -54,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
         for (DishOrder dish : dishes) {
             dish.setOrderId(order.getOrderId());
             //菜品状态
-            dish.setDishState(3);
+            dish.setDishState(0);
 
             //获取菜品ID
             Integer dishId = dish.getDishId();
@@ -133,9 +135,12 @@ public class OrderServiceImpl implements OrderService {
             map.put("newOrder",info);
 
             // 获取订单中菜品
+            System.out.println(orderInfoMapper.queryOrderDetail(info.getOrderId()));
             map.put("dishes", orderInfoMapper.queryOrderDetail(info.getOrderId()));
+            System.out.println("获取订单中菜品");
 
             //加菜信息
+            System.out.println(info);
             int addOrder = info.getAddOrder();
             if(addOrder != 0){
                 List<OrderInfo> orders = new ArrayList<>();

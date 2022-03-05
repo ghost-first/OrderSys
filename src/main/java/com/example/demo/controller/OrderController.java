@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 @RestController
 @CrossOrigin
+@RequestMapping("/order")
 public class OrderController {
     @Autowired
     private OrderServiceImpl orderServiceImpl;

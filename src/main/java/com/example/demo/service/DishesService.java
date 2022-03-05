@@ -31,7 +31,9 @@ public class DishesService {
     public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
-        criteria.andDishNameLike("%"+dishName+"%");
+        if(dishName!=null){
+            criteria.andDishNameLike("%"+dishName+"%");
+        }
         criteria.andPriceBetween(minPrice,maxPrice);
         return dishesMapper.selectByExample(de);
     }
@@ -59,4 +61,5 @@ public class DishesService {
     public boolean editDishes(Dishes dishes) {
         return dishesMapper.updateByPrimaryKeySelective(dishes)>0;
     }
+
 }
