@@ -85,7 +85,7 @@ public class shiroConfig {
         // 配置自定义 or角色 认证
         filtersMap.put("roles", new RoleFilter());
         //加入另一个filter
-        filtersMap.put("CORS",new CORSFilter());
+//        filtersMap.put("CORS",new CORSFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
 
         Map<String, String> map = new HashMap<>();
