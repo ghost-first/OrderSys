@@ -38,8 +38,8 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserServiceImpl getUserServiceImpl;
+//    @Autowired
+//    private UserServiceImpl getUserServiceImpl;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {
@@ -72,17 +72,7 @@ public class UserController {
      * */
     @RequestMapping(value = "/login")
     @ResponseBody
-//    public User login(User user){
-//        //根据ID获取用户
-//        User byName = userServiceImpl.findById(user.getUserId());
-//        //密码验证
-//        if(!user.getPassword().equals(byName.getPassword())){
-//            return null;
-//        }
-//
-//        return byName;
-//    }
-    public User login(@Param("userId") String userId, @Param("password") String password, Model model) {
+    public User login(@Param("userId") String userId, @Param("password") String password,Model model) {
         Subject subject = SecurityUtils.getSubject();
         if (!subject.isAuthenticated()){
             UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);

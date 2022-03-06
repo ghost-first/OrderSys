@@ -7,18 +7,17 @@ import java.util.List;
 
 public interface DishesService {
 
-    public List<Dishes> findAll();
+    List<Dishes> findAll();
 
-    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice);
+    List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec);
 
-    public Dishes findByDid(int did);
+    Dishes findByDid(int did);
 
-    public List<Dishes> findByCondition(DishesExample ge);
-    public boolean addDishes(Dishes dishes);
+    List<Dishes> findByCondition(DishesExample ge);
+    boolean addDishes(Dishes dishes);
 
-    public boolean removeDishes(int did);
+    boolean removeDishes(int did);
+    boolean removeDishesByCondition(DishesExample ge);
 
-    public boolean removeDishesByCondition(DishesExample ge);
-
-    public boolean editDishes(Dishes dishes);
+    boolean editDishes(Dishes dishes);
 }

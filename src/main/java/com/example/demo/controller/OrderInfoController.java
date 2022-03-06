@@ -14,6 +14,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
+import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/order")
@@ -22,6 +26,14 @@ public class OrderInfoController {
     private OrderInfoServiceImpl orderInfoServiceImpl;
     private List<Map<String, Object>> past7DaysData;
     private List<Map<String, Object>> past6MonthsData;
+
+    public void setPast7DaysData(List<Map<String, Object>> past7DaysData) {
+        this.past7DaysData = past7DaysData;
+    }
+
+    public void setPast6MonthsData(List<Map<String, Object>> past6MonthsData) {
+        this.past6MonthsData = past6MonthsData;
+    }
 
     //初始化的构造函数
     public OrderInfoController(OrderInfoServiceImpl orderInfoService) {
@@ -158,16 +170,19 @@ public class OrderInfoController {
 
     @RequestMapping("/get7DaysData")
     public List<Map<String, Object>> get7DaysData(){
+        setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         return past7DaysData;
     }
 
     @RequestMapping("/get6MonthsData")
     public List<Map<String,Object>> get6MonthsData(){
+        setPast6MonthsData(orderInfoServiceImpl.get6MonthsData());
         return past6MonthsData;
     }
 
     @RequestMapping("/getToday")
     public Map<String,Object> getToday(){
+        setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         return past7DaysData.get(0);
     }
 
@@ -177,14 +192,21 @@ public class OrderInfoController {
     }
 
     @RequestMapping("/getThisWeek")
-    public List<Map<String,Object>> getThisWeek(){
+    public double getThisWeek(){
+        setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         Calendar calendar=Calendar.getInstance();
         int day=calendar.get(Calendar.DAY_OF_WEEK);
-        return past7DaysData.subList(0,day-1);
+        List<Map<String,Object>> thisweek = past7DaysData.subList(0,day-1);
+        double result =0;
+        for(Map<String,Object> map:thisweek){
+            result+=(double)map.get("totalprice");
+        }
+        return result;
     }
 
     @RequestMapping("/getThisMonth")
     public Map<String,Object> getThisMonth(){
+        setPast6MonthsData(orderInfoServiceImpl.get6MonthsData());
         return past6MonthsData.get(0);
     }
 }

@@ -38,7 +38,6 @@ public class CustomRealm extends AuthorizingRealm {
         String userId1 = token1.getUsername();
         System.out.println(userId1);
         User user = userServiceImpl.selectById(userId1);
-        System.out.println(user);
         if (user == null){
             return null;
         }else if (user.getIsLock() == 1){

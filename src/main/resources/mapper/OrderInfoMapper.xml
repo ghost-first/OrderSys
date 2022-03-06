@@ -99,24 +99,24 @@
     )b ON a.click_date = b.datetime;
   </select>
   <select id="get6MonthsData" resultType="java.util.Map">
-    SELECT * FROM(
-        SELECT DATE_FORMAT(curdate(),'%Y-%c') as click_date
-        UNION ALL
-        SELECT DATE_FORMAT(date_sub(now(),interval 1 month),'%Y-%c') as click_date
-        UNION ALL
-        SELECT DATE_FORMAT(date_sub(now(),interval 2 month),'%Y-%c') as click_date
-        UNION ALL
-        SELECT DATE_FORMAT(date_sub(now(),interval 3 month),'%Y-%c') as click_date
-        UNION ALL
-        SELECT DATE_FORMAT(date_sub(now(),interval 4 month),'%Y-%c') as click_date
-        UNION ALL
-        SELECT DATE_FORMAT(date_sub(now(),interval 5 month),'%Y-%c') as click_date
+    SELECT click_date, totalprice FROM(
+    SELECT DATE_FORMAT(curdate(),'%Y-%c') as click_date
+    UNION ALL
+    SELECT DATE_FORMAT(date_sub(now(),interval 1 month),'%Y-%c') as click_date
+    UNION ALL
+    SELECT DATE_FORMAT(date_sub(now(),interval 2 month),'%Y-%c') as click_date
+    UNION ALL
+    SELECT DATE_FORMAT(date_sub(now(),interval 3 month),'%Y-%c') as click_date
+    UNION ALL
+    SELECT DATE_FORMAT(date_sub(now(),interval 4 month),'%Y-%c') as click_date
+    UNION ALL
+    SELECT DATE_FORMAT(date_sub(now(),interval 5 month),'%Y-%c') as click_date
     ) a LEFT JOIN (
-        SELECT DATE_FORMAT(order_time,'%Y-%c') as datetime,SUM(total_price)
-        FROM orderinfo WHERE order_time BETWEEN date_sub(now(),interval 6 month) AND now()
-        GROUP BY DATE_FORMAT(order_time,'%Y-%c')
-        )b ON a.click_date=b.datetime;
+    SELECT DATE_FORMAT(order_time,'%Y-%c') as datetime,SUM(total_price) AS totalprice FROM orderinfo WHERE order_time BETWEEN date_sub(now(),interval 6 month) AND now()
+    GROUP BY DATE_FORMAT(order_time,'%Y-%c')
+    )b ON a.click_date=b.datetime;
   </select>
+
   <select id="selectBySales" resultType="Map">
     SELECT dishorder.dish_id,dish_name, price,SUM(count) total
     FROM dishes
@@ -128,6 +128,7 @@
     GROUP BY dishorder.dish_id
     ORDER BY total DESC
   </select>
+
   <select id="queryOrder" parameterType="com.example.demo.entity.OrderInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
