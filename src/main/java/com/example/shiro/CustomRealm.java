@@ -2,6 +2,7 @@ package com.example.shiro;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
+import com.example.demo.service.serviceImpl.UserServiceImpl;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -13,7 +14,7 @@ import org.springframework.util.StringUtils;
 public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     private Integer count = 0;
     private String preUserId = "";
@@ -23,7 +24,7 @@ public class CustomRealm extends AuthorizingRealm {
         //获取登录用户名
         String name = (String) principalCollection.getPrimaryPrincipal();
         //查询用户名称
-        User user = userService.selectById(name);
+        User user = userServiceImpl.selectById(name);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         System.out.println(user.getRole(user.getRoleId()));
@@ -37,7 +38,7 @@ public class CustomRealm extends AuthorizingRealm {
 //        System.out.println("执行了认证");
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         String userId1 = token1.getUsername();
-        User user = userService.selectById(userId1);
+        User user = userServiceImpl.selectById(userId1);
         if (user == null){
             return null;
         }else if (user.getIsLock() == 1){

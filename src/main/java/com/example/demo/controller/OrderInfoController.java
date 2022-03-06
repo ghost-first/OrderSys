@@ -4,6 +4,7 @@ import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.TestDish;
 import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
+import com.example.demo.service.serviceImpl.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class OrderInfoController {
 
         System.out.println(orderPrice);
         System.out.println("结束getOrder");
+        WebSocketService.sendMessageToCook("有新的菜品");
         return orderPrice;
     }
 

@@ -160,3 +160,4 @@ public class shiroConfig {
         return authorizationAttributeSourceAdvisor;
     }
 }
+

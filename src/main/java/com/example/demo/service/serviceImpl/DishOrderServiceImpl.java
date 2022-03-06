@@ -33,6 +33,9 @@ public class DishOrderServiceImpl implements DishOrderService {
             dishOrderKey.setDishId(dishOrder.getDishId());
             dishOrderKey.setOrderId(dishOrder.getOrderId());
             DishOrder dishOrder1 = dishOrderMapper.selectByPrimaryKey(dishOrderKey);
+            if (dishOrder1.getDishState() == 2){
+                WebSocketService.sendMessageToWaiter("有新菜品待传送");
+            }
             return dishOrder1;
         }else{
             return null;

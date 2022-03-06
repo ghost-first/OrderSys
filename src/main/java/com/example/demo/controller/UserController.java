@@ -20,13 +20,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
@@ -38,8 +32,6 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
-    @Autowired
-    private UserServiceImpl getUserServiceImpl;
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {
@@ -71,46 +63,35 @@ public class UserController {
      * 登录
      * */
     @RequestMapping(value = "/login")
-    @ResponseBody
-//    public User login(User user){
-//        //根据ID获取用户
-//        User byName = userServiceImpl.findById(user.getUserId());
-//        //密码验证
-//        if(!user.getPassword().equals(byName.getPassword())){
-//            return null;
-//        }
-//
-//        return byName;
-//    }
-    public User login(@Param("userId") String userId, @Param("password") String password, Model model) {
+    public User login(@Param("userId") String userId, @Param("password") String password, Model model,HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
+        User user_wait = new User();
         if (!subject.isAuthenticated()){
             UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
             try {
                 subject.login(token);
             } catch(UnknownAccountException e) {
-                model.addAttribute("message","账户不存在");
+                user_wait.setRoleId(4);
             }catch (ExcessiveAttemptsException e){
-                model.addAttribute("message","验证未通过，错误次数大于5次，账户已锁定！");
                 User user = new User();
                 user.setUserId(userId);
                 user.setIsLock(1);
                 userServiceImpl.updateInfo(user);
+                user_wait.setRoleId(5);
             }catch (IncorrectCredentialsException e){
-                model.addAttribute("message","验证未通过，账户密码错误！");
+                user_wait.setRoleId(6);
             }catch (DisabledAccountException e){
-                model.addAttribute("message","验证未通过，账户已经禁止登录！");
+                user_wait.setRoleId(5);
             }
         }
 
         if (subject.isAuthenticated()){
-            Session session = subject.getSession();
             User user = userServiceImpl.selectById(userId);
-            session.setAttribute("user",user);
+            session.setAttribute("userId",userId);
             return user;
 //            subject.logout();
         }
-        return null;
+        return user_wait;
     }
     @RequestMapping("/logout")
     public void logout(){
