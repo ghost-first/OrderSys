@@ -7,7 +7,6 @@ import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -132,12 +131,12 @@ public class OrderInfoController {
     @RequestMapping("/getThisWeek")
     public double getThisWeek(){
         setPast7DaysData(orderInfoServiceImpl.get7DaysData());
-        Calendar calendar=Calendar.getInstance();
-        int day=calendar.get(Calendar.DAY_OF_WEEK);
-        List<Map<String,Object>> thisweek = past7DaysData.subList(0,day-1);
+        List<Map<String,Object>> thisweek = past7DaysData;
         double result =0;
         for(Map<String,Object> map:thisweek){
-            result+=(double)map.get("totalprice");
+            result+=Double.valueOf(map.get("totalprice").toString());
+            if(map.get("weekday").equals("Mon"))
+                break;
         }
         return result;
     }
