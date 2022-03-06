@@ -24,6 +24,7 @@ import java.util.Map;
 public class OrderInfoController {
     @Autowired
     private OrderInfoServiceImpl orderInfoServiceImpl;
+
     private List<Map<String, Object>> past7DaysData;
     private List<Map<String, Object>> past6MonthsData;
 
@@ -141,8 +142,6 @@ public class OrderInfoController {
     //查询订单
     @RequestMapping(value = "/queryDetailOrder",method = RequestMethod.GET)
     public List<Map<String, Object>> queryDetailOrder(OrderInfo orderInfo){
-        System.out.println("开始queryOrder");
-        System.out.println(orderInfo);
         return orderInfoServiceImpl.queryDetailOrder(orderInfo);
     }
 
@@ -158,6 +157,8 @@ public class OrderInfoController {
     public String deleteDishOrder(DishOrder dishOrder){
         return orderInfoServiceImpl.deleteDishOrder(dishOrder);
     }
+
+
     @RequestMapping("/querySome")
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);
@@ -194,12 +195,12 @@ public class OrderInfoController {
     @RequestMapping("/getThisWeek")
     public double getThisWeek(){
         setPast7DaysData(orderInfoServiceImpl.get7DaysData());
-        Calendar calendar=Calendar.getInstance();
-        int day=calendar.get(Calendar.DAY_OF_WEEK);
-        List<Map<String,Object>> thisweek = past7DaysData.subList(0,day-1);
+        List<Map<String,Object>> thisweek = past7DaysData;
         double result =0;
         for(Map<String,Object> map:thisweek){
-            result+=(double)map.get("totalprice");
+            result+=Double.valueOf(map.get("totalprice").toString());
+            if(map.get("weekday").equals("Mon"))
+                break;
         }
         return result;
     }
@@ -209,4 +210,5 @@ public class OrderInfoController {
         setPast6MonthsData(orderInfoServiceImpl.get6MonthsData());
         return past6MonthsData.get(0);
     }
+
 }

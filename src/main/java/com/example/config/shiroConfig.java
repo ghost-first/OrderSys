@@ -84,6 +84,8 @@ public class shiroConfig {
         LinkedHashMap<String, Filter> filtersMap = new LinkedHashMap<>();
         // 配置自定义 or角色 认证
         filtersMap.put("roles", new RoleFilter());
+        //加入另一个filter
+        filtersMap.put("CORS",new CORSFilter());
         shiroFilterFactoryBean.setFilters(filtersMap);
 
         Map<String, String> map = new HashMap<>();
@@ -96,35 +98,29 @@ public class shiroConfig {
         map.put("/notice/edit","roles[ADMIN]");
         map.put("/user/queryAll","roles[ADMIN]");
         map.put("/dishes/edit","roles[ADMIN]");
-        map.put("/queryOrder","roles[ADMIN]");
+        map.put("/order/queryOrder","roles[ADMIN]");
         map.put("/order/query","roles[ADMIN]");
-//        map.put("/**/add","anon");
-//        map.put("/**/remove","anon");
-//        map.put("/notice/edit","anon");
-//        map.put("/user/queryAll","anon");
-//        map.put("/dishes/edit","anon");
-//        map.put("/order/queryOrder","anon");
-//        map.put("/order/query","anon");
+        map.put("/order/queryDetailOrder","roles[ADMIN]");
+        map.put("/order/querySales","roles[ADMIN]");
+        map.put("/order/get7DaysData","roles[ADMIN]");
+        map.put("/order/get6MonthsData","roles[ADMIN]");
+        map.put("/order/getToday","roles[ADMIN]");
+        map.put("/order/getYesterday","roles[ADMIN]");
+        map.put("/order/getThisMonth","roles[ADMIN]");
+        map.put("/order/getThisWeek","roles[ADMIN]");
 
         //后厨
         map.put("/dishOrder/querySome","roles[COOK]");
         map.put("/dishOrder/update","roles[COOK,WAITER]");
-//        map.put("/dishOrder/querySome","anon");
-//        map.put("/dishOrder/update","anon");
 
         //服务员
         map.put("/dishes/all","roles[WAITER,ADMIN]");
         map.put("/dishes/query","roles[WAITER]");
         map.put("/dishes/querySome","roles[WAITER,ADMIN]");
         map.put("/order/newOrder","roles[WAITER]");
-        map.put("/checkout","roles[WAITER]");
+        map.put("/order/checkout","roles[WAITER]");
         map.put("/dishOrder/sendDishInfo","roles[WAITER]");
-//        map.put("/dishes/all","anon");
-//        map.put("/dishes/query","anon");
-//        map.put("/dishes/querySome","anon");
-//        map.put("/order/newOrder","anon");
-//        map.put("/checkout","anon");
-//        map.put("/dishOrder/sendDishInfo","anon");
+
 
         //基础功能
         map.put("/login","anon");
@@ -133,14 +129,8 @@ public class shiroConfig {
         map.put("/user/add","user");
         map.put("/notice/query","user");
         map.put("/notice/all","user");
-        map.put("/user/uploadFile","anon");
-//        map.put("/login","anon");
-//        map.put("/user/modify","anon");
-//        map.put("/user/query","anon");
-//        map.put("/user/add","anon");
-//        map.put("/notice/query","anon");
-//        map.put("/notice/all","anon");
-//        map.put("/user/uploadFile","anon");
+        map.put("/user/uploadFile","user");
+
 
 //        map.put("/dishes/all","perms[add]");
 //        map.put("")

@@ -78,7 +78,7 @@
 <!--  筛选历史数据
 3.1 by manyuan-->
   <select id="get7DaysData" resultType="java.util.Map">
-    SELECT click_date,DATE_FORMAT(click_date,'%a'),totalprice FROM (
+    SELECT click_date,DATE_FORMAT(click_date,'%a') AS weekday,totalprice FROM (
     SELECT curdate() as click_date
     union all
     SELECT date_sub(curdate(), interval 1 day) as click_date
@@ -94,7 +94,7 @@
     SELECT date_sub(curdate(), interval 6 day) as click_date
     )a LEFT JOIN (
     SELECT date(order_time) as datetime,SUM(total_price) as totalprice FROM orderinfo
-    WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(order_time)
+    WHERE DATE_SUB(CURDATE(), INTERVAL 7 DAY) &lt;= date(order_time) AND order_state=1
     GROUP BY datetime
     )b ON a.click_date = b.datetime;
   </select>
@@ -113,6 +113,7 @@
     SELECT DATE_FORMAT(date_sub(now(),interval 5 month),'%Y-%c') as click_date
     ) a LEFT JOIN (
     SELECT DATE_FORMAT(order_time,'%Y-%c') as datetime,SUM(total_price) AS totalprice FROM orderinfo WHERE order_time BETWEEN date_sub(now(),interval 6 month) AND now()
+    AND order_state=1
     GROUP BY DATE_FORMAT(order_time,'%Y-%c')
     )b ON a.click_date=b.datetime;
   </select>
