@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Notice;
 import com.example.demo.service.serviceImpl.NoticeServiceImpl;
+import com.example.demo.service.serviceImpl.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -46,6 +47,7 @@ public class NoticeController {
     @RequestMapping("/add")
     public boolean addDish(Notice notice){
         notice.setSendTime(new Date());
+        WebSocketService.sendAllMessage(notice.getUserId(),"管理员发布了一条新公告，请尽快查看！");
         return noticeServiceImpl.addNotice(notice);
     }
 
