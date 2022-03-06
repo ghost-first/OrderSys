@@ -44,6 +44,7 @@ public class WebSocketService {
         WebSocketClient client = new WebSocketClient();
         client.setSession(session);
         client.setUri(session.getRequestURI().toString());
+        client.setRoleId(roleId);
         webSocketMap.put(userName, client);
 
         log.info("----------------------------------------------------------------------------");
@@ -126,7 +127,7 @@ public class WebSocketService {
     public static void sendAllMessage(String userName,String message) {
         try {
             for (Map.Entry entry:webSocketMap.entrySet()) {
-                if (userName.equals(entry.getKey())) continue;
+//                if (userName.equals(entry.getKey())) continue;
                 WebSocketClient client = (WebSocketClient)entry.getValue();
                 client.getSession().getBasicRemote().sendText(message);
             }
@@ -142,7 +143,9 @@ public class WebSocketService {
     public static void sendMessageToCook(String message){
         try{
             for (WebSocketClient client: webSocketMap.values()){
-                if (client.getRoleId() != 3) continue;
+
+                if (client.getRoleId() != 2) continue;
+                System.out.println("client's roleId"+client.getRoleId());
                 client.getSession().getBasicRemote().sendText(message);
             }
         }catch (Exception e){
@@ -157,7 +160,7 @@ public class WebSocketService {
     public static void sendMessageToWaiter(String message){
         try{
             for (WebSocketClient client: webSocketMap.values()){
-                if (client.getRoleId() != 2) continue;
+                if (client.getRoleId() != 3) continue;
                 client.getSession().getBasicRemote().sendText(message);
             }
         }catch (Exception e){

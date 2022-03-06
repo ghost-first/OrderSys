@@ -47,7 +47,8 @@ public class NoticeController {
     @RequestMapping("/add")
     public boolean addDish(Notice notice){
         notice.setSendTime(new Date());
-        WebSocketService.sendAllMessage(notice.getUserId(),"管理员发布了一条新公告，请尽快查看！");
+        System.out.println("发送公告");
+        WebSocketService.sendAllMessage(notice.getUserId(),"管理员发布了一条新公告");
         return noticeServiceImpl.addNotice(notice);
     }
 

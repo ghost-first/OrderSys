@@ -67,41 +67,36 @@ public class UserController {
         }
     }
 
-    /*
-     * 登录
-     * */
     @RequestMapping(value = "/login")
-    @ResponseBody
-    public User login(@Param("userId") String userId, @Param("password") String password,Model model) {
+    public User login(@Param("userId") String userId, @Param("password") String password, Model model,HttpSession session) {
         Subject subject = SecurityUtils.getSubject();
+        User user_wait = new User();
         if (!subject.isAuthenticated()){
             UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
             try {
                 subject.login(token);
             } catch(UnknownAccountException e) {
-                model.addAttribute("message","账户不存在");
+                user_wait.setRoleId(4);
             }catch (ExcessiveAttemptsException e){
-                model.addAttribute("message","验证未通过，错误次数大于5次，账户已锁定！");
                 User user = new User();
                 user.setUserId(userId);
                 user.setIsLock(1);
                 userServiceImpl.updateInfo(user);
+                user_wait.setRoleId(5);
             }catch (IncorrectCredentialsException e){
-                model.addAttribute("message","验证未通过，账户密码错误！");
+                user_wait.setRoleId(6);
             }catch (DisabledAccountException e){
-                model.addAttribute("message","验证未通过，账户已经禁止登录！");
+                user_wait.setRoleId(5);
             }
         }
 
         if (subject.isAuthenticated()){
-            Session session = subject.getSession();
             User user = userServiceImpl.selectById(userId);
-            System.out.println(user);
-            session.setAttribute("user",user);
+            session.setAttribute("userId",userId);
             return user;
 //            subject.logout();
         }
-        return null;
+        return user_wait;
     }
     @RequestMapping("/logout")
     public void logout(){
