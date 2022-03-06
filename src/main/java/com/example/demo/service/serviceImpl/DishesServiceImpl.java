@@ -36,7 +36,8 @@ public class DishesServiceImpl implements DishesService {
             criteria.andDishNameLike("%"+dishName+"%");
         }
         criteria.andPriceBetween(minPrice,maxPrice);
-        criteria.andIsrecEqualTo(isrec);
+        if(isrec!=null)
+            criteria.andIsrecEqualTo(isrec);
         return dishesMapper.selectByExample(de);
     }
 

@@ -16,7 +16,11 @@ import java.io.IOException;
 public class  RoleFilter extends UserFilter {
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-
+        if (request instanceof HttpServletRequest) {
+            if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
+                return true;
+            }
+        }
         final Subject subject = getSubject(request, response);
         final String[] rolesArray = (String[]) mappedValue;
 
@@ -39,9 +43,10 @@ public class  RoleFilter extends UserFilter {
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
         if (httpRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
-            httpResponse.setHeader("Access-control-Allow-Origin", httpRequest.getHeader("Origin"));
-            httpResponse.setHeader("Access-Control-Allow-Methods", httpRequest.getMethod());
+            httpResponse.setHeader("Access-control-Allow-Origin",httpRequest.getHeader("Origin") );
+            httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
             httpResponse.setHeader("Access-Control-Allow-Headers", httpRequest.getHeader("Access-Control-Request-Headers"));
+
             httpResponse.setStatus(HttpStatus.OK.value());
             return false;
         }
