@@ -8,6 +8,8 @@ import com.example.demo.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -243,8 +245,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return orderInfoMapper.get7DaysData();
     }
 
-    public List<Map<String, Object>> getSixMonthsData() {
-        return orderInfoMapper.getSixMonthsData();
+    @Override
+    public List<Map<String, Object>> get6MonthsData() {
+        return orderInfoMapper.get6MonthsData();
     }
 
     public List<Map<String,Object>> selectBySales() throws ParseException {

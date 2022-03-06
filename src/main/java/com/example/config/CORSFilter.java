@@ -34,8 +34,10 @@ class CORSFilter extends OncePerRequestFilter {
         response.setHeader("XDomainRequestAllowed","1");//不可以放在后面
 
         //放行所有,类似*,这里的*完全无效
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
+        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        System.out.println("执行了");
 
         //允许请求方式
         response.setHeader("Access-Control-Allow-Methods", "POST,PUT, GET, OPTIONS, DELETE");
