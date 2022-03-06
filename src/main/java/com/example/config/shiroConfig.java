@@ -117,7 +117,6 @@ public class shiroConfig {
         map.put("/dishes/all","roles[WAITER,ADMIN]");
         map.put("/dishes/query","roles[WAITER]");
         map.put("/dishes/querySome","roles[WAITER,ADMIN]");
-        map.put("/order/newOrder","roles[WAITER]");
         map.put("/order/checkout","roles[WAITER]");
         map.put("/dishOrder/sendDishInfo","roles[WAITER]");
 
@@ -130,6 +129,7 @@ public class shiroConfig {
         map.put("/notice/query","user");
         map.put("/notice/all","user");
         map.put("/user/uploadFile","user");
+        map.put("/order/newOrder","anon");
 
 
 //        map.put("/dishes/all","perms[add]");

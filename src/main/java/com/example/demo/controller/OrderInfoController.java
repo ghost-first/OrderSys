@@ -71,11 +71,10 @@ public class OrderInfoController {
         resp.setContentType("text/html;charset=utf-8");
 
         //验证toket 表单是否已经提交过
-        if(!isBumit(req,token)){
-            System.out.println("您已提交了数据..或者token错误!");
-//            resp.getWriter().write("您已提交了数据..或者token错误!");
-            return null;
-        }
+//        if(!isBumit(req,token)){
+//            System.out.println("您已提交了数据..或者token错误!");
+//            return null;
+//        }
 //        resp.getWriter().write("表单数据保存成功..");
         System.out.println("表单数据提交成功");
 
