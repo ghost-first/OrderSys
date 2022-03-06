@@ -20,16 +20,16 @@ public class NoticeServiceImpl implements NoticeService {
         return noticeMapper.selectByExampleWithBLOBs(noticeExample);
     }
 
-    public Notice findByDid(int notice_id){
-        return noticeMapper.selectByPrimaryKey(notice_id);
+    public Notice findByDid(int noticeId){
+        return noticeMapper.selectByPrimaryKey(noticeId);
     }
 
     public boolean addNotice(Notice notice) {
         return noticeMapper.insertSelective(notice)>0;
     }
 
-    public boolean removeNotice(int notice_id) {
-        return noticeMapper.deleteByPrimaryKey(notice_id)>0;
+    public boolean removeNotice(int noticeId) {
+        return noticeMapper.deleteByPrimaryKey(noticeId)>0;
     }
 
     public boolean editNotice(Notice notice) {

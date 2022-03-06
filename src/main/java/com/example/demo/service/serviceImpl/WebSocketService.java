@@ -44,6 +44,7 @@ public class WebSocketService {
         WebSocketClient client = new WebSocketClient();
         client.setSession(session);
         client.setUri(session.getRequestURI().toString());
+        client.setRoleId(roleId);
         webSocketMap.put(userName, client);
 
         log.info("----------------------------------------------------------------------------");

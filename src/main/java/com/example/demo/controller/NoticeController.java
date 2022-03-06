@@ -39,15 +39,16 @@ public class NoticeController {
 
     @ResponseBody
     @RequestMapping("/remove")
-    public boolean removeNotice(int notice_id){
-        return noticeServiceImpl.removeNotice(notice_id);
+    public boolean removeNotice(int noticeId,String userId){
+        WebSocketService.sendAllMessage(userId,"公告");
+        return noticeServiceImpl.removeNotice(noticeId);
     }
 
     @ResponseBody
     @RequestMapping("/add")
     public boolean addNotice(Notice notice){
         notice.setSendTime(new Date());
-        WebSocketService.sendAllMessage(notice.getUserId(),"管理员发布了一条新公告，请尽快查看！");
+        WebSocketService.sendAllMessage(notice.getUserId(),"公告");
         return noticeServiceImpl.addNotice(notice);
     }
 
@@ -55,6 +56,7 @@ public class NoticeController {
     @RequestMapping("/edit")
     public boolean editNotice(Notice notice){
         notice.setSendTime(new Date());
+        WebSocketService.sendAllMessage(notice.getUserId(),"公告");
         return noticeServiceImpl.editNotice(notice);
     }
 
