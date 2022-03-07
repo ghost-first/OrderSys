@@ -20,12 +20,8 @@ public class GlobalCorsConfig {
         CorsConfiguration config = new CorsConfiguration();
 
 //1) 允许的域,不要写*，否则cookie就无法使用了
-
-// config.addAllowedOrigin("http://localhost:8081");
-
-// config.addAllowedOrigin("http://192.168.59.168:8081");
-
-        config.addAllowedOrigin("*");
+//        config.addAllowedOrigin("http://r8coecno5.hn-bkt.clouddn.com");
+        config.addAllowedOrigin("http://localhost:8081");
 
 //2) 是否发送Cookie信息
 

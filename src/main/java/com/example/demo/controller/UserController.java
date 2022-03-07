@@ -94,6 +94,7 @@ public class UserController {
         }
 
         if (subject.isAuthenticated()){
+            System.out.println("认证过了");
             Session session = subject.getSession();
             User user = userServiceImpl.selectById(userId);
             session.setAttribute("user",user);
