@@ -16,6 +16,7 @@ import java.io.IOException;
 public class  RoleFilter extends UserFilter {
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
+        System.out.println("Filter 的isAllowed");
         if (request instanceof HttpServletRequest) {
             if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
                 return true;
@@ -40,6 +41,7 @@ public class  RoleFilter extends UserFilter {
     //可能的解决跨域问题的方法
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        System.out.println("预处理");
         HttpServletRequest httpRequest = WebUtils.toHttp(request);
         HttpServletResponse httpResponse = WebUtils.toHttp(response);
         if (httpRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
@@ -54,6 +56,7 @@ public class  RoleFilter extends UserFilter {
     }
     @Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        System.out.println("请求拒绝");
         HttpServletResponse httpResp = WebUtils.toHttp(response);
         HttpServletRequest httpReq = WebUtils.toHttp(request);
 

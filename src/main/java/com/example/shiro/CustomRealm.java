@@ -20,6 +20,7 @@ public class CustomRealm extends AuthorizingRealm {
     //角色和权限添加。执行授权操作
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        System.out.println("执行了授权");
         //获取登录用户名
         String name = (String) principalCollection.getPrimaryPrincipal();
         //查询用户名称
@@ -34,7 +35,7 @@ public class CustomRealm extends AuthorizingRealm {
     //执行认证操作
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-//        System.out.println("执行了认证");
+        System.out.println("执行了认证");
         UsernamePasswordToken token1 = (UsernamePasswordToken) token;
         String userId1 = token1.getUsername();
         User user = userServiceImpl.selectById(userId1);
