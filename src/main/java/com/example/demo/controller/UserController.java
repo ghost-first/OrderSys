@@ -37,18 +37,22 @@ public class UserController {
     public User addUser(User user) throws Exception {
         return userServiceImpl.add(user);
     }
+
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){
         return userServiceImpl.selectById(userId);
     }
+
     @RequestMapping(value = "/queryAll",method = RequestMethod.GET)
     public List<User> queryAllUsers(User user){
         return userServiceImpl.selectAll(user);
     }
+
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
     public User updateUser(User user){
         return userServiceImpl.updateInfo(user);
     }
+
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
         int result = userServiceImpl.delete(userId);

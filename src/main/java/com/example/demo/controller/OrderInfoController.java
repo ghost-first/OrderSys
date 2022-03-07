@@ -19,11 +19,9 @@ public class OrderInfoController {
     private OrderInfoServiceImpl orderInfoServiceImpl;
 
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
-    @ResponseBody
     public OrderInfo newOrder(@RequestBody TestDish testDish){
         System.out.println("newOrder开始");
         System.out.println(testDish);
-
         //添加新订单，获取订单号
         OrderInfo orderInfo = orderInfoServiceImpl.addOrder(testDish.getNewOrder());
         System.out.println("获取到订单号"+orderInfo.getOrderId());
@@ -40,7 +38,6 @@ public class OrderInfoController {
     }
 
     //买单
-    @ResponseBody
     @RequestMapping("/checkout")
     public boolean checkout(int orderid){
         return orderInfoServiceImpl.checkout(orderid);
@@ -48,7 +45,6 @@ public class OrderInfoController {
 
     //删除订单
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
-    @ResponseBody
     public Integer deleteOrder(Integer orderId){
         int res = orderInfoServiceImpl.deleteOrder(orderId);
         return res;
@@ -56,7 +52,6 @@ public class OrderInfoController {
 
     //查询订单
     @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
-    @ResponseBody
     public List<TestDish> queryOrder(OrderInfo orderInfo){
         System.out.println("开始queryOrder");
         System.out.println(orderInfo);
@@ -84,6 +79,7 @@ public class OrderInfoController {
     public String deleteDishOrder(DishOrder dishOrder){
         return orderInfoServiceImpl.deleteDishOrder(dishOrder);
     }
+
     @RequestMapping("/querySome")
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);

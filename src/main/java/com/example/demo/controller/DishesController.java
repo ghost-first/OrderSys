@@ -23,20 +23,18 @@ public class DishesController {
     private DishesServiceImpl dishesServiceImpl;
 
     @RequestMapping("/all")
-    @ResponseBody
     public List<Dishes> showDishes() {
         List<Dishes> list = dishesServiceImpl.findAll();
         return list;
     }
 
-    @ResponseBody
     @RequestMapping("/query")
     public Dishes queryDish(int dishId){
         Dishes dish = dishesServiceImpl.findByDid(dishId);
         System.out.println(dish);
         return dish;
     }
-    @ResponseBody
+
     @RequestMapping("/querySome")
     public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
                                         @Param("minPrice")Double minPrice,
@@ -44,13 +42,13 @@ public class DishesController {
         return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice);
     }
 
-    @ResponseBody
+
     @RequestMapping("/remove")
     public boolean removeDish(int dishid){
         return dishesServiceImpl.removeDishes(dishid);
     }
 
-    @ResponseBody
+
     @RequestMapping("/add")
     public boolean addDish(Dishes dish){
         System.out.println(dish);
@@ -58,7 +56,6 @@ public class DishesController {
         return dishesServiceImpl.addDishes(dish);
     }
 
-    @ResponseBody
     @RequestMapping("/edit")
     public boolean editDish(Dishes dish){
 //        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片

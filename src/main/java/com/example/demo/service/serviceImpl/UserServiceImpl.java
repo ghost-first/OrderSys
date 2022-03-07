@@ -22,19 +22,30 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
 
-    /*
-    * 通过userId查找用户
-    * 用于登录
-    * */
-
+    /**
+     * 登录时根据用户id查询用户信息
+     * @param userId
+     * @return
+     */
     public User selectById(String userId){
         return userMapper.selectById(userId);
     }
 
+    /**
+     * 查询所有用户
+     * @param user
+     * @return
+     */
     public List<User> selectAll(User user){
         return userMapper.selectAll(user);
     }
 
+    /**
+     * 用户注册
+     * @param user
+     * @return
+     * @throws Exception
+     */
     public User add(User user) throws Exception {
         User oldUser = userMapper.selectById(user.getUserId());
         if(oldUser != null){
@@ -44,6 +55,12 @@ public class UserServiceImpl implements UserService{
         userMapper.insert(user);
         return user;
     }
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @return
+     */
     public User updateInfo(User user){
         int result =  userMapper.updateInfo(user);
         if(result>0){
@@ -57,6 +74,13 @@ public class UserServiceImpl implements UserService{
         return userMapper.deleteById(userId);
     }
 
+    /**
+     * 上传图片
+     * @param itemName
+     * @param request
+     * @return
+     * @throws Exception
+     */
     public String uploadPic(String itemName, MultipartHttpServletRequest request)throws Exception {
         String pathRoot = request.getSession().getServletContext().getRealPath(""); //获得服务器上绝对路径
         String path = "";// 保存的图片名
