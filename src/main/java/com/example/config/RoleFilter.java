@@ -60,7 +60,7 @@ public class  RoleFilter extends UserFilter {
         /*系统重定向会默认把请求头清空，这里通过拦截器重新设置请求头，解决跨域问题*/
         httpResp.addHeader("Access-Control-Allow-Origin", httpReq.getHeader("Origin"));
         httpResp.addHeader("Access-Control-Allow-Headers", "*");
-        httpResp.addHeader("Access-Control-Allow-Methods", "*");
+        httpResp.addHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         httpResp.addHeader("Access-Control-Allow-Credentials", "true");
 
         this.saveRequestAndRedirectToLogin(request, response);
