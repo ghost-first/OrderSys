@@ -4,6 +4,7 @@ import com.example.demo.entity.Notice;
 import com.example.demo.service.serviceImpl.NoticeServiceImpl;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import com.example.demo.service.serviceImpl.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +28,6 @@ public class NoticeController {
 
 
     @RequestMapping("/all")
-//    @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN","COOK"})
     public List<Notice> showNotice() {
         List<Notice> list = noticeServiceImpl.findAll();
         return list;
@@ -35,7 +35,6 @@ public class NoticeController {
 
 
     @RequestMapping("/query")
-//    @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN","COOK"})
     public Notice queryNotice(int notice_id){
         System.out.println("开始看公告了");
         return noticeServiceImpl.findByDid(notice_id);
@@ -43,14 +42,16 @@ public class NoticeController {
 
     @RequestMapping("/remove")
     @RequiresRoles("ADMIN")
-    public boolean removeNotice(int notice_id){
-        return noticeServiceImpl.removeNotice(notice_id);
+    public boolean removeNotice(int noticeId,String userId){
+        WebSocketService.sendAllMessage(userId,"公告");
+        return noticeServiceImpl.removeNotice(noticeId);
     }
 
     @RequestMapping("/add")
     @RequiresRoles("ADMIN")
     public boolean addDish(Notice notice){
         notice.setSendTime(new Date());
+        WebSocketService.sendAllMessage(notice.getUserId(),"公告");
         return noticeServiceImpl.addNotice(notice);
     }
 
@@ -58,6 +59,7 @@ public class NoticeController {
     @RequiresRoles("ADMIN")
     public boolean editDish(Notice notice){
         notice.setSendTime(new Date());
+        WebSocketService.sendAllMessage(notice.getUserId(),"公告");
         return noticeServiceImpl.editNotice(notice);
     }
 

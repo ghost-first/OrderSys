@@ -11,6 +11,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
@@ -83,7 +84,6 @@ public class UserController {
             return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
         }
     }
-
     @RequestMapping("/logout")
     public void logout(){
         Subject subject = SecurityUtils.getSubject();

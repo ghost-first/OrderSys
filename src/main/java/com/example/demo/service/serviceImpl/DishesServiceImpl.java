@@ -13,22 +13,29 @@ import java.util.Map;
 @Service
 public class DishesServiceImpl implements DishesService {
 
-    @Autowired
+
     private DishesMapper dishesMapper;
 
-//    public DishesMapper getDishesMapper() {
-//        return dishesMapper;
-//    }
-//
-//    public void setDishesMapper(DishesMapper dishesMapper) {
-//        this.dishesMapper = dishesMapper;
-//    }
+    @Autowired
+    public void setDishesMapper(DishesMapper dishesMapper) {
+        this.dishesMapper = dishesMapper;
+    }
 
-
+    /**
+     * 展示所有菜品
+     * @return
+     */
     public List<Dishes> findAll(){
         return dishesMapper.selectByExample(null);
     }
 
+    /**
+     * 根据菜品名、价格区间对菜品进行模糊查询
+     * @param dishName
+     * @param minPrice
+     * @param maxPrice
+     * @return
+     */
     public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
@@ -41,26 +48,48 @@ public class DishesServiceImpl implements DishesService {
         return dishesMapper.selectByExample(de);
     }
 
-    public Dishes findByDid(int did){
-        return dishesMapper.selectByPrimaryKey(did);
+    /**
+     *根据具体id查询菜品信息
+     * @param dishId
+     * @return
+     */
+    public Dishes findByDid(int dishId){
+        return dishesMapper.selectByPrimaryKey(dishId);
     }
+
 
     public List<Dishes> findByCondition(DishesExample ge){
         return dishesMapper.selectByExample(ge);
     }
 
+    /**
+     * 增加菜品
+     * @param dishes
+     * @return
+     */
     public boolean addDishes(Dishes dishes) {
         return dishesMapper.insertSelective(dishes)>0;
     }
 
-    public boolean removeDishes(int did) {
-        return dishesMapper.deleteByPrimaryKey(did)>0;
+    /**
+     * 删除菜品
+     * @param dishid
+     * @return
+     */
+    public boolean removeDishes(int dishid) {
+        return dishesMapper.deleteByPrimaryKey(dishid)>0;
     }
+
 
     public boolean removeDishesByCondition(DishesExample ge) {
         return dishesMapper.deleteByExample(ge)>0;
     }
 
+    /**
+     * 修改菜品信息
+     * @param dishes
+     * @return
+     */
     public boolean editDishes(Dishes dishes) {
         return dishesMapper.updateByPrimaryKeySelective(dishes)>0;
     }

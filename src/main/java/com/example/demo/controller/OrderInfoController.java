@@ -6,9 +6,11 @@ import com.example.demo.entity.TestDish;
 import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
+import com.example.demo.service.serviceImpl.WebSocketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -54,6 +56,7 @@ public class OrderInfoController {
 
         System.out.println(orderPrice);
         System.out.println("结束getOrder");
+        WebSocketService.sendMessageToCook("有新的菜品");
         return orderPrice;
     }
 
@@ -105,10 +108,16 @@ public class OrderInfoController {
     }
 
 
+
     @RequestMapping("/querySome")
     @RequiresRoles(logical = Logical.OR,value = {"ADMIN","WAITER"})
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);
+    }
+
+    @RequestMapping("/querySales")
+    public List<Map<String,Object>> selectBySales() throws ParseException {
+        return orderInfoServiceImpl.selectBySales();
     }
 
     @RequestMapping("/get7DaysData")

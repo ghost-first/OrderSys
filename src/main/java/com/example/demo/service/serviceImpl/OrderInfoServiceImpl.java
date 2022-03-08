@@ -8,6 +8,8 @@ import com.example.demo.service.OrderInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -258,4 +260,19 @@ public class OrderInfoServiceImpl implements OrderInfoService{
         return result;
     }
 
+    public List<Map<String,Object>> selectBySales() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String today = sdf.format(date);
+        System.out.println(today);
+        Calendar cld = Calendar.getInstance();
+        cld.setTime(date);
+//        //月份+1，天设置为0。下个月第0天，就是这个月最后一天
+        cld.add(Calendar.MONTH, 1);
+        cld.set(Calendar.DAY_OF_MONTH, 0);
+        String end = sdf.format(cld.getTime());
+        cld.set(Calendar.DAY_OF_MONTH,1);
+        String start = sdf.format(cld.getTime());
+        return orderInfoMapper.selectBySales(start,end);
+    }
 }

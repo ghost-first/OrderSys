@@ -48,6 +48,7 @@ public class DishesController {
         return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice,isrec);
     }
 
+
     @RequestMapping("/remove")
     @RequiresRoles("ADMIN")
     public boolean removeDish(int dishid){

@@ -5,6 +5,7 @@ import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.OrderInfoExample;
 import com.example.demo.entity.TestDish;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,4 +23,6 @@ public interface OrderInfoService {
     //查看历史数据
     List<Map<String,Object>> get7DaysData();
     List<Map<String, Object>> get6MonthsData();
+
+    public List<Map<String,Object>> selectBySales() throws ParseException;
 }
