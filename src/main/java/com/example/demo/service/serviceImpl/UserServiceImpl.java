@@ -6,8 +6,10 @@ import com.example.demo.entity.DishesExample;
 import com.example.demo.entity.User;
 import com.example.demo.entity.UserExample;
 import com.example.demo.service.UserService;
+import org.apache.shiro.codec.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -40,7 +42,13 @@ public class UserServiceImpl implements UserService{
         if(oldUser != null){
             return oldUser;
         }
-//        user.setProfilePic(uploadPic("profile_pic",request));
+        String password = user.getPassword();
+
+        //加密
+        byte[] data = password.getBytes();
+        String resPassword = new String(DigestUtils.md5DigestAsHex(data));
+
+        user.setPassword(resPassword);
         userMapper.insert(user);
         return user;
     }

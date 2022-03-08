@@ -21,13 +21,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     @Autowired
     private DishesMapper dishesMapper;
 
-    /*
-    * 添加菜单
-    * 参数获取订单ID，包含桌号，waiter，remarks
-    * 设置时间，状态
-    *
-    * 返回订单号
-    * */
+    /**
+     * 添加菜品
+     * @param newOrder 获取订单ID，包含桌号，waiter，remarks
+     * @return 返回订单信息，包括订单号
+     */
     @Override
     public OrderInfo addOrder(OrderInfo newOrder) {
         //时间
@@ -44,12 +42,12 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return newOrder;
     }
 
-    /*
-     * dish包括dish_id，count
-     * 设置每个dish的订单号，将每一个菜品添加到订单中，
-     * 总价格计算并set订单的总价
-     * 返回总价
-     * */
+    /**
+     *设置每个dish的订单号，将每一个菜品添加到订单中，计算总价格并set订单的总价
+     * @param dishes 包括dish_id,count
+     * @param order 包括订单号
+     * @return 返回订单，包括总价
+     */
     @Override
     public OrderInfo addDishesIntoOrder(List<DishOrder> dishes, OrderInfo order) {
         //总价
@@ -83,6 +81,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         orderInfo.setOrderState(1);
         return orderInfoMapper.updateByPrimaryKeySelective(orderInfo)>0;
     }
+
     /*
     * 删除DishOrder里的菜品，再删除订单
     * */
@@ -93,6 +92,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return res1 & res2;
     }
 
+    /**
+     * 查询订单信息
+     * @param orderInfo
+     * @return 包括订单本身，以及订单对应的所点菜品
+     */
     @Override
     public List<TestDish> queryOrder(OrderInfo orderInfo) {
         //where add_order = 0,选出不加菜的列表

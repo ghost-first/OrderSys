@@ -1,32 +1,17 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Dishes;
 import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
-import com.example.demo.util.RandomValidateCode;
-import com.example.demo.service.UserService;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
-import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
@@ -69,6 +54,10 @@ public class UserController {
 
     @RequestMapping(value = "/login")
     public User login(@Param("userId") String userId, @Param("password") String password, Model model,HttpSession session) {
+        //获取加密的密码
+        byte[] data = password.getBytes();
+        password = new String(DigestUtils.md5DigestAsHex(data));
+
         Subject subject = SecurityUtils.getSubject();
         User user_wait = new User();
         if (!subject.isAuthenticated()){
@@ -109,7 +98,6 @@ public class UserController {
 
     @RequestMapping("/uploadFile")
     public String uploadFile(MultipartFile photo, HttpSession session) throws IOException {
-        System.out.println("开始上传");
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();
         System.out.println("上传图片"+fileName);
