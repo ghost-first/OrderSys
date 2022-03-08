@@ -97,6 +97,7 @@ public class OrderInfoController {
     @RequestMapping("/addDishes")
     @RequiresRoles("WAITER")
     public OrderInfo addDishes(@RequestBody TestDish testDish){
+        WebSocketService.sendMessageToCook("有新的菜品");
         return orderInfoServiceImpl.addDishes(testDish);
     }
 

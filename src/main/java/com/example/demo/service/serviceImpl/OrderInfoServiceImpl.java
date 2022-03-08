@@ -275,4 +275,10 @@ public class OrderInfoServiceImpl implements OrderInfoService{
         String start = sdf.format(cld.getTime());
         return orderInfoMapper.selectBySales(start,end);
     }
+    /**
+     * 服务员撤单，订单总金额减少
+     */
+    public int cancelDishesFromOrder(Integer orderId,Double totalPrice){
+        return orderInfoMapper.updatePrice(orderId,totalPrice);
+    }
 }
