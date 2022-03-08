@@ -46,6 +46,7 @@ public class DishOrderController {
     }
 
     @RequestMapping("/cancel")
+    @RequiresRoles("WAITER")
     public int cancelDishOrder(Integer orderId,Integer dishId,Integer count,Double price){
         orderInfoServiceImpl.cancelDishesFromOrder(orderId,count*price);
         return dishOrderServiceImpl.cancelDishOrder(orderId,dishId);
