@@ -156,7 +156,6 @@
       where order_id = #{orderId,jdbcType=INTEGER};
     </if>
   </select>
-
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.example.demo.entity.OrderInfoExample" >
     select
     <if test="distinct" >

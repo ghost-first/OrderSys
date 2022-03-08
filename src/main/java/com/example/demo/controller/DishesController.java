@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.Dishes;
 import com.example.demo.service.serviceImpl.DishesServiceImpl;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,21 +25,22 @@ public class DishesController {
     private DishesServiceImpl dishesServiceImpl;
 
     @RequestMapping("/all")
-    @ResponseBody
+    @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN"})
     public List<Dishes> showDishes() {
         List<Dishes> list = dishesServiceImpl.findAll();
         return list;
     }
 
-    @ResponseBody
+
     @RequestMapping("/query")
+    @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN"})
     public Dishes queryDish(int dishId){
         Dishes dish = dishesServiceImpl.findByDid(dishId);
-        System.out.println(dish);
         return dish;
     }
-    @ResponseBody
+
     @RequestMapping("/querySome")
+    @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN"})
     public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
                                         @Param("minPrice")Double minPrice,
                                         @Param("maxPrice")Double maxPrice,
@@ -45,25 +48,23 @@ public class DishesController {
         return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice,isrec);
     }
 
-    @ResponseBody
+
     @RequestMapping("/remove")
+    @RequiresRoles("ADMIN")
     public boolean removeDish(int dishid){
         return dishesServiceImpl.removeDishes(dishid);
     }
 
-    @ResponseBody
+
     @RequestMapping("/add")
+    @RequiresRoles("ADMIN")
     public boolean addDish(Dishes dish){
-        System.out.println(dish);
-//        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
         return dishesServiceImpl.addDishes(dish);
     }
 
-    @ResponseBody
     @RequestMapping("/edit")
+    @RequiresRoles("ADMIN")
     public boolean editDish(Dishes dish){
-//        dish.setDishPic(uploadPic("dish_pic",request));  //设置图片
-        System.out.println(dish);
         return dishesServiceImpl.editDishes(dish);
     }
 

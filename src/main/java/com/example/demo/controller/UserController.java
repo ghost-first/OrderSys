@@ -2,9 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
+import com.example.util.JWTUtil;
+import com.example.util.ResultMap;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -23,9 +26,16 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
-//    @Autowired
-//    private UserServiceImpl getUserServiceImpl;
 
+    private final ResultMap resultMap;
+
+    @Autowired
+    public UserController(ResultMap resultMap,UserServiceImpl userServiceImpl) {
+        this.resultMap = resultMap;
+        this.userServiceImpl=userServiceImpl;
+    }
+
+    //注册
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {
         return userServiceImpl.add(user);
@@ -34,6 +44,8 @@ public class UserController {
     public User queryUserById(String userId){
         return userServiceImpl.selectById(userId);
     }
+
+    @RequiresRoles("ADMIN")
     @RequestMapping(value = "/queryAll",method = RequestMethod.GET)
     public List<User> queryAllUsers(User user){
         return userServiceImpl.selectAll(user);
@@ -42,6 +54,8 @@ public class UserController {
     public User updateUser(User user){
         return userServiceImpl.updateInfo(user);
     }
+
+    @RequiresRoles("ADMIN")
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
         int result = userServiceImpl.delete(userId);
@@ -52,40 +66,28 @@ public class UserController {
         }
     }
 
+    /*
+     * 登录
+     * */
     @RequestMapping(value = "/login")
-    public User login(@Param("userId") String userId, @Param("password") String password, Model model,HttpSession session) {
+    public ResultMap login(@Param("userId") String userId, @Param("password") String password) {
         //获取加密的密码
         byte[] data = password.getBytes();
         password = new String(DigestUtils.md5DigestAsHex(data));
 
-        Subject subject = SecurityUtils.getSubject();
-        User user_wait = new User();
-        if (!subject.isAuthenticated()){
-            UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
-            try {
-                subject.login(token);
-            } catch(UnknownAccountException e) {
-                user_wait.setRoleId(4);
-            }catch (ExcessiveAttemptsException e){
-                User user = new User();
-                user.setUserId(userId);
-                user.setIsLock(1);
-                userServiceImpl.updateInfo(user);
-                user_wait.setRoleId(5);
-            }catch (IncorrectCredentialsException e){
-                user_wait.setRoleId(6);
-            }catch (DisabledAccountException e){
-                user_wait.setRoleId(5);
-            }
+        System.out.println("在登录");
+        User user = userServiceImpl.selectById(userId);
+        String realPassword = user.getPassword();
+        int islock = user.getIsLock();
+        if (realPassword == null) {
+            return resultMap.fail().code(401).message("用户名错误").curuser(null);
+        } else if (!realPassword.equals(password)) {
+            return resultMap.fail().code(401).message("密码错误").curuser(null);
+        } else if(islock==1){
+            return resultMap.fail().code(401).message("用户已经锁定").curuser(null);
+        } else {
+            return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
         }
-
-        if (subject.isAuthenticated()){
-            User user = userServiceImpl.selectById(userId);
-            session.setAttribute("userId",userId);
-            return user;
-//            subject.logout();
-        }
-        return user_wait;
     }
     @RequestMapping("/logout")
     public void logout(){
@@ -98,6 +100,7 @@ public class UserController {
 
     @RequestMapping("/uploadFile")
     public String uploadFile(MultipartFile photo, HttpSession session) throws IOException {
+        System.out.println("开始上传");
         //获取上传的文件的文件名
         String fileName = photo.getOriginalFilename();
         System.out.println("上传图片"+fileName);
