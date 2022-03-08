@@ -9,6 +9,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -71,6 +72,8 @@ public class UserController {
     @RequestMapping(value = "/login")
     public ResultMap login(@Param("userId") String userId, @Param("password") String password) {
         System.out.println("在登录");
+        byte[] data = password.getBytes();
+        password = DigestUtils.md5DigestAsHex(data);
         User user = userServiceImpl.selectById(userId);
         String realPassword = user.getPassword();
         int islock = user.getIsLock();
