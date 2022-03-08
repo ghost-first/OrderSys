@@ -29,9 +29,6 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
     private final UserServiceImpl userServiceImpl;
 
-    private int count=0;
-    private String preUserId="";
-
     @Autowired
     public CustomRealm(UserServiceImpl userServiceImpl) {
         this.userServiceImpl = userServiceImpl;

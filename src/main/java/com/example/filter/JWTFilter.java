@@ -1,6 +1,7 @@
 package com.example.filter;
 
 import com.example.shiro.JWTToken;
+import org.apache.shiro.ShiroException;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
                 return true;
             } catch (Exception e) {
                 //token 错误
-                responseError(response, e.getMessage());
+                logger.error(e.getMessage());
             }
         }
         //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 true
@@ -85,6 +86,7 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
         httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        httpServletResponse.setHeader("Access-Control-Allow-Credentials", "true");
         // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
         if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
             httpServletResponse.setStatus(HttpStatus.OK.value());
@@ -93,18 +95,4 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         return super.preHandle(request, response);
     }
 
-    /**
-     * 将非法请求跳转到 /unauthorized/**
-     */
-    private void responseError(ServletResponse response, String message) {
-        System.out.println("在JWTFILER响应错误请求responseError");
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            //设置编码，否则中文字符在重定向时会变为空字符串
-            message = URLEncoder.encode(message, "UTF-8");
-            httpServletResponse.sendRedirect("/unauthorized/" + message);
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        }
-    }
 }
