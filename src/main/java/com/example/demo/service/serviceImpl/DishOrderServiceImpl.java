@@ -64,5 +64,18 @@ public class DishOrderServiceImpl implements DishOrderService {
         return dishOrderMapper.sendDishInfo();
     }
 
+    /**
+     * 服务员撤销菜品
+     * @param orderId
+     * @param dishId
+     * @return
+     */
+    public int cancelDishOrder(Integer orderId,Integer dishId){
+        DishOrderKey dishOrderKey = new DishOrderKey();
+        dishOrderKey.setOrderId(orderId);
+        dishOrderKey.setDishId(dishId);
+        WebSocketService.sendMessageToCook("撤菜");
+        return dishOrderMapper.cancel(dishOrderKey);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DishOrder;
 import com.example.demo.service.serviceImpl.DishOrderServiceImpl;
+import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class DishOrderController {
     @Autowired
     private DishOrderServiceImpl dishOrderServiceImpl;
+    @Autowired
+    private OrderInfoServiceImpl orderInfoServiceImpl;
 
     @RequestMapping("/querySome")
     public List<Map<String,Object>> findSomeDishOrder(@Param("dishName")String dishName,
@@ -38,4 +41,9 @@ public class DishOrderController {
         return dishOrderServiceImpl.sendDishInfo();
     }
 
+    @RequestMapping("/cancel")
+    public int cancelDishOrder(Integer orderId,Integer dishId,Integer count,Double price){
+        orderInfoServiceImpl.cancelDishesFromOrder(orderId,count*price);
+        return dishOrderServiceImpl.cancelDishOrder(orderId,dishId);
+    }
 }

@@ -325,4 +325,9 @@
       add_order = #{addOrder,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
+  <update id="updatePrice">
+    update orderinfo
+    set total_price = total_price-#{totalPrice,jdbcType=DOUBLE}
+    where order_id = #{orderId,jdbcType=INTEGER}
+  </update>
 </mapper>

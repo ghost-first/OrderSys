@@ -25,5 +25,7 @@ public interface OrderInfoService {
 
     List<Map<String, Object>> getSixMonthsData();
 
-    public List<Map<String,Object>> selectBySales() throws ParseException;
+    List<Map<String,Object>> selectBySales() throws ParseException;
+
+    int cancelDishesFromOrder(Integer orderId,Double totalPrice);
 }

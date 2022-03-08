@@ -71,6 +71,7 @@ public class OrderInfoController {
     //加菜
     @RequestMapping("/addDishes")
     public OrderInfo addDishes(@RequestBody TestDish testDish){
+        WebSocketService.sendMessageToCook("有新的菜品");
         return orderInfoServiceImpl.addDishes(testDish);
     }
 
