@@ -1,32 +1,16 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Dishes;
 import com.example.demo.entity.User;
 import com.example.demo.service.serviceImpl.UserServiceImpl;
-import com.example.demo.util.RandomValidateCode;
-import com.example.demo.service.UserService;
+import com.example.util.JWTUtil;
+import com.example.util.ResultMap;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
-import org.apache.shiro.session.Session;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.util.MultiValueMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.List;
@@ -36,27 +20,40 @@ import java.util.UUID;
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {
-    @Autowired
-    private UserServiceImpl userServiceImpl;
-//    @Autowired
-//    private UserServiceImpl getUserServiceImpl;
 
+    private UserServiceImpl userServiceImpl;
+
+    private final ResultMap resultMap;
+
+    @Autowired
+    public UserController(ResultMap resultMap,UserServiceImpl userServiceImpl) {
+        this.resultMap = resultMap;
+        this.userServiceImpl=userServiceImpl;
+    }
+
+    //注册
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public User addUser(User user) throws Exception {
         return userServiceImpl.add(user);
     }
+
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){
         return userServiceImpl.selectById(userId);
     }
+
+    @RequiresRoles("ADMIN")
     @RequestMapping(value = "/queryAll",method = RequestMethod.GET)
     public List<User> queryAllUsers(User user){
         return userServiceImpl.selectAll(user);
     }
+
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
     public User updateUser(User user){
         return userServiceImpl.updateInfo(user);
     }
+
+    @RequiresRoles("ADMIN")
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
     public String deleteUser(String userId){
         int result = userServiceImpl.delete(userId);
@@ -71,38 +68,22 @@ public class UserController {
      * 登录
      * */
     @RequestMapping(value = "/login")
-    @ResponseBody
-    public User login(@Param("userId") String userId, @Param("password") String password,Model model) {
-        Subject subject = SecurityUtils.getSubject();
-        if (!subject.isAuthenticated()){
-            UsernamePasswordToken token = new UsernamePasswordToken(userId,password,true);
-            try {
-                subject.login(token);
-            } catch(UnknownAccountException e) {
-                model.addAttribute("message","账户不存在");
-            }catch (ExcessiveAttemptsException e){
-                model.addAttribute("message","验证未通过，错误次数大于5次，账户已锁定！");
-                User user = new User();
-                user.setUserId(userId);
-                user.setIsLock(1);
-                userServiceImpl.updateInfo(user);
-            }catch (IncorrectCredentialsException e){
-                model.addAttribute("message","验证未通过，账户密码错误！");
-            }catch (DisabledAccountException e){
-                model.addAttribute("message","验证未通过，账户已经禁止登录！");
-            }
+    public ResultMap login(@Param("userId") String userId, @Param("password") String password) {
+        System.out.println("在登录");
+        User user = userServiceImpl.selectById(userId);
+        String realPassword = user.getPassword();
+        int islock = user.getIsLock();
+        if (realPassword == null) {
+            return resultMap.fail().code(401).message("用户名错误").curuser(null);
+        } else if (!realPassword.equals(password)) {
+            return resultMap.fail().code(401).message("密码错误").curuser(null);
+        } else if(islock==1){
+            return resultMap.fail().code(401).message("用户已经锁定").curuser(null);
+        } else {
+            return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
         }
-
-        if (subject.isAuthenticated()){
-            System.out.println("认证过了");
-            Session session = subject.getSession();
-            User user = userServiceImpl.selectById(userId);
-            session.setAttribute("user",user);
-            return user;
-//            subject.logout();
-        }
-        return null;
     }
+
     @RequestMapping("/logout")
     public void logout(){
         Subject subject = SecurityUtils.getSubject();

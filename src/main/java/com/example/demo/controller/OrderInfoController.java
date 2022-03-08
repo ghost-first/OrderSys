@@ -4,6 +4,8 @@ import com.example.demo.entity.DishOrder;
 import com.example.demo.entity.OrderInfo;
 import com.example.demo.entity.TestDish;
 import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +38,7 @@ public class OrderInfoController {
     }
 
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
-    @ResponseBody
+    @RequiresRoles("WAITER")
     public OrderInfo newOrder(@RequestBody TestDish testDish){
         System.out.println("newOrder开始");
         System.out.println(testDish);
@@ -56,15 +58,15 @@ public class OrderInfoController {
     }
 
     //买单
-    @ResponseBody
     @RequestMapping("/checkout")
+    @RequiresRoles("WAITER")
     public boolean checkout(int orderid){
         return orderInfoServiceImpl.checkout(orderid);
     }
 
     //删除订单
     @RequestMapping(value = "/remove",method = RequestMethod.GET)
-    @ResponseBody
+    @RequiresRoles("ADMIN")
     public Integer deleteOrder(Integer orderId){
         int res = orderInfoServiceImpl.deleteOrder(orderId);
         return res;
@@ -72,7 +74,7 @@ public class OrderInfoController {
 
     //查询订单
     @RequestMapping(value = "/queryOrder",method = RequestMethod.GET)
-    @ResponseBody
+    @RequiresRoles("ADMIN")
     public List<TestDish> queryOrder(OrderInfo orderInfo){
         System.out.println("开始queryOrder");
         System.out.println(orderInfo);
@@ -80,8 +82,9 @@ public class OrderInfoController {
         return testDishes;
     }
 
-    //查询订单
+    //查询包含加菜的订单
     @RequestMapping(value = "/queryDetailOrder",method = RequestMethod.GET)
+    @RequiresRoles(logical = Logical.OR,value = {"ADMIN","WAITER"})
     public List<Map<String, Object>> queryDetailOrder(OrderInfo orderInfo){
         return orderInfoServiceImpl.queryDetailOrder(orderInfo);
     }
@@ -89,52 +92,60 @@ public class OrderInfoController {
 
     //加菜
     @RequestMapping("/addDishes")
+    @RequiresRoles("WAITER")
     public OrderInfo addDishes(@RequestBody TestDish testDish){
         return orderInfoServiceImpl.addDishes(testDish);
     }
 
-    //TODO 撤销菜品
+    //撤销菜品
     @RequestMapping(value = "/deleteDishOrder",method = RequestMethod.POST)
+    @RequiresRoles("WAITER")
     public String deleteDishOrder(DishOrder dishOrder){
         return orderInfoServiceImpl.deleteDishOrder(dishOrder);
     }
 
 
     @RequestMapping("/querySome")
+    @RequiresRoles(logical = Logical.OR,value = {"ADMIN","WAITER"})
     public List<OrderInfo> findSomeOrderInfo(Integer tableId){
         return orderInfoServiceImpl.findSomeOrderInfo(tableId);
     }
 
     @RequestMapping("/get7DaysData")
+    @RequiresRoles("ADMIN")
     public List<Map<String, Object>> get7DaysData(){
         setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         return past7DaysData;
     }
 
     @RequestMapping("/get6MonthsData")
+    @RequiresRoles("ADMIN")
     public List<Map<String,Object>> get6MonthsData(){
         setPast6MonthsData(orderInfoServiceImpl.get6MonthsData());
         return past6MonthsData;
     }
 
     @RequestMapping("/getToday")
+    @RequiresRoles("ADMIN")
     public Map<String,Object> getToday(){
         setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         return past7DaysData.get(0);
     }
 
     @RequestMapping("/getYesterday")
+    @RequiresRoles("ADMIN")
     public Map<String,Object> getYesterday(){
         return past7DaysData.get(1);
     }
 
     @RequestMapping("/getThisWeek")
+    @RequiresRoles("ADMIN")
     public double getThisWeek(){
         setPast7DaysData(orderInfoServiceImpl.get7DaysData());
         List<Map<String,Object>> thisweek = past7DaysData;
         double result =0;
         for(Map<String,Object> map:thisweek){
-            result+=Double.valueOf(map.get("totalprice").toString());
+            result+=Double.parseDouble(map.get("totalprice").toString());
             if(map.get("weekday").equals("Mon"))
                 break;
         }
@@ -142,6 +153,7 @@ public class OrderInfoController {
     }
 
     @RequestMapping("/getThisMonth")
+    @RequiresRoles("ADMIN")
     public Map<String,Object> getThisMonth(){
         setPast6MonthsData(orderInfoServiceImpl.get6MonthsData());
         return past6MonthsData.get(0);
