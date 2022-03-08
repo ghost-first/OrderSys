@@ -14,4 +14,6 @@ public interface DishOrderService {
 
     //发布传菜信息
     List<Map<String,Object>> sendDishInfo();
+
+    int cancelDishOrder(Integer orderId,Integer dishId);
 }

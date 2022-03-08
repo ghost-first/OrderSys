@@ -41,4 +41,6 @@ public interface OrderInfoMapper {
     List<Map<String,Object>> get6MonthsData();
 
     List<Map<String,Object>> selectBySales(String start,String end);
+
+    int updatePrice(@Param("orderId") Integer orderId,@Param("totalPrice") Double totalPrice);
 }

@@ -40,4 +40,6 @@ public interface DishOrderMapper {
     List<DishOrder> queryDishes(Integer orderId);
 
     List<Map<String, Object>> sendDishInfo();
+
+    int cancel(DishOrderKey key);
 }

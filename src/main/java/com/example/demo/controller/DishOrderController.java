@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.DishOrder;
 import com.example.demo.service.serviceImpl.DishOrderServiceImpl;
+import com.example.demo.service.serviceImpl.OrderInfoServiceImpl;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -19,6 +20,8 @@ import java.util.Map;
 public class DishOrderController {
     @Autowired
     private DishOrderServiceImpl dishOrderServiceImpl;
+    @Autowired
+    private OrderInfoServiceImpl orderInfoServiceImpl;
 
     @RequestMapping("/querySome")
     @RequiresRoles("COOK")
@@ -42,4 +45,10 @@ public class DishOrderController {
         return dishOrderServiceImpl.sendDishInfo();
     }
 
+    @RequestMapping("/cancel")
+    @RequiresRoles("WAITER")
+    public int cancelDishOrder(Integer orderId,Integer dishId,Integer count,Double price){
+        orderInfoServiceImpl.cancelDishesFromOrder(orderId,count*price);
+        return dishOrderServiceImpl.cancelDishOrder(orderId,dishId);
+    }
 }

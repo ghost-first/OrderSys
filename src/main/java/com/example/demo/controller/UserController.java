@@ -12,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +41,7 @@ public class UserController {
     public User addUser(User user) throws Exception {
         return userServiceImpl.add(user);
     }
+
     @RequestMapping(value = "/query",method = RequestMethod.GET)
     public User queryUserById(String userId){
         return userServiceImpl.selectById(userId);
@@ -50,6 +52,7 @@ public class UserController {
     public List<User> queryAllUsers(User user){
         return userServiceImpl.selectAll(user);
     }
+
     @RequestMapping(value = "/modify",method = RequestMethod.POST)
     public User updateUser(User user){
         return userServiceImpl.updateInfo(user);
