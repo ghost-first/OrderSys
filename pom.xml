@@ -20,6 +20,7 @@
     </properties>
 
 
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,12 +135,6 @@
             <scope>true</scope>
         </dependency>
 
-        <!--        <dependency>-->
-<!--            <groupId>com.github.pagehelper</groupId>-->
-<!--            <artifactId>pagehelper-spring-boot-starter</artifactId>-->
-<!--            <version>1.2.10</version>-->
-<!--        </dependency>-->
-
         <!--    向前端传数据    -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -150,6 +145,13 @@
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.11</version>
+        </dependency>
+
+        <!--    lombok    -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
