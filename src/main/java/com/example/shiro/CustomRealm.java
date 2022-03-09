@@ -39,7 +39,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        System.out.println("进入了CustomRealm 中的supports");
+        System.out.println("进入了CustomRealm 中的supports，判断当前拿到的token是不是自定义的token类型");
         return token instanceof JWTToken;
     }
 
@@ -49,6 +49,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         System.out.println("CustomRealm中的————身份认证方法————");
+        System.out.println("从authenticationToken中拿到Token并解密");
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);

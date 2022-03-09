@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class DishesServiceImpl implements DishesService {
@@ -32,17 +31,21 @@ public class DishesServiceImpl implements DishesService {
     /**
      * 根据菜品名、价格区间对菜品进行模糊查询
      * @param dishName
+     * @param type
      * @param minPrice
      * @param maxPrice
+     * @param isrec
      * @return
      */
-    public List<Dishes> findSomeDishes(String dishName,Double minPrice,Double maxPrice,Integer isrec){
+    public List<Dishes> findSomeDishes(String dishName,String type,Double minPrice,Double maxPrice,Integer isrec){
         DishesExample de = new DishesExample();
         DishesExample.Criteria criteria = de.createCriteria();
         if(dishName!=null){
             criteria.andDishNameLike("%"+dishName+"%");
         }
         criteria.andPriceBetween(minPrice,maxPrice);
+        if(type!=null)
+            criteria.andTypeEqualTo(type);
         if(isrec!=null)
             criteria.andIsrecEqualTo(isrec);
         return dishesMapper.selectByExample(de);
