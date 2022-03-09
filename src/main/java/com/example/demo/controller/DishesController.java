@@ -42,10 +42,11 @@ public class DishesController {
     @RequestMapping("/querySome")
     @RequiresRoles(logical = Logical.OR, value = {"WAITER", "ADMIN"})
     public List<Dishes> querySomeDishes(@Param("dishName") String dishName,
+                                        @Param("type") String type,
                                         @Param("minPrice")Double minPrice,
                                         @Param("maxPrice")Double maxPrice,
                                         @Param("isrec") Integer isrec){
-        return dishesServiceImpl.findSomeDishes(dishName,minPrice,maxPrice,isrec);
+        return dishesServiceImpl.findSomeDishes(dishName,type,minPrice,maxPrice,isrec);
     }
 
 

@@ -54,7 +54,7 @@ public class JWTUtil {
      * @return 是否正确
      */
     public static boolean verify(String token, String username) {
-        System.out.println("JWTUTIL在verify校验token是否正确");
+        System.out.println("JWTUTIL在verify校验token是否正确，用的JWT自带的verify");
         try {
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
             //在token中附带了username信息
