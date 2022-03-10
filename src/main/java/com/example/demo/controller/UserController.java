@@ -24,10 +24,15 @@ import java.util.UUID;
 @RequestMapping("/user")
 @CrossOrigin
 public class UserController {
-    @Autowired
+
     private UserServiceImpl userServiceImpl;
 
-    private final ResultMap resultMap;
+    private ResultMap resultMap;
+
+    @Autowired
+    public void setResultMap(ResultMap resultMap) {
+        this.resultMap = resultMap;
+    }
 
     @Autowired
     public UserController(ResultMap resultMap,UserServiceImpl userServiceImpl) {
@@ -74,6 +79,7 @@ public class UserController {
      * */
     @RequestMapping(value = "/login")
     public ResultMap login(@Param("userId") String userId, @Param("password") String password) {
+        setResultMap(new ResultMap());
         System.out.println("在登录");
         //加密
         byte[] data = password.getBytes();
@@ -82,6 +88,7 @@ public class UserController {
         System.out.println(encode);
 
         User user = userServiceImpl.selectById(userId);
+        System.out.println(user);
         if (user == null) {
             return resultMap.fail().code(401).message("账号不存在").curRoleid(4).curuser(null);
         } else if (!user.getPassword().equals(password)) {
@@ -89,7 +96,7 @@ public class UserController {
         } else if(user.getIsLock()==1){
             return resultMap.fail().code(401).message("用户已经锁定").curRoleid(5).curuser(null);
         } else {
-            return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
+            return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curRoleid(user.getRoleId()).curuser(user);
         }
     }
     @RequestMapping("/logout")
