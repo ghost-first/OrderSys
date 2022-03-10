@@ -1,10 +1,7 @@
 package com.example.demo.service.serviceImpl;
 
 import com.example.demo.dao.UserMapper;
-import com.example.demo.entity.Dishes;
-import com.example.demo.entity.DishesExample;
 import com.example.demo.entity.User;
-import com.example.demo.entity.UserExample;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,14 +43,12 @@ public class UserServiceImpl implements UserService{
      * @return
      * @throws Exception
      */
-    public User add(User user) throws Exception {
-        User oldUser = userMapper.selectById(user.getUserId());
-        if(oldUser != null){
-            return oldUser;
+    public boolean add(User user){
+        try {
+            return userMapper.insertSelective(user)>0;
+        } catch (Exception e) {
+            return false;
         }
-//        user.setProfilePic(uploadPic("profile_pic",request));
-        userMapper.insert(user);
-        return user;
     }
 
     /**
