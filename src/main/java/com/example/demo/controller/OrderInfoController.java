@@ -51,15 +51,13 @@ public class OrderInfoController {
     @RequestMapping("/form")
     @ResponseBody()
     public String fromToket(HttpServletRequest req, HttpServletResponse resp, Model model){
+
         //生成toket
         String toket = UUID.randomUUID().toString();
         //保存到session
-        req.getSession().setAttribute("token",toket);
+        req.getSession().setAttribute("toket",toket);
         System.out.println("开始form");
         System.out.println(req.getSession());
-        //丢给前端
-        model.addAttribute("token",toket);
-        System.out.println(req.getSession().getAttribute("token"));
         return  toket;
     }
 
@@ -79,10 +77,10 @@ public class OrderInfoController {
 //            return null;
 //        }
 //        resp.getWriter().write("表单数据保存成功..");
-        System.out.println("表单数据提交成功");
+//        System.out.println("表单数据提交成功");
 
         //删除sessionToken
-        req.getSession().removeAttribute("token");
+//        req.getSession().removeAttribute("token");
 
         //添加新订单，获取订单号
         OrderInfo orderInfo = orderInfoServiceImpl.addOrder(testDish.getNewOrder());
@@ -99,20 +97,17 @@ public class OrderInfoController {
         return orderPrice;
     }
 
-    private boolean isBumit(HttpServletRequest request,String token) {
-//        String token = request.getParameter("token");
-        String sessionToken = (String) request.getSession().getAttribute("token");
+    private boolean isBumit(HttpServletRequest request,String toket) {
+        String sessionToken = (String) request.getSession().getAttribute("toket");
         System.out.println("开始isBumit");
         System.out.println(request.getSession());
-        System.out.println(request.getSession().toString());
-        System.out.println("token:"+token);
-        System.out.println("sessionToken:"+sessionToken);
+        System.out.println("toket:"+toket);
         //判断是否提交过
         if (sessionToken == null) {
             return false;
         }
         // 判断是否是伪造token
-        if(!(token.equals(sessionToken))){
+        if(!(toket.equals(sessionToken))){
             return false;
         }
         return true;
