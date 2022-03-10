@@ -113,7 +113,7 @@ by 李满园2.26-->
       <if test="count != null">
         count = #{count,jdbcType=INTEGER} and
       </if>
-      dish_state  between 0 and 2
+      dish_state  between 0 and 1
     </trim>
   </select>
   <select id="selectByExample" parameterType="com.example.demo.entity.DishOrderExample" resultMap="BaseResultMap">

@@ -3,10 +3,9 @@ package com.example.demo.service.serviceImpl;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
-import org.apache.shiro.codec.Base64;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -27,7 +26,14 @@ public class UserServiceImpl implements UserService{
      * @return
      */
     public User selectById(String userId){
-        return userMapper.selectById(userId);
+        User user = userMapper.selectById(userId);
+        //解密
+        org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+        String password = user.getPassword();
+        String decodePassword = new String(base64.decode(password));
+        System.out.println("decodePassword:"+decodePassword);
+        user.setPassword(decodePassword);
+        return user;
     }
 
     /**
@@ -36,7 +42,17 @@ public class UserServiceImpl implements UserService{
      * @return
      */
     public List<User> selectAll(User user){
-        return userMapper.selectAll(user);
+        List<User> users = userMapper.selectAll(user);
+        for (User queryUser : users) {
+            org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+            String password = queryUser.getPassword();
+            String decodePassword = new String(base64.decode(password));
+            System.out.println(decodePassword);
+            queryUser.setPassword(decodePassword);
+        }
+        //解密
+
+        return users;
     }
 
     /**
@@ -47,6 +63,13 @@ public class UserServiceImpl implements UserService{
      */
     public boolean add(User user){
         try {
+            //加密
+            String password = user.getPassword();
+            byte[] data = password.getBytes();
+            org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+            String encode = base64.encodeAsString(data);
+
+            user.setPassword(encode);
             return userMapper.insertSelective(user)>0;
         } catch (Exception e) {
             return false;
@@ -59,7 +82,15 @@ public class UserServiceImpl implements UserService{
      * @return
      */
     public User updateInfo(User user){
+        byte[] data = user.getPassword().getBytes();
+
+        //加密
+        org.apache.commons.codec.binary.Base64 base64 = new Base64();
+        String encode = base64.encodeAsString(data);
+        user.setPassword(encode);
+
         int result =  userMapper.updateInfo(user);
+
         if(result>0){
             return userMapper.selectById(user.getUserId());
         }else{

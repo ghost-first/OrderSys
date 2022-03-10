@@ -53,34 +53,33 @@ public class OrderInfoController {
     public String fromToket(HttpServletRequest req, HttpServletResponse resp, Model model){
 
         //生成toket
-        String toket = UUID.randomUUID().toString();
+        String verify = UUID.randomUUID().toString();
         //保存到session
-        req.getSession().setAttribute("toket",toket);
+        req.getSession().setAttribute("verify",verify);
         System.out.println("开始form");
         System.out.println(req.getSession());
-        return  toket;
+        return  verify;
     }
 
     @RequestMapping(value = "/newOrder",method = RequestMethod.POST)
     @RequiresRoles("WAITER")
-    public OrderInfo newOrder(@RequestBody TestDish testDish, @RequestHeader("token") String token, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    public OrderInfo newOrder(@RequestBody TestDish testDish, @RequestHeader("verify") String verify, HttpServletRequest req, HttpServletResponse resp) throws IOException {
         System.out.println("newOrder开始");
-        System.out.println(testDish);
-        System.out.println(token);
+        System.out.println(req.getSession().getAttribute("verify"));
+        System.out.println(verify);
         //表单幂等性
         // 防止浏览器显示乱码
         resp.setContentType("text/html;charset=utf-8");
 
         //验证toket 表单是否已经提交过
-//        if(!isBumit(req,token)){
-//            System.out.println("您已提交了数据..或者token错误!");
+//        if(!isBumit(req,verify)){
+//            System.out.println("您已提交了数据..或者verify错误!");
 //            return null;
 //        }
-//        resp.getWriter().write("表单数据保存成功..");
 //        System.out.println("表单数据提交成功");
 
         //删除sessionToken
-//        req.getSession().removeAttribute("token");
+//        req.getSession().removeAttribute("verify");
 
         //添加新订单，获取订单号
         OrderInfo orderInfo = orderInfoServiceImpl.addOrder(testDish.getNewOrder());
@@ -97,17 +96,17 @@ public class OrderInfoController {
         return orderPrice;
     }
 
-    private boolean isBumit(HttpServletRequest request,String toket) {
-        String sessionToken = (String) request.getSession().getAttribute("toket");
+    private boolean isBumit(HttpServletRequest request,String verify) {
+        String sessionToken = (String) request.getSession().getAttribute("verify");
         System.out.println("开始isBumit");
         System.out.println(request.getSession());
-        System.out.println("toket:"+toket);
+        System.out.println("verify:"+verify);
         //判断是否提交过
         if (sessionToken == null) {
             return false;
         }
         // 判断是否是伪造token
-        if(!(toket.equals(sessionToken))){
+        if(!(verify.equals(sessionToken))){
             return false;
         }
         return true;

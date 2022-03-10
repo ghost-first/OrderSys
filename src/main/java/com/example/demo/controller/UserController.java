@@ -6,19 +6,17 @@ import com.example.util.JWTUtil;
 import com.example.util.ResultMap;
 import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.annotation.RequiresGuest;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.util.DigestUtils;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.*;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -77,16 +75,18 @@ public class UserController {
     @RequestMapping(value = "/login")
     public ResultMap login(@Param("userId") String userId, @Param("password") String password) {
         System.out.println("在登录");
+        //加密
         byte[] data = password.getBytes();
-        password = DigestUtils.md5DigestAsHex(data);
+        org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+        String encode = base64.encodeAsString(data);
+        System.out.println(encode);
+
         User user = userServiceImpl.selectById(userId);
-        String realPassword = user.getPassword();
-        int islock = user.getIsLock();
-        if (realPassword == null) {
+        if (user == null) {
             return resultMap.fail().code(401).message("账号不存在").curRoleid(4).curuser(null);
-        } else if (!realPassword.equals(password)) {
+        } else if (!user.getPassword().equals(password)) {
             return resultMap.fail().code(401).message("密码错误").curRoleid(6).curuser(null);
-        } else if(islock==1){
+        } else if(user.getIsLock()==1){
             return resultMap.fail().code(401).message("用户已经锁定").curRoleid(5).curuser(null);
         } else {
             return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
