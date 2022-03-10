@@ -18,7 +18,7 @@ public interface UserService {
 
     List<User> selectAll(User user);
 
-    User add(User user) throws Exception;
+    boolean add(User user) throws Exception;
 
     User updateInfo(User user);
 

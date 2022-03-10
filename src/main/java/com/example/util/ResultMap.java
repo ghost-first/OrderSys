@@ -42,5 +42,10 @@ public class ResultMap extends HashMap<String, Object> {
         this.put("user",user);
         return this;
     }
+
+    public ResultMap curRoleid(int roleId){
+        this.put("roleId",roleId);
+        return this;
+    }
 }
 

@@ -40,7 +40,7 @@ public class UserController {
     //注册
     @RequiresGuest
     @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public User addUser(User user) throws Exception {
+    public boolean addUser(User user){
         return userServiceImpl.add(user);
     }
 
@@ -83,11 +83,11 @@ public class UserController {
         String realPassword = user.getPassword();
         int islock = user.getIsLock();
         if (realPassword == null) {
-            return resultMap.fail().code(401).message("用户名错误").curuser(null);
+            return resultMap.fail().code(401).message("账号不存在").curRoleid(4).curuser(null);
         } else if (!realPassword.equals(password)) {
-            return resultMap.fail().code(401).message("密码错误").curuser(null);
+            return resultMap.fail().code(401).message("密码错误").curRoleid(6).curuser(null);
         } else if(islock==1){
-            return resultMap.fail().code(401).message("用户已经锁定").curuser(null);
+            return resultMap.fail().code(401).message("用户已经锁定").curRoleid(5).curuser(null);
         } else {
             return resultMap.success().code(200).message(JWTUtil.createToken(userId)).curuser(user);
         }
