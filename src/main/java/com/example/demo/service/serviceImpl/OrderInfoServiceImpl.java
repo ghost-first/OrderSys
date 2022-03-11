@@ -136,9 +136,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public List<Map<String, Object>> getDetailOrder(List<OrderInfo> orderInfos){
         List<Map<String, Object>> list = new ArrayList<>();
         for (OrderInfo info : orderInfos) {
+            //设置总金额
+            Double totalPrice = info.getTotalPrice();
             Map<String,Object> map = new HashMap<>();
-            // 添加订单信息
-            map.put("newOrder",info);
+
 
             // 获取订单中菜品
             System.out.println(orderInfoMapper.queryOrderDetail(info.getOrderId()));
@@ -160,6 +161,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                 //加菜订单中的菜品
                 List<HashMap<String, Object>> addOrderList = new ArrayList<>();
                 for (OrderInfo order : orders) {
+                    totalPrice += order.getTotalPrice();
                     HashMap<String, Object> addOrderMap = new HashMap<>();
                     addOrderMap.put("addOrder",order);
                     addOrderMap.put("addOrderDetail",orderInfoMapper.queryOrderDetail(order.getOrderId()));
@@ -167,6 +169,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                 }
                 map.put("addOrders",addOrderList);
             }
+            // 添加订单信息
+            info.setTotalPrice(totalPrice);
+            map.put("newOrder",info);
             list.add(map);
         }
         return list;

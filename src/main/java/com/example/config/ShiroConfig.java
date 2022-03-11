@@ -48,7 +48,7 @@ public class ShiroConfig {
         // 所有请求通过我们自己的JWT Filter
         filterRuleMap.put("/**", "jwt");
         // 访问 /unauthorized/** 不通过JWTFilter
-//        filterRuleMap.put("/unauthorized/**", "anon");
+        filterRuleMap.put("/user/uploadFile", "anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }
