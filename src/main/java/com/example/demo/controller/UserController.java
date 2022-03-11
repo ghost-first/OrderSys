@@ -108,6 +108,7 @@ public class UserController {
         }
     }
 
+
     @RequestMapping("/uploadFile")
     public String uploadFile(MultipartFile photo, HttpSession session) throws IOException {
         System.out.println("开始上传");

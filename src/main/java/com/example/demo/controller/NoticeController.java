@@ -36,7 +36,7 @@ public class NoticeController {
 
 
     @RequestMapping("/query")
-    public Notice queryNotice(int notice_id){
+    public Notice queryNotice(Integer notice_id){
         System.out.println("开始看公告了");
         return noticeServiceImpl.findByDid(notice_id);
     }
@@ -44,7 +44,7 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping("/remove")
     @RequiresRoles("ADMIN")
-    public boolean removeNotice(int noticeId,String userId){
+    public boolean removeNotice(Integer noticeId,String userId){
         WebSocketService.sendAllMessage(userId,"公告");
         return noticeServiceImpl.removeNotice(noticeId);
     }
