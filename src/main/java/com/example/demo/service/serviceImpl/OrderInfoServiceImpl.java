@@ -178,20 +178,12 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public OrderInfo addDishes(TestDish testDish){
         //加的钱
         System.out.println(testDish);
-        //获取旧ID
-        int firstOldId = testDish.getNewOrder().getOrderId();
         //旧订单的修改，获取新订单的ID
         OrderInfo newOrder = getAddOrderInfo(testDish.getNewOrder());
 
         //菜品加入订单DishOrder
         newOrder = addDishesIntoOrder(testDish.getDishOrders(), newOrder);
         System.out.println(newOrder);
-//        orderInfoMapper.updateByPrimaryKeySelective(newOrder);
-
-        //价格加到第一个菜单上
-        OrderInfo firstOldOrder = orderInfoMapper.selectByPrimaryKey(firstOldId);
-        firstOldOrder.setTotalPrice(firstOldOrder.getTotalPrice()+newOrder.getTotalPrice());
-        orderInfoMapper.updateByPrimaryKeySelective(firstOldOrder);
 
         return newOrder;
     }

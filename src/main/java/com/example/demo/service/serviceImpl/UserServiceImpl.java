@@ -27,13 +27,19 @@ public class UserServiceImpl implements UserService{
      */
     public User selectById(String userId){
         User user = userMapper.selectById(userId);
-        //解密
-        org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
-        String password = user.getPassword();
-        String decodePassword = new String(base64.decode(password));
-        System.out.println("decodePassword:"+decodePassword);
-        user.setPassword(decodePassword);
-        return user;
+        try{
+            //解密
+            org.apache.commons.codec.binary.Base64 base64 = new org.apache.commons.codec.binary.Base64();
+            String password = user.getPassword();
+            String decodePassword = new String(base64.decode(password));
+            System.out.println("decodePassword:"+decodePassword);
+            user.setPassword(decodePassword);
+            return user;
+        }catch (Exception e){
+            return null;
+        }
+
+
     }
 
     /**
@@ -92,7 +98,7 @@ public class UserServiceImpl implements UserService{
         int result =  userMapper.updateInfo(user);
 
         if(result>0){
-            return userMapper.selectById(user.getUserId());
+            return selectById(user.getUserId());
         }else{
             return null;
         }

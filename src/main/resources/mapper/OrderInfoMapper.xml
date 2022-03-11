@@ -150,7 +150,7 @@
 
 <!--     List<Map<String, Object>> queryOrderDetail(int orderId); -->
   <select id="queryOrderDetail" parameterType="java.lang.Integer" resultType="java.util.Map">
-    select dish_id,dish_name,count,dish_state,price
+    select dish_id,dish_name,count,dish_state,price,order_id
     from orderinfo natural join dishorder natural join dishes
     <if test="orderId != null">
       where order_id = #{orderId,jdbcType=INTEGER};

@@ -44,7 +44,7 @@ public class NoticeController {
     @ResponseBody
     @RequestMapping("/remove")
     @RequiresRoles("ADMIN")
-    public boolean removeNotice(int noticeId,String userId){
+    public boolean removeNotice(Integer noticeId,String userId){
         WebSocketService.sendAllMessage(userId,"公告");
         return noticeServiceImpl.removeNotice(noticeId);
     }
